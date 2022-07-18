@@ -29,7 +29,7 @@ import {
   returnMaxUploadSize,
   GENERAL_CHAT_ID
 } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import LocalContext from '../../Context';
 import localize from 'constants/localize';
 
@@ -76,10 +76,10 @@ function MessageInput({
   subjectId,
   textForThisChannel
 }) {
-  const { banned, fileUploadLvl } = useMyState();
+  const { banned, fileUploadLvl } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const {
     actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget }
   } = useContext(LocalContext);

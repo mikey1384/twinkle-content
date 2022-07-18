@@ -25,8 +25,8 @@ import {
   isMobile,
   scrollElementToCenter
 } from 'helpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState, useTheme } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -85,7 +85,7 @@ export default function Body({
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
 
   const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
-    useMyState();
+    useKeyContext((v) => v.myState);
   const {
     reward: { color: rewardColor }
   } = useTheme(theme);

@@ -6,7 +6,7 @@ import RewardReason from './RewardReason';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import { rewardReasons } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 MessageRewardModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -15,10 +15,10 @@ MessageRewardModal.propTypes = {
 };
 
 export default function MessageRewardModal({ onHide, userToReward, onSubmit }) {
-  const { isCreator } = useMyState();
+  const { isCreator } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [selectedReasonId, setSelectedReasonId] = useState(0);
   const [rewardAmount, setRewardAmount] = useState(0);
   const submitDisabled = useMemo(

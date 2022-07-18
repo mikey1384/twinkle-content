@@ -8,8 +8,7 @@ import ProfilePic from 'components/ProfilePic';
 import Loading from 'components/Loading';
 import { Color } from 'constants/css';
 import { useNavigate } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 
 UserListModal.propTypes = {
   description: PropTypes.string,
@@ -33,7 +32,9 @@ export default function UserListModal({
 }) {
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
-  const { userId, username, profilePicUrl, authLevel } = useMyState();
+  const { userId, username, profilePicUrl, authLevel } = useKeyContext(
+    (v) => v.myState
+  );
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const onUpdateSelectedChannelId = useChatContext(
     (v) => v.actions.onUpdateSelectedChannelId

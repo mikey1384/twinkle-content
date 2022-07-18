@@ -20,8 +20,12 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useHomeContext, useInputContext } from 'contexts';
+import {
+  useAppContext,
+  useHomeContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
 
@@ -37,11 +41,11 @@ function ContentInput() {
     (v) => v.requestHelpers.checkContentUrl
   );
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
-  const { canEditRewardLevel, banned } = useMyState();
+  const { canEditRewardLevel, banned } = useKeyContext((v) => v.myState);
   const {
     warning: { color: warningColor },
     success: { color: successColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onLoadNewFeeds = useHomeContext((v) => v.actions.onLoadNewFeeds);
   const content = useInputContext((v) => v.state.content);
   const onResetContentInput = useInputContext(

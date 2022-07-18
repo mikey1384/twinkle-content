@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { innerBorderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Checkbox.propTypes = {
   className: PropTypes.string,
@@ -25,7 +25,7 @@ export default function Checkbox({
 }) {
   const {
     switch: { color: switchColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   return (
     <div

@@ -8,7 +8,8 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Comment from './Comment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Starmarks from './Starmarks';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const showMoreRewardRecordsLabel = localize('showMoreRewardRecords');
@@ -36,7 +37,7 @@ function RewardStatus({
   style,
   theme
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     info: { color: infoColor }
   } = useTheme(theme);

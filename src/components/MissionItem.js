@@ -4,8 +4,7 @@ import RewardText from 'components/Texts/RewardText';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext, useMissionContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 import { returnMissionThumb } from 'constants/defaultValues';
 
@@ -27,7 +26,7 @@ export default function MissionItem({
   showStatus = true
 }) {
   const navigate = useNavigate();
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );

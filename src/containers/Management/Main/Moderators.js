@@ -7,8 +7,7 @@ import Table from '../Table';
 import AddModeratorModal from '../Modals/AddModeratorModal';
 import EditModeratorModal from '../Modals/EditModeratorModal';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useManagementContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useManagementContext, useKeyContext } from 'contexts';
 import { isMobile } from 'helpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
@@ -30,10 +29,10 @@ Moderators.propTypes = {
 };
 
 export default function Moderators({ canManage }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     tableHeader: { color: tableHeaderColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const accountTypes = useManagementContext((v) => v.state.accountTypes);
   const moderators = useManagementContext((v) => v.state.moderators);
   const moderatorsLoaded = useManagementContext(

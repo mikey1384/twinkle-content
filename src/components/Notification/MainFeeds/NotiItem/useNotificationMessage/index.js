@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useMyState, useTheme } from 'helpers/hooks';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
+import { useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 export default function useNotificationMessage({
@@ -18,7 +18,7 @@ export default function useNotificationMessage({
   rootMissionType,
   user
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     action: { color: actionColor },
     info: { color: infoColor },
@@ -26,7 +26,7 @@ export default function useNotificationMessage({
     mention: { color: mentionColor },
     mission: { color: missionColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const NotificationMessage = useMemo(() => {
     const isReply = targetComment?.userId === userId;
     const isSubjectResponse = targetSubject?.userId === userId;

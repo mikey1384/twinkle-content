@@ -11,8 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 
 MobileMenu.propTypes = {
   onClose: PropTypes.func.isRequired
@@ -28,7 +27,7 @@ export default function MobileMenu({ onClose }) {
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onResetChat = useChatContext((v) => v.actions.onResetChat);
-  const { username, userId } = useMyState();
+  const { username, userId } = useKeyContext((v) => v.myState);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditStatus, setImageEditStatus] = useState({
     imageEditModalShown: false,

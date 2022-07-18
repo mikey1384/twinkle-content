@@ -29,8 +29,8 @@ import {
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useInputContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
+import { useInputContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const areYouSureLabel = localize('areYouSure');
@@ -70,7 +70,9 @@ function InputForm({
   theme,
   targetCommentId
 }) {
-  const { userId, authLevel, twinkleXP, fileUploadLvl } = useMyState();
+  const { userId, authLevel, twinkleXP, fileUploadLvl } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     skeuomorphicDisabled: {
       color: skeuomorphicDisabledColor,

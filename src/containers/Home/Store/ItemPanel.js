@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const freeLabel = localize('free');
@@ -42,7 +42,7 @@ export default function ItemPanel({
   upgradeIcon
 }) {
   const [highlighted, setHighlighted] = useState(false);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const unlockProgress = useMemo(() => {
     return Math.floor(Math.min((karmaPoints * 100) / requiredKarmaPoints, 100));
   }, [karmaPoints, requiredKarmaPoints]);

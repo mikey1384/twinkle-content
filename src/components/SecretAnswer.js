@@ -4,8 +4,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import LongText from 'components/Texts/LongText';
 import ContentFileViewer from 'components/ContentFileViewer';
 import { borderRadius, Color, desktopMinWidth } from 'constants/css';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
@@ -38,7 +38,7 @@ function SecretAnswer({
   const checkIfUserResponded = useAppContext(
     (v) => v.requestHelpers.checkIfUserResponded
   );
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const onChangeSpoilerStatus = useContentContext(
     (v) => v.actions.onChangeSpoilerStatus
   );

@@ -3,11 +3,10 @@ import Featured from './Featured';
 import Recommended from './Recommended';
 import MadeByUsers from './MadeByUsers';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useAppContext, useExploreContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 
 export default function Subjects() {
-  const { canPinPlaylists, userId } = useMyState();
+  const { canPinPlaylists, userId } = useKeyContext((v) => v.myState);
   const loadByUserUploads = useAppContext(
     (v) => v.requestHelpers.loadByUserUploads
   );

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ProgressBar from 'components/ProgressBar';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import RewardAmountInfo from '../../RewardAmountInfo';
 
@@ -21,7 +21,7 @@ export default function XPProgressBar({
   userId,
   videoProgress
 }) {
-  const theme = useTheme();
+  const theme = useKeyContext((v) => v.theme);
   const xpLevelColor = useMemo(
     () => theme[`level${rewardLevel}`]?.color,
     [rewardLevel, theme]

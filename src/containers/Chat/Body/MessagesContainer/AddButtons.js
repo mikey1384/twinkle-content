@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 AddButtons.propTypes = {
   disabled: PropTypes.bool,
@@ -17,7 +17,7 @@ export default function AddButtons({
 }) {
   const {
     button: { color: buttonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   return (
     <div

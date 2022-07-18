@@ -4,7 +4,7 @@ import UsernameText from 'components/Texts/UsernameText';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
 import { unix } from 'moment';
 import { Color } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 const marginHeight = 1;
 const subjectTitleHeight = 24;
@@ -37,7 +37,7 @@ export default function SubjectItem({
   const [marginBottom, setMarginBottom] = useState(`${marginHeight}rem`);
   const [selectButtonDisabled, setSelectButtonDisabled] = useState(false);
   const SubjectTitleRef = useRef(null);
-  const { authLevel, canDelete } = useMyState();
+  const { authLevel, canDelete } = useKeyContext((v) => v.myState);
 
   useEffect(() => {
     const numLines = SubjectTitleRef.current.clientHeight / subjectTitleHeight;

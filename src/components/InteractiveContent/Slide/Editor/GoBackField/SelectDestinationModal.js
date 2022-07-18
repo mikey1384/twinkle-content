@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from '../../../SlideListItem';
 import GoBackToMissionItem from './GoBackToMissionItem';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 SelectDestinationModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -23,7 +23,7 @@ export default function SelectDestinationModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [forkIds, setForkIds] = useState([]);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 

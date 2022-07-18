@@ -5,8 +5,7 @@ import localize from 'constants/localize';
 import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
 import Loading from 'components/Loading';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 const myRankingLabel = localize('myRanking');
 const top30Label = localize('top30');
@@ -25,7 +24,7 @@ export default function Rankings({ channelId, rankingsTab, onSetRankingsTab }) {
   const [allRanks, setAllRanks] = useState([]);
   const [top30s, setTop30s] = useState([]);
   const [myRank, setMyRank] = useState(null);
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const users = useMemo(
     () => (rankingsTab === 'all' ? allRanks : top30s),
     [allRanks, rankingsTab, top30s]

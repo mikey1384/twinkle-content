@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 import { borderRadius, mobileMaxWidth, Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const rankLabel = localize('rank');
@@ -18,7 +18,7 @@ RankBar.propTypes = {
 export default function RankBar({ className, profile, style }) {
   const {
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const rankColor = useMemo(
     () =>
       profile.rank === 1

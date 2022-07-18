@@ -19,13 +19,14 @@ import Description from './Description';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import { processedURL } from 'helpers/stringHelpers';
 import {
   useAppContext,
   useContentContext,
   useViewContext,
-  useExploreContext
+  useExploreContext,
+  useKeyContext
 } from 'contexts';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -45,14 +46,14 @@ export default function LinkPage() {
   const loadSubjects = useAppContext((v) => v.requestHelpers.loadSubjects);
 
   const { authLevel, canDelete, canEdit, canReward, twinkleCoins, userId } =
-    useMyState();
+    useKeyContext((v) => v.myState);
   const {
     byUserIndicator: {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onEditLinkPage = useExploreContext((v) => v.actions.onEditLinkPage);
   const onLikeLink = useExploreContext((v) => v.actions.onLikeLink);
   const onUpdateNumLinkComments = useExploreContext(

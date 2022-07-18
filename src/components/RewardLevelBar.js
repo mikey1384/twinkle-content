@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const rewardLevelLabel = localize('rewardLevel');
@@ -16,7 +16,7 @@ RewardLevelBar.propTypes = {
 };
 
 export default function RewardLevelBar({ className, rewardLevel, style }) {
-  const theme = useTheme();
+  const theme = useKeyContext((v) => v.theme);
   const stars = useMemo(() => {
     const result = [];
     for (let i = 0; i < rewardLevel; i++) {

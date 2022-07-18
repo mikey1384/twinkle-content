@@ -12,8 +12,13 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import XPBar from './XPBar';
 import { videoRewardHash } from 'constants/defaultValues';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext, useViewContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useViewContext,
+  useKeyContext
+} from 'contexts';
 
 const intervalLength = 2000;
 
@@ -57,7 +62,9 @@ function XPVideoPlayer({
   );
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const { rewardBoostLvl, userId, twinkleCoins } = useKeyContext(
+    (v) => v.myState
+  );
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
     [rewardBoostLvl]

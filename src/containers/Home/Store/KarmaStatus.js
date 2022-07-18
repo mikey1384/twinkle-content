@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { karmaMultiplier, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import Loading from 'components/Loading';
 import localize from 'constants/localize';
@@ -58,7 +57,9 @@ export default function KarmaStatus() {
     (v) => v.requestHelpers.loadKarmaPoints
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const { authLevel, userType, userId, karmaPoints } = useMyState();
+  const { authLevel, userType, userId, karmaPoints } = useKeyContext(
+    (v) => v.myState
+  );
   const [loadingKarma, setLoadingKarma] = useState(false);
   const [numTwinklesRewarded, setNumTwinklesRewarded] = useState(0);
   const [numApprovedRecommendations, setNumApprovedRecommendations] =

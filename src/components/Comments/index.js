@@ -17,8 +17,13 @@ import { v1 as uuidv1 } from 'uuid';
 import { returnImageFileFromUrl, scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState, useContentState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useContentState, useTheme } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 
 Comments.propTypes = {
   autoExpand: PropTypes.bool,
@@ -97,7 +102,7 @@ function Comments({
   theme,
   userId
 }) {
-  const { banned } = useMyState();
+  const { banned } = useKeyContext((v) => v.myState);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
   } = useTheme(theme);

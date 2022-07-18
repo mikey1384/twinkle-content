@@ -7,7 +7,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { exceedsCharLimit } from 'helpers/stringHelpers';
 
 StatusInput.propTypes = {
@@ -35,7 +35,7 @@ export default function StatusInput({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const statusExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({

@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Questions from './Questions';
 import StartScreen from './StartScreen';
-import { useAppContext, useMissionContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 
 Grammar.propTypes = {
   isRepeating: PropTypes.bool,
@@ -11,7 +10,7 @@ Grammar.propTypes = {
 };
 
 export default function Grammar({ isRepeating, mission }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
   const myAttempts = useMissionContext((v) => v.state.myAttempts);
   const onSetMissionState = useMissionContext(

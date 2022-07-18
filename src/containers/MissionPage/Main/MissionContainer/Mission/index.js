@@ -11,8 +11,12 @@ import { panel } from '../../../Styles';
 import { returnMissionThumb } from 'constants/defaultValues';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useViewContext, useAppContext, useMissionContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import {
+  useViewContext,
+  useAppContext,
+  useMissionContext,
+  useKeyContext
+} from 'contexts';
 
 Mission.propTypes = {
   style: PropTypes.object,
@@ -77,7 +81,7 @@ export default function Mission({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageVisible]);
 
-  const { isCreator } = useMyState();
+  const { isCreator } = useKeyContext((v) => v.myState);
   return (
     <ErrorBoundary
       componentPath="MissionPage/Main/MissionContainer/Mission/index"

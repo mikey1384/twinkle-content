@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
+import { useKeyContext } from 'contexts';
 
 Banner.propTypes = {
   children: PropTypes.node,
@@ -26,7 +26,7 @@ export default function Banner({
 }) {
   const {
     warning: { color: warningColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const timerRef = useRef(null);
   const [spinnerShown, setSpinnerShown] = useState(false);
 

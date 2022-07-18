@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 
 PasswordInputModal.propTypes = {
@@ -15,7 +14,7 @@ PasswordInputModal.propTypes = {
 export default function PasswordInputModal({ onHide, onConfirm }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const confirmPassword = useAppContext(

@@ -8,10 +8,10 @@ import FilterBar from 'components/FilterBar';
 import Banner from 'components/Banner';
 import SearchInput from 'components/Texts/SearchInput';
 import Loading from 'components/Loading';
-import { useSearch, useTheme } from 'helpers/hooks';
+import { useSearch } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { isEqual } from 'lodash';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 
 SelectFeaturedPlaylists.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -24,7 +24,7 @@ export default function SelectFeaturedPlaylists({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadPlaylistList = useAppContext(
     (v) => v.requestHelpers.loadPlaylistList
   );

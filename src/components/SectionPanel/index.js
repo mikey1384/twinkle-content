@@ -11,6 +11,7 @@ import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { useTheme, useOutsideClick } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const editLabel = localize('edit');
@@ -62,7 +63,7 @@ export default function SectionPanel({
 }) {
   const {
     success: { color: successColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [savingEdit, setSavingEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);

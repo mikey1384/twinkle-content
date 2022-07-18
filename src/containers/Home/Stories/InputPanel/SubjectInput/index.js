@@ -32,8 +32,12 @@ import {
   charLimit,
   DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL
 } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useHomeContext, useInputContext } from 'contexts';
+import {
+  useAppContext,
+  useHomeContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
 
@@ -47,11 +51,11 @@ const secretMessageLabel = localize('secretMessage');
 function SubjectInput() {
   const { onFileUpload } = useContext(LocalContext);
   const uploadContent = useAppContext((v) => v.requestHelpers.uploadContent);
-  const { canEditRewardLevel, banned } = useMyState();
+  const { canEditRewardLevel, banned } = useKeyContext((v) => v.myState);
   const {
     success: { color: successColor },
     button: { color: buttonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const fileUploadProgress = useHomeContext((v) => v.state.fileUploadProgress);
   const secretAttachmentUploadProgress = useHomeContext(
     (v) => v.state.secretAttachmentUploadProgress

@@ -10,6 +10,8 @@ export {
   useNotiContext,
   useProfileContext,
   useMissionContext,
-  useViewContext
+  useViewContext,
+  useKeyContext
 } from './hooks';
 export { AppContextProvider } from './AppContext';
+export { KeyContext } from './KeyContext';

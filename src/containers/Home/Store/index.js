@@ -7,13 +7,12 @@ import FileSizeItem from './FileSizeItem';
 import ProfilePictureItem from './ProfilePictureItem';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext, useViewContext } from 'contexts';
+import { useAppContext, useViewContext, useKeyContext } from 'contexts';
 import {
   priceTable,
   karmaPointTable,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
 import RewardBoostItem from './RewardBoostItem';
 import localize from 'constants/localize';
 
@@ -46,11 +45,13 @@ export default function Store() {
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { canChangeUsername, karmaPoints, userId } = useMyState();
+  const { canChangeUsername, karmaPoints, userId } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     logoTwin: { color: twinColor },
     logoKle: { color: kleColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   useEffect(() => {
     if (userId) {

@@ -6,12 +6,11 @@ import AlertModal from 'components/Modals/AlertModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { isMobile, returnImageFileFromUrl } from 'helpers';
 import { Color } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
 import {
   addCommasToNumber,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useInputContext } from 'contexts';
+import { useInputContext, useKeyContext } from 'contexts';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
   mb,
@@ -34,7 +33,9 @@ export default function StartScreen({ navigateTo, onHide }) {
   const onSetSubjectAttachment = useInputContext(
     (v) => v.actions.onSetSubjectAttachment
   );
-  const { authLevel, fileUploadLvl, twinkleXP } = useMyState();
+  const { authLevel, fileUploadLvl, twinkleXP } = useKeyContext(
+    (v) => v.myState
+  );
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
   const maxSize = useMemo(

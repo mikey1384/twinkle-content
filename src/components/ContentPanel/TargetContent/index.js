@@ -29,8 +29,13 @@ import {
   isMobile
 } from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useContentState, useTheme } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { v1 as uuidv1 } from 'uuid';
@@ -80,7 +85,7 @@ export default function TargetContent({
     userId,
     twinkleCoins,
     username
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     content: { color: contentColor },

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
-import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { priceTable } from 'constants/defaultValues';
 import { css } from '@emotion/css';
+import { useKeyContext } from 'contexts';
 
 ColorSelector.propTypes = {
   unlocked: PropTypes.array.isRequired,
@@ -22,7 +22,7 @@ export default function ColorSelector({
   selectedColor,
   style
 }) {
-  const { twinkleCoins } = useMyState();
+  const { twinkleCoins } = useKeyContext((v) => v.myState);
   const [hovered, setHovered] = useState();
 
   return (

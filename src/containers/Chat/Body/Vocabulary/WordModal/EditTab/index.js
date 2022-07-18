@@ -7,8 +7,7 @@ import Remove from './Remove';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isEqual } from 'lodash';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { capitalize } from 'helpers/stringHelpers';
 
 EditTab.propTypes = {
@@ -35,10 +34,10 @@ export default function EditTab({
   word
 }) {
   const editWord = useAppContext((v) => v.requestHelpers.editWord);
-  const { canDelete } = useMyState();
+  const { canDelete } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [selectedTab, setSelectedTab] = useState('reorder');
   const [posting, setPosting] = useState(false);
   const [poses, setPoses] = useState([]);

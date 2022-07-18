@@ -12,10 +12,10 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
-import { useSearch, useTheme } from 'helpers/hooks';
+import { useSearch } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { isMobile, objectify } from 'helpers';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 
 EditPlaylistModal.propTypes = {
   modalType: PropTypes.string.isRequired,
@@ -34,7 +34,7 @@ export default function EditPlaylistModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const editPlaylistVideos = useAppContext(
     (v) => v.requestHelpers.editPlaylistVideos
   );

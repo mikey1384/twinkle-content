@@ -8,8 +8,7 @@ import VerificationEmailSendModal from './VerificationEmailSendModal';
 import { css } from '@emotion/css';
 import { isValidPassword, stringIsEmpty } from 'helpers/stringHelpers';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 const currentPasswordLabel = localize('currentPassword');
 const enterCurrentPasswordLabel = localize('enterCurrentPassword');
@@ -32,7 +31,7 @@ export default function ChangePasswordModal({ onHide }) {
   const {
     done: { color: doneColor },
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const changePasswordFromStore = useAppContext(
     (v) => v.requestHelpers.changePasswordFromStore
   );

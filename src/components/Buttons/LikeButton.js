@@ -3,8 +3,8 @@ import React, { memo, useMemo, useState } from 'react';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useAppContext, useContentContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const likeLabel = localize('like');
@@ -33,7 +33,7 @@ function LikeButton({
 }) {
   const likeContent = useAppContext((v) => v.requestHelpers.likeContent);
   const onLikeContent = useContentContext((v) => v.actions.onLikeContent);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const [disabled, setDisabled] = useState(false);
   const liked = useMemo(() => {
     let userLikedThis = false;

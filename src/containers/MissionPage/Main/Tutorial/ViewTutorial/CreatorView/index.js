@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Editor from './Editor';
 import { borderRadius, Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 CreatorView.propTypes = {
@@ -21,7 +21,7 @@ export default function CreatorView({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [isEditing, setIsEditing] = useState(false);
 
   return (

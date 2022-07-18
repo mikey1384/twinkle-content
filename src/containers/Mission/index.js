@@ -4,15 +4,16 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Main from './Main';
 import RightMenu from './RightMenu';
 import Management from './Management';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import FilterBar from 'components/FilterBar';
 
 export default function Mission() {
   const [loading, setLoading] = useState(false);
-  const { currentMissionId, userId, isCreator } = useMyState();
+  const { currentMissionId, userId, isCreator } = useKeyContext(
+    (v) => v.myState
+  );
   const loadMissionList = useAppContext(
     (v) => v.requestHelpers.loadMissionList
   );

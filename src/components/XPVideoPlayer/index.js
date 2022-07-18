@@ -15,8 +15,13 @@ import playButtonImg from 'assets/play-button-image.png';
 import { videoRewardHash, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useViewContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useViewContext,
+  useKeyContext
+} from 'contexts';
 
 const intervalLength = 2000;
 
@@ -68,13 +73,15 @@ function XPVideoPlayer({
   );
 
   const pageVisible = useViewContext((v) => v.state.pageVisible);
-  const { rewardBoostLvl, userId, twinkleCoins } = useMyState();
+  const { rewardBoostLvl, userId, twinkleCoins } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     byUserIndicator: {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const coinRewardAmount = useMemo(
     () => videoRewardHash?.[rewardBoostLvl]?.coin || 2,
     [rewardBoostLvl]

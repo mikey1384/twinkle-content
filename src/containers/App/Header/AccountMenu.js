@@ -4,8 +4,7 @@ import Button from 'components/Button';
 import DropdownButton from 'components/Buttons/DropdownButton';
 import Icon from 'components/Icon';
 import FullTextReveal from 'components/Texts/FullTextReveal';
-import { useAppContext, useChatContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { socket } from 'constants/io';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { useNavigate } from 'react-router-dom';
@@ -24,10 +23,10 @@ function AccountMenu({ className }) {
   const navigate = useNavigate();
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
   const { loggedIn, username, userId, managementLevel, twinkleCoins } =
-    useMyState();
+    useKeyContext((v) => v.myState);
   const {
     login: { color: loginColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onLogout = useAppContext((v) => v.user.actions.onLogout);
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal

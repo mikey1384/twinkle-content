@@ -22,12 +22,13 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { fetchedVideoCodeFromURL } from 'helpers/stringHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
   useViewContext,
-  useExploreContext
+  useExploreContext,
+  useKeyContext
 } from 'contexts';
 import localize from 'constants/localize';
 
@@ -63,7 +64,7 @@ export default function VideoPage() {
   const uploadQuestions = useAppContext(
     (v) => v.requestHelpers.uploadQuestions
   );
-  const { authLevel, canEdit, userId } = useMyState();
+  const { authLevel, canEdit, userId } = useKeyContext((v) => v.myState);
   const onChangeVideoByUserStatus = useExploreContext(
     (v) => v.actions.onChangeVideoByUserStatus
   );

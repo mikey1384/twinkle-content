@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
 import ProfilePic from 'components/ProfilePic';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 RankingsListItem.propTypes = {
@@ -26,7 +26,7 @@ export default function RankingsListItem({
 }) {
   const {
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const rankColor = useMemo(() => {
     return user.rank === 1
       ? Color.gold()

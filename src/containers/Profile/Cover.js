@@ -10,9 +10,9 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
-import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -36,7 +36,7 @@ export default function Cover({
     (v) => v.requestHelpers.checkIfUserOnline
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     id,
     profilePicUrl,

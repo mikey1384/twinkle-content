@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useAppContext, useInteractiveContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useInteractiveContext, useKeyContext } from 'contexts';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import Content from './Content';
@@ -118,7 +117,7 @@ export default function Slide({
     (v) => v.actions.onSetSlideState
   );
 
-  const { canEdit } = useMyState();
+  const { canEdit } = useKeyContext((v) => v.myState);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
 
   const dropdownMenuProps = useMemo(() => {

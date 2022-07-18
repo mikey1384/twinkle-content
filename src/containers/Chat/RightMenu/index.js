@@ -4,7 +4,7 @@ import ChatInfo from './ChatInfo';
 import VocabInfo from './VocabInfo';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import LocalContext from '../Context';
 
 RightMenu.propTypes = {
@@ -24,7 +24,7 @@ function RightMenu({
   displayedThemeColor,
   selectedChannelId
 }) {
-  const { userId, twinkleXP } = useMyState();
+  const { userId, twinkleXP } = useKeyContext((v) => v.myState);
   const {
     actions: { onGetRanks },
     requests: { loadRankings },

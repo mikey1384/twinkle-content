@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { Color } from 'constants/css';
-import { useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useChatContext, useKeyContext } from 'contexts';
 import Collector from './Collector';
 import FilterBar from 'components/FilterBar';
 import localize from 'constants/localize';
@@ -11,7 +10,7 @@ const rankingsLabel = localize('rankings');
 const top30Label = localize('top30');
 
 export default function TopMenu() {
-  const { numWordsCollected } = useMyState();
+  const { numWordsCollected } = useKeyContext((v) => v.myState);
   const { all, top30s } = useChatContext((v) => v.state.wordCollectors);
   const [allSelected, setAllSelected] = useState(numWordsCollected > 0);
   const wordCollectors = useMemo(

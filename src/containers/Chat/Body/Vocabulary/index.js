@@ -17,11 +17,11 @@ import {
   useAppContext,
   useChatContext,
   useInputContext,
-  useNotiContext
+  useNotiContext,
+  useKeyContext
 } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -51,7 +51,7 @@ function Vocabulary() {
   const state = useInputContext((v) => v.state);
   const onEnterComment = useInputContext((v) => v.actions.onEnterComment);
   const socketConnected = useNotiContext((v) => v.state.socketConnected);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const inputText = state['vocabulary']?.text?.trim?.() || '';
   const wordObj = useMemo(
     () => wordsObj[inputText] || {},

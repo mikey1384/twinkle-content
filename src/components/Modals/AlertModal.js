@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 AlertModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -13,7 +13,7 @@ AlertModal.propTypes = {
 export default function AlertModal({ onHide, modalOverModal, title, content }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   return (
     <Modal modalOverModal={modalOverModal} onHide={onHide}>

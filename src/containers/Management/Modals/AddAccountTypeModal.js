@@ -6,9 +6,8 @@ import Input from 'components/Texts/Input';
 import Check from '../Check';
 import Table from '../Table';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { useAppContext, useManagementContext } from 'contexts';
+import { useAppContext, useManagementContext, useKeyContext } from 'contexts';
 
 AddAccountTypeModal.propTypes = {
   onHide: PropTypes.func.isRequired
@@ -17,7 +16,7 @@ AddAccountTypeModal.propTypes = {
 export default function AddAccountTypeModal({ onHide }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const addAccountType = useAppContext((v) => v.requestHelpers.addAccountType);
   const onAddAccountType = useManagementContext(
     (v) => v.actions.onAddAccountType

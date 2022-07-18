@@ -8,9 +8,8 @@ import Icon from 'components/Icon';
 import DeleteInterface from './DeleteInterface';
 import AddPictureModal from './AddPictureModal';
 import { objectify } from 'helpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
 import ErrorBoundary from 'components/ErrorBoundary';
 import ReorderInterface from './ReorderInterface';
 import NoPictures from './NoPictures';
@@ -36,7 +35,7 @@ export default function Pictures({
   pictures,
   selectedTheme
 }) {
-  const { userId, banned } = useMyState();
+  const { userId, banned } = useKeyContext((v) => v.myState);
   const [addPictureModalShown, setAddPictureModalShown] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);

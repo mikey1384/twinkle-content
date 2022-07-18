@@ -8,8 +8,7 @@ import Check from '../Check';
 import AddAccountTypeModal from '../Modals/AddAccountTypeModal';
 import EditAccountTypeModal from '../Modals/EditAccountTypeModal';
 import Icon from 'components/Icon';
-import { useTheme } from 'helpers/hooks';
-import { useManagementContext } from 'contexts';
+import { useManagementContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const accountTypesLabel = localize('accountTypes');
@@ -31,7 +30,7 @@ AccountTypes.propTypes = {
 export default function AccountTypes({ canManage }) {
   const {
     tableHeader: { color: tableHeaderColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const accountTypes = useManagementContext((v) => v.state.accountTypes);
   const accountTypesLoaded = useManagementContext(
     (v) => v.state.accountTypesLoaded

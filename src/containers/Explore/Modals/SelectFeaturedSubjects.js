@@ -7,10 +7,10 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Loading from 'components/Loading';
 import FilterBar from 'components/FilterBar';
 import SearchInput from 'components/Texts/SearchInput';
-import { useSearch, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
+import { useSearch } from 'helpers/hooks';
 import { objectify } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext } from 'contexts';
 
 SelectFeaturedSubjectsModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -25,7 +25,7 @@ export default function SelectFeaturedSubjectsModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);

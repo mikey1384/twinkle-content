@@ -7,8 +7,8 @@ import PeopleFilterBar from './PeopleFilterBar';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { useAppContext, useInputContext } from 'contexts';
-import { useInfiniteScroll, useTheme, useSearch } from 'helpers/hooks';
+import { useAppContext, useInputContext, useKeyContext } from 'contexts';
+import { useInfiniteScroll, useSearch } from 'helpers/hooks';
 import request from 'axios';
 import URL from 'constants/URL';
 import {
@@ -40,7 +40,7 @@ function People() {
   const {
     loadMoreButton: { color: loadMoreButtonColor },
     search: { color: searchColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [loading, setLoading] = useState(false);
   const { handleSearch, searching } = useSearch({
     onSearch: handleSearchUsers,

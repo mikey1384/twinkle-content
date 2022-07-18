@@ -4,8 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Input from 'components/Texts/Input';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 
 VerificationCodeInput.propTypes = {
   email: PropTypes.string.isRequired,
@@ -15,7 +14,7 @@ VerificationCodeInput.propTypes = {
 export default function VerificationCodeInput({ onRetry, email }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [verificationCode, setVerificationCode] = useState('');
   const [verifying, setVerifying] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -23,7 +22,7 @@ export default function VerificationCodeInput({ onRetry, email }) {
     (v) => v.requestHelpers.verifyEmailViaOTP
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
 
   return (
     <ErrorBoundary

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { panel } from './Styles';
-import { useAppContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import Icon from 'components/Icon';
 import ContentListItem from 'components/ContentListItem';
 import Button from 'components/Button';
@@ -19,7 +18,7 @@ HighXPSubjects.propTypes = {
 export default function HighXPSubjects({ style }) {
   const {
     showMeAnotherSubjectButton: { color: showMeAnotherSubjectButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const loadHighXPSubjects = useAppContext(

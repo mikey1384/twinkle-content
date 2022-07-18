@@ -11,8 +11,7 @@ import Earn from './Earn';
 import Store from './Store';
 import Stories from './Stories';
 import LocalContext from './Context';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { container, Left, Center, Right } from './Styles';
 
 Home.propTypes = {
@@ -21,7 +20,7 @@ Home.propTypes = {
 };
 
 function Home({ onFileUpload, section }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const [imageEditModalShown, setImageEditModalShown] = useState(false);

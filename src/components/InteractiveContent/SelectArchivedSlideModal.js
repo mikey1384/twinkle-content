@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SlideListItem from './SlideListItem';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 SelectArchivedSlideModal.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -20,7 +20,7 @@ export default function SelectArchivedSlideModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [selectedSlideId, setSelectedSlideId] = useState(null);
 
   return (

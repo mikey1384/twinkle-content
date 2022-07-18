@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
-import { useAppContext, useMissionContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -22,7 +21,7 @@ export default function TaskComplete({
   passMessage,
   passMessageFontSize
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );

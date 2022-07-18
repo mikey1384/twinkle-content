@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useChatContext, useKeyContext } from 'contexts';
 import { returnWordLevel, wordLevelHash } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
@@ -18,7 +17,7 @@ Vocabulary.propTypes = {
 };
 
 function Vocabulary({ selected, onClick }) {
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const wordsObj = useChatContext((v) => v.state.wordsObj);
   const vocabActivities = useChatContext((v) => v.state.vocabActivities);
 

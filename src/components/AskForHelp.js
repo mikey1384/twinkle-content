@@ -1,8 +1,8 @@
 import React from 'react';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 export default function AskForHelp() {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   return (
     <div style={{ fontSize: '1.7rem' }}>
       <span>{`We need your email address in order for us to make sure you are the owner of this account. `}</span>{' '}

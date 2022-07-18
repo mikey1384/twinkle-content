@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import SearchInput from 'components/Texts/SearchInput';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import CheckListGroup from 'components/CheckListGroup';
 import localize from 'constants/localize';
@@ -27,10 +27,10 @@ export default function SelectNewOwnerModal({
   onHide,
   onSubmit
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [searchText, setSearchText] = useState('');
   const shownMembers = useMemo(() => {
     return members.filter(

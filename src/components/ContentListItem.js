@@ -9,8 +9,8 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import { useNavigate } from 'react-router-dom';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useContentContext, useKeyContext } from 'contexts';
 
 ContentListItem.propTypes = {
   contentObj: PropTypes.object.isRequired,
@@ -33,10 +33,10 @@ function ContentListItem({
   style
 }) {
   const navigate = useNavigate();
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const {
     content,
     description,

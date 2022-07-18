@@ -24,9 +24,9 @@ import { commentContainer } from '../Styles';
 import { Link } from 'react-router-dom';
 import { Color } from 'constants/css';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
@@ -118,7 +118,7 @@ function Reply({
     isCreator,
     twinkleCoins,
     userId
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }

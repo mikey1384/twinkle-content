@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
 import ExtractedThumb from 'components/ExtractedThumb';
 import FileInfo from './FileInfo';
 import { returnImageFileFromUrl } from 'helpers';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import {
   exceedsCharLimit,
@@ -44,10 +44,10 @@ function UploadModal({
   recepientId,
   subjectId
 }) {
-  const { profilePicUrl, userId, username } = useMyState();
+  const { profilePicUrl, userId, username } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const {
     onFileUpload,
     state: { isRespondingToSubject },

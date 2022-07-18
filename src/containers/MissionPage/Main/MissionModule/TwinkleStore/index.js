@@ -5,15 +5,16 @@ import NotEnoughKarmaInstructions from './NotEnoughKarmaInstructions';
 import EnoughKarmaInstructions from './EnoughKarmaInstructions';
 import FinalStep from './FinalStep';
 import { karmaPointTable } from 'constants/defaultValues';
-import { useAppContext, useViewContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useViewContext, useKeyContext } from 'contexts';
 
 TwinkleStore.propTypes = {
   mission: PropTypes.object
 };
 
 export default function TwinkleStore({ mission }) {
-  const { canChangeUsername, userId, karmaPoints } = useMyState();
+  const { canChangeUsername, userId, karmaPoints } = useKeyContext(
+    (v) => v.myState
+  );
   const loadKarmaPoints = useAppContext(
     (v) => v.requestHelpers.loadKarmaPoints
   );

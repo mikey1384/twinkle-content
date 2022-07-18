@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 
 InviteUsersModal.propTypes = {
   currentChannel: PropTypes.object.isRequired,
@@ -21,7 +20,7 @@ export default function InviteUsersModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const inviteUsersToChannel = useAppContext(
     (v) => v.requestHelpers.inviteUsersToChannel
   );

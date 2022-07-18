@@ -9,9 +9,14 @@ import ContentPanel from 'components/ContentPanel';
 import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { useInfiniteScroll, useMyState, useTheme } from 'helpers/hooks';
+import { useInfiniteScroll } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { useAppContext, useHomeContext, useNotiContext } from 'contexts';
+import {
+  useAppContext,
+  useHomeContext,
+  useNotiContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 
 const hiThereLabel = localize('hiThere');
@@ -39,11 +44,11 @@ const categoryObj = {
 export default function Stories() {
   const loadFeeds = useAppContext((v) => v.requestHelpers.loadFeeds);
   const loadNewFeeds = useAppContext((v) => v.requestHelpers.loadNewFeeds);
-  const { hideWatched, userId, username } = useMyState();
+  const { hideWatched, userId, username } = useKeyContext((v) => v.myState);
   const {
     alert: { color: alertColor },
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const numNewPosts = useNotiContext((v) => v.state.numNewPosts);
   const onResetNumNewPosts = useNotiContext(
     (v) => v.actions.onResetNumNewPosts

@@ -18,8 +18,12 @@ import {
   priceTable,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 
 const clearLabel = localize('clear');
@@ -50,10 +54,12 @@ export default function XPRewardInterface({
 }) {
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const rewardUser = useAppContext((v) => v.requestHelpers.rewardUser);
-  const { authLevel, twinkleCoins, userId, banned } = useMyState();
+  const { authLevel, twinkleCoins, userId, banned } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const state = useInputContext((v) => v.state);
   const onSetRewardForm = useInputContext((v) => v.actions.onSetRewardForm);
   const onAttachReward = useContentContext((v) => v.actions.onAttachReward);

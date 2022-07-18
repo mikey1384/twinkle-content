@@ -3,11 +3,10 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Moderators from './Moderators';
 import AccountTypes from './AccountTypes';
 import BannedUsers from './BannedUsers';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useManagementContext } from 'contexts';
+import { useAppContext, useManagementContext, useKeyContext } from 'contexts';
 
 export default function Main() {
-  const { managementLevel } = useMyState();
+  const { managementLevel } = useKeyContext((v) => v.myState);
   const canManage = useMemo(() => managementLevel > 1, [managementLevel]);
   const loadAccountTypes = useAppContext(
     (v) => v.requestHelpers.loadAccountTypes

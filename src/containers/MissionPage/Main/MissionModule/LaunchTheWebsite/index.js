@@ -9,8 +9,7 @@ import ConnectReplToGitHub from './ConnectReplToGitHub';
 import UpdateYourRepl from './UpdateYourRepl';
 import defaultCode from './defaultCode';
 import RequiresComputer from '../components/RequiresComputer';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { isMobile } from 'helpers';
 
 LaunchTheWebsite.propTypes = {
@@ -22,10 +21,10 @@ LaunchTheWebsite.propTypes = {
 const deviceIsMobile = isMobile(navigator);
 
 export default function LaunchTheWebsite({ onSetMissionState, style, task }) {
-  const { missions, username } = useMyState();
+  const { missions, username } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );

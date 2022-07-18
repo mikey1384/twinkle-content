@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Modal from 'components/Modal';
 import Caption from './Caption';
 import Icon from 'components/Icon';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { stringIsEmpty, finalizeEmoji } from 'helpers/stringHelpers';
 
 ImageModal.propTypes = {
@@ -32,7 +32,7 @@ export default function ImageModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [editedCaption, setEditedCaption] = useState(caption || '');
   const [isEditing, setIsEditing] = useState(false);
   return (

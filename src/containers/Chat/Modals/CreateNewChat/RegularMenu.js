@@ -5,8 +5,8 @@ import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import SwitchButton from 'components/Buttons/SwitchButton';
 import { Color } from 'constants/css';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const backLabel = localize('back');
@@ -32,10 +32,10 @@ export default function RegularMenu({
   onHide,
   onDone
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [channelName, setChannelName] = useState('');
   const [isClosed, setIsClosed] = useState(false);
 

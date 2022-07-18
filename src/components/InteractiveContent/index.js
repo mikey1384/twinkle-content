@@ -1,10 +1,14 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { useMyState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Slide from './Slide';
 import Loading from 'components/Loading';
 import BottomInterface from './BottomInterface';
-import { useAppContext, useInteractiveContext, useViewContext } from 'contexts';
+import {
+  useAppContext,
+  useInteractiveContext,
+  useViewContext,
+  useKeyContext
+} from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 
@@ -67,7 +71,7 @@ export default function InteractiveContent({
   const onSetSlideState = useInteractiveContext(
     (v) => v.actions.onSetSlideState
   );
-  const { managementLevel, userId } = useMyState();
+  const { managementLevel, userId } = useKeyContext((v) => v.myState);
   const expanded = useRef(false);
   const SlideRefs = useRef({});
   const prevDisplayedSlideIds = useRef([]);

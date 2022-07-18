@@ -30,7 +30,7 @@ import { css } from '@emotion/css';
 import { useNavigate } from 'react-router-dom';
 import { commentContainer } from '../Styles';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
+import { useContentState, useTheme } from 'helpers/hooks';
 import {
   determineUserCanRewardThis,
   determineXpButtonDisabled,
@@ -38,7 +38,7 @@ import {
 } from 'helpers';
 import { borderRadius, Color } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import LocalContext from '../Context';
 
 Comment.propTypes = {
@@ -118,7 +118,7 @@ function Comment({
     isCreator,
     twinkleCoins,
     userId
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }

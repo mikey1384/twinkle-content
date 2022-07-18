@@ -5,11 +5,10 @@ import UsernameText from 'components/Texts/UsernameText';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
-import { useMissionContext } from 'contexts';
+import { useMissionContext, useKeyContext } from 'contexts';
 import { borderRadius, Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 
 ApprovedStatus.propTypes = {
   isTask: PropTypes.bool,
@@ -32,7 +31,7 @@ export default function ApprovedStatus({
     link: { color: linkColor },
     success: { color: successColor },
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onUpdateMissionAttempt = useMissionContext(
     (v) => v.actions.onUpdateMissionAttempt
   );

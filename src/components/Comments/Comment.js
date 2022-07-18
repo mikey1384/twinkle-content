@@ -37,15 +37,10 @@ import {
   determineXpButtonDisabled,
   scrollElementToCenter
 } from 'helpers';
-import {
-  useContentState,
-  useLazyLoad,
-  useMyState,
-  useTheme
-} from 'helpers/hooks';
+import { useContentState, useLazyLoad, useTheme } from 'helpers/hooks';
 import { borderRadius, Color } from 'constants/css';
 import { getFileInfoFromFileName, stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { useInView } from 'react-intersection-observer';
 import LocalContext from './Context';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -153,7 +148,7 @@ function Comment({
     isCreator,
     twinkleCoins,
     userId
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     reward: { color: rewardColor }

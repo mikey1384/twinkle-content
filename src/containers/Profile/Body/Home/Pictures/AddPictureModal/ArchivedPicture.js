@@ -5,8 +5,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { cloudFrontURL } from 'constants/defaultValues';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 
 ArchivedPicture.propTypes = {
   picture: PropTypes.object.isRequired,
@@ -27,7 +26,7 @@ export default function ArchivedPicture({
 }) {
   const {
     itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const deleteArchivedPicture = useAppContext(
     (v) => v.requestHelpers.deleteArchivedPicture
   );

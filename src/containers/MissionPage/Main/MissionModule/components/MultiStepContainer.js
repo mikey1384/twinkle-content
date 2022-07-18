@@ -3,8 +3,7 @@ import Button from 'components/Button';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
 
 MultiStepContainer.propTypes = {
@@ -22,10 +21,10 @@ export default function MultiStepContainer({
   taskId,
   taskType
 }) {
-  const { missions } = useMyState();
+  const { missions } = useKeyContext((v) => v.myState);
   const {
     warning: { color: warningColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );

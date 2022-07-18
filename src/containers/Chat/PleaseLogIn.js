@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import Button from 'components/Button';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -13,7 +12,7 @@ export default function PleaseLogIn() {
     login: { color: loginColor },
     logoTwin: { color: twinColor },
     logoKle: { color: kleColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal

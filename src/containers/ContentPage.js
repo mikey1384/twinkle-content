@@ -7,15 +7,15 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useViewContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useViewContext, useKeyContext } from 'contexts';
 
 export default function ContentPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { contentId: initialContentId } = useParams();
   const contentId = Number(initialContentId);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const onSetContentNav = useViewContext((v) => v.actions.onSetContentNav);
   const contentType = location.pathname.split('/')[1].slice(0, -1);
   const { loaded, isDeleted, isDeleteNotification } = useContentState({

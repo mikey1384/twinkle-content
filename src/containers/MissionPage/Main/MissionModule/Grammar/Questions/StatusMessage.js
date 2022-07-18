@@ -4,7 +4,7 @@ import Icon from 'components/Icon';
 import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 
@@ -27,7 +27,7 @@ export default function StatusMessage({
 }) {
   const {
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   const rewardDetails = useMemo(() => {
     return (

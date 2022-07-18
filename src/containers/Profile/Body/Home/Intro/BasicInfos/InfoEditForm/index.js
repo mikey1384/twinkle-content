@@ -8,8 +8,7 @@ import {
   isValidYoutubeChannelUrl,
   stringIsEmpty
 } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
-import { useInputContext } from 'contexts';
+import { useInputContext, useKeyContext } from 'contexts';
 
 InfoEditForm.propTypes = {
   email: PropTypes.string,
@@ -30,7 +29,7 @@ export default function InfoEditForm({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [checking, setChecking] = useState(false);
   const userInfo = useInputContext((v) => v.state.userInfo);
   const onSetEditedEmail = useInputContext((v) => v.actions.onSetEditedEmail);

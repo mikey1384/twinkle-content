@@ -9,9 +9,8 @@ import Loading from 'components/Loading';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import CaptionEditor from 'components/Texts/CaptionEditor';
 import { v1 as uuidv1 } from 'uuid';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { finalizeEmoji } from 'helpers/stringHelpers';
 
 ImageEditModal.propTypes = {
@@ -36,10 +35,10 @@ export default function ImageEditModal({
   const [captionText, setCaptionText] = useState('');
   const uploadFile = useAppContext((v) => v.requestHelpers.uploadFile);
   const uploadUserPic = useAppContext((v) => v.requestHelpers.uploadUserPic);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [processing, setProcessing] = useState(false);

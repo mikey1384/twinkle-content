@@ -10,8 +10,13 @@ import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext, useInputContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
+import {
+  useAppContext,
+  useChatContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -68,7 +73,7 @@ export default function BasicInfos({
     username: myUsername,
     authLevel: myAuthLevel,
     banned
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor }
   } = useTheme(selectedTheme || profileTheme || 'logoBlue');

@@ -7,9 +7,8 @@ import StepSlide from '../components/StepSlide';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 FinalizeYourCode.propTypes = {
   index: PropTypes.number,
@@ -28,7 +27,7 @@ export default function FinalizeYourCode({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );

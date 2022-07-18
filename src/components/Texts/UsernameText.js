@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import DropdownList from 'components/DropdownList';
 import { Color } from 'constants/css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { isMobile, getSectionFromPathname } from 'helpers';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import Icon from 'components/Icon';
@@ -53,7 +52,9 @@ export default function UsernameText({
   const { rank, twinkleXP } = useAppContext(
     (v) => v.user.state.userObj[user.id] || {}
   );
-  const { userId, username, profilePicUrl, authLevel } = useMyState();
+  const { userId, username, profilePicUrl, authLevel } = useKeyContext(
+    (v) => v.myState
+  );
   const onUpdateSelectedChannelId = useChatContext(
     (v) => v.actions.onUpdateSelectedChannelId
   );

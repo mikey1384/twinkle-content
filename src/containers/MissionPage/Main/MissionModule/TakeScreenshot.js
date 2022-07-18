@@ -5,13 +5,12 @@ import AlertModal from 'components/Modals/AlertModal';
 import Icon from 'components/Icon';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
 import {
   getFileInfoFromFileName,
   generateFileName
 } from 'helpers/stringHelpers';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
@@ -44,7 +43,7 @@ export default function TakeScreenshot({
   );
   const [screenshotTaken, setScreenshotTaken] = useState(false);
   const [buttonShown, setButtonShown] = useState(false);
-  const { fileUploadLvl, username } = useMyState();
+  const { fileUploadLvl, username } = useKeyContext((v) => v.myState);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
   const maxSize = useMemo(

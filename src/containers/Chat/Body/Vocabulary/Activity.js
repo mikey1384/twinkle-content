@@ -11,10 +11,9 @@ import {
 } from 'constants/defaultValues';
 import { MessageStyle } from '../../Styles';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { unix } from 'moment';
 import { socket } from 'constants/io';
-import { useChatContext } from 'contexts';
+import { useChatContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
@@ -46,7 +45,7 @@ export default function Activity({
   const {
     link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onRemoveNewActivityStatus = useChatContext(
     (v) => v.actions.onRemoveNewActivityStatus
   );

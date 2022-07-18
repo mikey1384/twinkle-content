@@ -4,8 +4,7 @@ import Question from './Question';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -18,7 +17,7 @@ Googling.propTypes = {
 export default function Googling({ mission, onSetMissionState, style }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );

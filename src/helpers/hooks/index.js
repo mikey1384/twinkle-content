@@ -100,34 +100,49 @@ export function useMyState() {
   const loaded = useAppContext((v) => v.user.state.loaded);
   const signinModalShown = useAppContext((v) => v.user.state.signinModalShown);
   const myState = useAppContext((v) => v.user.state.userObj[userId] || {});
-
-  return myState.loaded
-    ? {
-        ...myState,
-        missions: {
-          ...(myState?.state?.missions || {}),
-          ...missions
-        },
-        lastChatPath,
-        loaded,
-        numWordsCollected,
-        userId,
-        searchFilter,
-        hideWatched,
-        isCreator:
-          myState.userType === 'admin' || myState.userType === 'creator',
-        loggedIn: true,
-        profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
-        signinModalShown,
-        xpThisMonth
-      }
-    : {
-        loaded,
-        lastChatPath: '',
-        rewardBoostLvl: 0,
-        profileTheme: DEFAULT_PROFILE_THEME,
-        signinModalShown
-      };
+  const result = useMemo(
+    () =>
+      myState.loaded
+        ? {
+            ...myState,
+            missions: {
+              ...(myState?.state?.missions || {}),
+              ...missions
+            },
+            lastChatPath,
+            loaded,
+            numWordsCollected,
+            userId,
+            searchFilter,
+            hideWatched,
+            isCreator:
+              myState.userType === 'admin' || myState.userType === 'creator',
+            loggedIn: true,
+            profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
+            signinModalShown,
+            xpThisMonth
+          }
+        : {
+            loaded,
+            lastChatPath: '',
+            rewardBoostLvl: 0,
+            profileTheme: DEFAULT_PROFILE_THEME,
+            signinModalShown
+          },
+    [
+      hideWatched,
+      lastChatPath,
+      loaded,
+      missions,
+      myState,
+      numWordsCollected,
+      searchFilter,
+      signinModalShown,
+      userId,
+      xpThisMonth
+    ]
+  );
+  return result;
 }
 
 export function useTheme(selectedTheme) {

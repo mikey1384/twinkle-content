@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Button from 'components/Button';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { addEmoji } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 
 Editor.propTypes = {
@@ -25,7 +24,7 @@ export default function Editor({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateTutorialPrompt = useAppContext(
     (v) => v.requestHelpers.updateTutorialPrompt
   );

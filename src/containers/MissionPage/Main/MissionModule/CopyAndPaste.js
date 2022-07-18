@@ -4,8 +4,7 @@ import Input from 'components/Texts/Input';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext, useMissionContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
@@ -31,10 +30,10 @@ CopyAndPaste.propTypes = {
 
 export default function CopyAndPaste({ mission, onSetMissionState, style }) {
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     success: { color: successColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const uploadMissionAttempt = useAppContext(
     (v) => v.requestHelpers.uploadMissionAttempt
   );

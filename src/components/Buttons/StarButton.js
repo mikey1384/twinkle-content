@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
@@ -7,7 +7,7 @@ import DropdownList from 'components/DropdownList';
 import RewardLevelModal from 'components/Modals/RewardLevelModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import AlertModal from 'components/Modals/AlertModal';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import {
   DESCRIPTION_LENGTH_FOR_EXTRA_REWARD_LEVEL,
   SELECTED_LANGUAGE
@@ -46,7 +46,9 @@ export default function StarButton({
   skeuomorphic,
   style = {}
 }) {
-  const { canReward, canEditRewardLevel, userId } = useMyState();
+  const { canReward, canEditRewardLevel, userId } = useKeyContext(
+    (v) => v.myState
+  );
   const setByUser = useAppContext((v) => v.requestHelpers.setByUser);
   const { description } = useContentState({ contentId, contentType });
   const [cannotChangeModalShown, setCannotChangeModalShown] = useState(false);

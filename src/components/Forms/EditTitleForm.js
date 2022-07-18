@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Input from 'components/Texts/Input';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import { useOutsideClick, useTheme } from 'helpers/hooks';
+import { useOutsideClick } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { addEmoji, finalizeEmoji, stringIsEmpty } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
 
@@ -30,7 +31,7 @@ export default function EditTitleForm({
 }) {
   const {
     success: { color: successColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [title, setTitle] = useState(props.title);
   const FormRef = useRef(null);
   useOutsideClick(FormRef, onClickOutSide);

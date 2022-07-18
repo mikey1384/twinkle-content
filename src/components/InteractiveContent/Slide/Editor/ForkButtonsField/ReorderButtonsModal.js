@@ -4,7 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Modal from 'components/Modal';
 import SortableListGroup from 'components/SortableListGroup';
 import Button from 'components/Button';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { isEqual } from 'lodash';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -28,7 +28,7 @@ export default function ReorderButtonsModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [forkButtonIds, setForkButtonIds] = useState(initialButtonIds);
   return (
     <ErrorBoundary componentPath="ForkButtonsField/ReorderButtonsModal">

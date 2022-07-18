@@ -16,9 +16,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import request from 'axios';
 import URL from 'constants/URL';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext, useInputContext } from 'contexts';
+import { useAppContext, useInputContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import {
   addEmoji,
@@ -50,7 +49,7 @@ export default function Intro({ profile, selectedTheme }) {
   const onSetEditedStatusMsg = useInputContext(
     (v) => v.actions.onSetEditedStatusMsg
   );
-  const { userId, banned } = useMyState();
+  const { userId, banned } = useKeyContext((v) => v.myState);
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   useEffect(() => {

@@ -7,8 +7,7 @@ import SideMenu from 'components/SideMenu';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useManagementContext } from 'contexts';
+import { useManagementContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const accountMgmtLabel = localize('accountMgmt');
@@ -21,7 +20,9 @@ export default function Management() {
   const onLoadManagement = useManagementContext(
     (v) => v.actions.onLoadManagement
   );
-  const { loaded: userLoaded, managementLevel } = useMyState();
+  const { loaded: userLoaded, managementLevel } = useKeyContext(
+    (v) => v.myState
+  );
   useEffect(() => {
     onLoadManagement();
     // eslint-disable-next-line react-hooks/exhaustive-deps

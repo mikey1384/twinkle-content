@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import StartScreen from './StartScreen';
 import SelectAttachmentScreen from './SelectAttachmentScreen';
 import localize from 'constants/localize';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 const attachContentToSubjectLabel = localize('attachContentToSubject');
 const backLabel = localize('back');
@@ -34,7 +34,7 @@ AttachContentModal.propTypes = {
 export default function AttachContentModal({ onConfirm, onHide }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [section, setSection] = useState('start');
   const [selected, setSelected] = useState();
   return (

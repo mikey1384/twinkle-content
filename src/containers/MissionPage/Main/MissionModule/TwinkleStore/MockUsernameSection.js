@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ProgressBar from 'components/ProgressBar';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { priceTable } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { useKeyContext } from 'contexts';
 
 ItemPanel.propTypes = {
   requiredKarmaPoints: PropTypes.number,
@@ -24,7 +24,7 @@ export default function ItemPanel({
   karmaPoints,
   unlockProgress
 }) {
-  const { canChangeUsername } = useMyState();
+  const { canChangeUsername } = useKeyContext((v) => v.myState);
 
   return (
     <div

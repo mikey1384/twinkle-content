@@ -25,8 +25,7 @@ import {
   getPlayerPieces
 } from './helpers/model';
 import { isMobile } from 'helpers';
-import { useChatContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useChatContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 const deviceIsMobile = isMobile(navigator);
@@ -74,7 +73,7 @@ function Chess({
   spoilerOff,
   style
 }) {
-  const { userId, banned } = useMyState();
+  const { userId, banned } = useKeyContext((v) => v.myState);
   const creatingNewDMChannel = useChatContext(
     (v) => v.state.creatingNewDMChannel
   );

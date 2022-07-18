@@ -3,8 +3,8 @@ import Cover from './Cover';
 import Body from './Body';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import { useAppContext, useProfileContext } from 'contexts';
-import { useMyState, useProfileState } from 'helpers/hooks';
+import { useAppContext, useProfileContext, useKeyContext } from 'contexts';
+import { useProfileState } from 'helpers/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
@@ -16,7 +16,7 @@ export default function Profile() {
     (v) => v.requestHelpers.loadProfileViaUsername
   );
   const setTheme = useAppContext((v) => v.requestHelpers.setTheme);
-  const { userId, username } = useMyState();
+  const { userId, username } = useKeyContext((v) => v.myState);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onSetProfileId = useProfileContext((v) => v.actions.onSetProfileId);
   const onUserNotExist = useProfileContext((v) => v.actions.onUserNotExist);

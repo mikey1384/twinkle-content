@@ -5,8 +5,8 @@ import TagModal from './TagModal';
 import { hashify } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -37,7 +37,7 @@ function TagStatus({
   const fetchPlaylistsContaining = useAppContext(
     (v) => v.requestHelpers.fetchPlaylistsContaining
   );
-  const { canEditPlaylists } = useMyState();
+  const { canEditPlaylists } = useKeyContext((v) => v.myState);
   const [shownPlaylistId, setShownPlaylistId] = useState();
   const [shownPlaylistTitle, setShownPlaylistTitle] = useState('');
   const [tagModalShown, setTagModalShown] = useState(false);

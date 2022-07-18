@@ -2,8 +2,8 @@ import React, { memo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import SearchInput from 'components/Texts/SearchInput';
-import { useMyState, useSearch, useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useSearch } from 'helpers/hooks';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { Color } from 'constants/css';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,12 @@ function ChatSearchBox({ style }) {
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const navigate = useNavigate();
   const searchChat = useAppContext((v) => v.requestHelpers.searchChat);
-  const { profilePicUrl, userId, username, authLevel } = useMyState();
+  const { profilePicUrl, userId, username, authLevel } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     generalChat: { color: generalChatColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const chatSearchResults = useChatContext((v) => v.state.chatSearchResults);
   const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
   const onClearChatSearchResults = useChatContext(

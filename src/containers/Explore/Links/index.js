@@ -3,8 +3,7 @@ import AddLinkModal from './AddLinkModal';
 import Button from 'components/Button';
 import SectionPanel from 'components/SectionPanel';
 import LinkGroup from './LinkGroup';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const addLinkLabel = localize('addLink');
@@ -14,7 +13,7 @@ const noUploadedLinksLabel = localize('noLinks');
 const recommendedLabel = localize('recommendedLinks');
 
 export default function Links() {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const loadByUserUploads = useAppContext(
     (v) => v.requestHelpers.loadByUserUploads
   );

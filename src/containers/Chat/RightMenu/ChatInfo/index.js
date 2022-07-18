@@ -4,8 +4,7 @@ import Members from './Members';
 import ChannelDetails from './ChannelDetails';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
-import { useChatContext } from 'contexts';
+import { useChatContext, useKeyContext } from 'contexts';
 import { socket } from 'constants/io';
 import { v1 as uuidv1 } from 'uuid';
 import { GENERAL_CHAT_ID } from 'constants/defaultValues';
@@ -32,7 +31,12 @@ function ChatInfo({
   displayedThemeColor,
   channelName
 }) {
-  const { userId: myId, username, profilePicUrl, banned } = useMyState();
+  const {
+    userId: myId,
+    username,
+    profilePicUrl,
+    banned
+  } = useKeyContext((v) => v.myState);
   const onSetCall = useChatContext((v) => v.actions.onSetCall);
   const onHangUp = useChatContext((v) => v.actions.onHangUp);
   const onSubmitMessage = useChatContext((v) => v.actions.onSubmitMessage);

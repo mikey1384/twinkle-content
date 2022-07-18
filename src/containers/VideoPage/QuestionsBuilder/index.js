@@ -12,7 +12,7 @@ import { css } from '@emotion/css';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 import Icon from 'components/Icon';
 
@@ -82,7 +82,7 @@ export default function QuestionsBuilder({
   const {
     success: { color: successColor },
     info: { color: infoColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [reorderModeOn, setReorderModeOn] = useState(false);
   const [questions, setQuestions] = useState({});
   const [questionIds, setQuestionIds] = useState([]);

@@ -7,7 +7,7 @@ import LongText from 'components/Texts/LongText';
 import { css } from '@emotion/css';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
@@ -29,7 +29,7 @@ export default function Attempt({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   return (
     <div
       style={{ width: '100%', paddingBottom: '1.5rem', ...style }}

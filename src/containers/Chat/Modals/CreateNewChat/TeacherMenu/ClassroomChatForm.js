@@ -4,8 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
 import Input from 'components/Texts/Input';
-import { useAppContext, useChatContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { mobileMaxWidth } from 'constants/css';
@@ -40,10 +39,10 @@ export default function ClassroomChatForm({ onBackClick, onHide }) {
   const onSearchUserToInvite = useChatContext(
     (v) => v.actions.onSearchUserToInvite
   );
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [creatingChat, setCreatingChat] = useState(false);
   const [channelName, setChannelName] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);

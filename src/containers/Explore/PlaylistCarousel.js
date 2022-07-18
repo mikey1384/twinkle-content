@@ -12,8 +12,7 @@ import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { charLimit } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const byLabel = localize('by');
@@ -48,10 +47,10 @@ export default function PlaylistCarousel({
   const editPlaylistTitle = useAppContext(
     (v) => v.requestHelpers.editPlaylistTitle
   );
-  const { canEditPlaylists } = useMyState();
+  const { canEditPlaylists } = useKeyContext((v) => v.myState);
   const {
     carousel: { color: carouselColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const clickSafe = useExploreContext((v) => v.state.videos.clickSafe);
   const onDeletePlaylist = useExploreContext((v) => v.actions.onDeletePlaylist);
   const onEditPlaylistTitle = useExploreContext(

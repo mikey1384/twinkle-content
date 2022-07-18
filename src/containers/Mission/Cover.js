@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import ProfilePic from 'components/ProfilePic';
@@ -21,10 +20,10 @@ Cover.propTypes = {
 
 export default function Cover({ missionIds, missionObj, myAttempts }) {
   const navigate = useNavigate();
-  const { profilePicUrl, userId, username } = useMyState();
+  const { profilePicUrl, userId, username } = useKeyContext((v) => v.myState);
   const {
     cover: { color: coverColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadMissionRankings = useAppContext(
     (v) => v.requestHelpers.loadMissionRankings
   );

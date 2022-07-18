@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ChangePicture from './ChangePicture';
 import { cloudFrontURL } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { isMobile } from 'helpers';
 import StatusTag from './StatusTag';
 
@@ -37,7 +36,7 @@ export default function ProfilePic({
   style
 }) {
   const userObj = useAppContext((v) => v.user.state.userObj);
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const [changePictureShown, setChangePictureShown] = useState(false);
   const [src, setSrc] = useState(`${cloudFrontURL}${profilePicUrl}`);
   const displayedProfilePicUrl = useMemo(() => {

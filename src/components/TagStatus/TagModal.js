@@ -4,9 +4,8 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import TagForm from 'components/Forms/TagForm';
 import AddPlaylistModal from 'components/Modals/AddPlaylistModal';
-import { useTheme } from 'helpers/hooks';
 import { capitalize, hashify } from 'helpers/stringHelpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 TagModal.propTypes = {
   currentPlaylists: PropTypes.array.isRequired,
@@ -27,7 +26,7 @@ function TagModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const addVideoToPlaylists = useAppContext(
     (v) => v.requestHelpers.addVideoToPlaylists
   );

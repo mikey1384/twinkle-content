@@ -5,7 +5,7 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import useNotificationMessage from './useNotificationMessage';
 import UsernameText from 'components/Texts/UsernameText';
 
@@ -33,7 +33,7 @@ export default function NotiItem({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const NotificationMessage = useNotificationMessage({
     actionObj,
     isNotification,

@@ -5,11 +5,10 @@ import Task from './Task';
 import Tutorial from '../Tutorial';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { useParams } from 'react-router-dom';
 import { mobileMaxWidth } from 'constants/css';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 import NotUnlocked from './NotUnlocked';
 import TutorialModal from '../TutorialModal';
 
@@ -19,7 +18,7 @@ TaskContainer.propTypes = {
 
 export default function TaskContainer({ mission }) {
   const { taskType } = useParams();
-  const { userId, managementLevel } = useMyState();
+  const { userId, managementLevel } = useKeyContext((v) => v.myState);
   const missionTypeIdHash = useMissionContext((v) => v.state.missionTypeIdHash);
   const taskId = useMemo(() => {
     if (!taskType) return null;
