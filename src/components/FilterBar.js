@@ -29,13 +29,13 @@ export default function FilterBar({
   const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     alert: { color: alertColor },
-    filter: { color: filterColor, opacity: filterOpacity }
+    filter: { color: filterColor },
+    filterActive: { color: filterActiveColor }
   } = useTheme(color || profileTheme);
 
-  const filterActiveColor = Color[filterColor]();
   const FilterBarStyle = useMemo(() => {
     return `${css`
-      background: ${inverted ? Color[filterColor](filterOpacity) : '#fff'};
+      background: ${inverted ? Color[filterColor]() : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -85,14 +85,18 @@ export default function FilterBar({
           }
         }
         > nav.active {
-          background: ${inverted ? filterActiveColor : ''};
-          border-bottom: ${inverted ? '' : `3px solid ${filterActiveColor}`};
-          color: ${inverted ? '#fff' : filterActiveColor};
+          background: ${inverted ? Color[filterActiveColor]() : ''};
+          border-bottom: ${inverted
+            ? ''
+            : `3px solid ${Color[filterActiveColor]()}`};
+          color: ${inverted ? '#fff' : Color[filterActiveColor]()};
           > a {
-            color: ${inverted ? '#fff' : filterActiveColor};
+            color: ${inverted ? '#fff' : Color[filterActiveColor]()};
           }
           @media (max-width: ${mobileMaxWidth}) {
-            border-bottom: ${inverted ? '' : `4px solid ${filterActiveColor}`};
+            border-bottom: ${inverted
+              ? ''
+              : `4px solid ${Color[filterActiveColor]()}`};
           }
         }
         > nav.active.alert {
@@ -141,8 +145,7 @@ export default function FilterBar({
     dropdownButton,
     inverted,
     filterActiveColor,
-    filterColor,
-    filterOpacity
+    filterColor
   ]);
 
   return (

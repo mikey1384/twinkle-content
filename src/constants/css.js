@@ -144,8 +144,13 @@ export function Theme(color = 'logoBlue') {
       color:
         {
           gold: 'brownOrange'
-        }[color] || color,
-      opacity: 0.7
+        }[color] || color
+    },
+    filterActive: {
+      color:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || color
     },
     generalChat: {
       color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
