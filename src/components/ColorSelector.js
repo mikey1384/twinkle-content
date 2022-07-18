@@ -28,7 +28,8 @@ export default function ColorSelector({
     red: 1_500_000,
     purple: 100_000,
     darkBlue: 500_000,
-    vantaBlack: 1_000_000
+    vantaBlack: 1_000_000,
+    gold: 10_000_000
   };
 
   return (

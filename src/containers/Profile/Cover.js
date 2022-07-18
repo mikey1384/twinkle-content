@@ -68,6 +68,7 @@ export default function Cover({
 
   const {
     cover: { color: coverColor },
+    coverText: { color: coverTextColor, shadow: coverTextShadowColor },
     done: { color: doneColor }
   } = useTheme(selectedTheme || profileTheme || 'logoBlue');
 
@@ -75,7 +76,7 @@ export default function Cover({
     <ErrorBoundary componentPath="Profile/Cover">
       <div
         style={{
-          color: '#fff',
+          color: Color[coverTextColor](),
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
           backgroundColor: Color[coverColor]()
@@ -101,6 +102,9 @@ export default function Cover({
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            ${coverTextShadowColor
+              ? `text-shadow: 2px 2px ${Color[coverTextShadowColor]()};`
+              : ''}
             > p {
               font-size: 2rem;
               line-height: 1rem;
@@ -170,6 +174,7 @@ export default function Cover({
                     'logoBlue',
                     'green',
                     'orange',
+                    'gold',
                     'red',
                     'rose',
                     'pink',

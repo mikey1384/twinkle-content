@@ -27,14 +27,13 @@ export default function FilterBar({
 }) {
   const {
     alert: { color: alertColor },
-    mainFilter: { color: mainFilterColor, opacity: mainFilterOpacity }
+    filter: { color: filterColor, opacity: filterOpacity }
   } = useTheme(color);
-  const mainFilterActiveColor = Color[mainFilterColor]();
+
+  const filterActiveColor = Color[filterColor]();
   const FilterBarStyle = useMemo(() => {
     return `${css`
-      background: ${inverted
-        ? Color[mainFilterColor](mainFilterOpacity)
-        : '#fff'};
+      background: ${inverted ? Color[filterColor](filterOpacity) : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -84,18 +83,14 @@ export default function FilterBar({
           }
         }
         > nav.active {
-          background: ${inverted ? mainFilterActiveColor : ''};
-          border-bottom: ${inverted
-            ? ''
-            : `3px solid ${mainFilterActiveColor}`};
-          color: ${inverted ? '#fff' : mainFilterActiveColor};
+          background: ${inverted ? filterActiveColor : ''};
+          border-bottom: ${inverted ? '' : `3px solid ${filterActiveColor}`};
+          color: ${inverted ? '#fff' : filterActiveColor};
           > a {
-            color: ${inverted ? '#fff' : mainFilterActiveColor};
+            color: ${inverted ? '#fff' : filterActiveColor};
           }
           @media (max-width: ${mobileMaxWidth}) {
-            border-bottom: ${inverted
-              ? ''
-              : `4px solid ${mainFilterActiveColor}`};
+            border-bottom: ${inverted ? '' : `4px solid ${filterActiveColor}`};
           }
         }
         > nav.active.alert {
@@ -117,17 +112,15 @@ export default function FilterBar({
             : ''};
         }
         > nav:hover {
-          background: ${inverted ? mainFilterActiveColor : ''};
-          color: ${inverted ? '#fff' : mainFilterActiveColor};
-          border-bottom: ${inverted
-            ? ''
-            : `3px solid ${mainFilterActiveColor}`};
+          background: ${inverted ? filterActiveColor : ''};
+          color: ${inverted ? '#fff' : filterActiveColor};
+          border-bottom: ${inverted ? '' : `3px solid ${filterActiveColor}`};
           &.alert {
             color: ${Color[alertColor]()}!important;
             border-bottom: 3px solid ${Color[alertColor]()}!important;
           }
           > a {
-            color: ${inverted ? '#fff' : mainFilterActiveColor};
+            color: ${inverted ? '#fff' : filterActiveColor};
             font-weight: bold;
           }
         }
@@ -145,9 +138,9 @@ export default function FilterBar({
     className,
     dropdownButton,
     inverted,
-    mainFilterActiveColor,
-    mainFilterColor,
-    mainFilterOpacity
+    filterActiveColor,
+    filterColor,
+    filterOpacity
   ]);
 
   return (

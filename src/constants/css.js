@@ -70,9 +70,8 @@ export const Color = {
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
-  darkGold: (opacity = 1) => `rgba(255,195,55,${opacity})`,
-  gold: (opacity = 1) => `rgba(255,206,0,${opacity})`,
-  yellow: (opacity = 1) => `rgba(255,255,0,${opacity})`
+  gold: (opacity = 1) => `rgba(255,203,50,${opacity})`,
+  yellow: (opacity = 1) => `rgba(255,255,55,${opacity})`
 };
 
 export const strongColors = ['rose', 'red', 'purple'];
@@ -94,14 +93,7 @@ export function Theme(color) {
         }[color] || 'green'
     },
     alert: {
-      color:
-        {
-          green: 'darkGold',
-          rose: 'darkGold',
-          black: 'darkGold',
-          darkBlue: 'darkGold',
-          vantaBlack: 'darkGold'
-        }[color] || 'gold'
+      color: 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
@@ -128,6 +120,13 @@ export function Theme(color) {
         }[color] || 'green'
     },
     cover: { color },
+    coverText: {
+      color: 'white',
+      shadow:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || ''
+    },
     danger: {
       color:
         {
@@ -141,6 +140,13 @@ export function Theme(color) {
       opacity: 0.8
     },
     chatInvitation: { color },
+    filter: {
+      color:
+        {
+          gold: 'brownOrange'
+        }[color] || color,
+      opacity: 0.7
+    },
     generalChat: {
       color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
     },
@@ -204,7 +210,6 @@ export function Theme(color) {
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: 'logoGreen' },
-    mainFilter: { color, opacity: 0.7 },
     mention: { color: { pink: 'orange' }[color] || 'passionFruit' },
     mission: { color: 'orange' },
     profilePanel: { color },
