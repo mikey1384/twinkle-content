@@ -143,13 +143,13 @@ export function Theme(color = 'logoBlue') {
     filter: {
       color:
         {
-          gold: 'brownOrange'
+          gold: 'gold'
         }[color] || color
     },
     filterActive: {
       color:
         {
-          gold: 'darkBrownOrange'
+          gold: 'brownOrange'
         }[color] || color
     },
     generalChat: {
