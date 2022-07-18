@@ -10,8 +10,7 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const deletedByLabel = localize('deletedBy');
@@ -34,7 +33,7 @@ export default function DeletedContent({
   postId,
   style
 }) {
-  const { managementLevel } = useMyState();
+  const { managementLevel } = useKeyContext((v) => v.myState);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const deletePermanently = useAppContext(
     (v) => v.requestHelpers.deletePermanently

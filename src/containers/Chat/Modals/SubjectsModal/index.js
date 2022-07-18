@@ -6,9 +6,8 @@ import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import SubjectItem from './SubjectItem';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/ConfirmModal';
-import { useTheme } from 'helpers/hooks';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 SubjectsModal.propTypes = {
   channelId: PropTypes.number.isRequired,
@@ -29,7 +28,7 @@ export default function SubjectsModal({
 }) {
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const deleteChatSubject = useAppContext(
     (v) => v.requestHelpers.deleteChatSubject
   );

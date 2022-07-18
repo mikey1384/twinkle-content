@@ -4,10 +4,9 @@ import MissionItem from 'components/MissionItem';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
-import { useMissionContext } from 'contexts';
+import { useMissionContext, useKeyContext } from 'contexts';
 import { mobileMaxWidth } from 'constants/css';
 import { checkMultiMissionPassStatus } from 'helpers/userDataHelpers';
-import { useMyState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
 
@@ -36,7 +35,7 @@ export default function MissionList({
     (v) => v.actions.onSetSelectedMissionListTab
   );
 
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const ongoingMissions = useMemo(() => {
     return missions.filter(
       (missionId) => !returnPassStatus({ missionId, myAttempts })

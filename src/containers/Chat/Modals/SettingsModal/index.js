@@ -10,9 +10,8 @@ import Icon from 'components/Icon';
 import ColorSelector from './ColorSelector';
 import NameChanger from './NameChanger';
 import { priceTable } from 'constants/defaultValues';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
@@ -60,10 +59,10 @@ export default function SettingsModal({
     (v) => v.actions.onEnableChatSubject
   );
   const onEnableTheme = useChatContext((v) => v.actions.onEnableTheme);
-  const { twinkleCoins, userId } = useMyState();
+  const { twinkleCoins, userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [hovered, setHovered] = useState(false);
   const [selectNewOwnerModalShown, setSelectNewOwnerModalShown] =
     useState(false);

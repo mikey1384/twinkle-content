@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import queryString from 'query-string';
 import GitHubButton from './GitHubButton';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -19,7 +18,7 @@ GitHubVerifier.propTypes = {
 export default function GitHubVerifier({ onSetMissionState, task }) {
   const loadGitHubData = useAppContext((v) => v.requestHelpers.loadGitHubData);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const location = useLocation();
   const { search } = location;
   const { code } = useMemo(() => queryString.parse(search), [search]);

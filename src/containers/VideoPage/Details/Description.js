@@ -5,7 +5,7 @@ import LongText from 'components/Texts/LongText';
 import Button from 'components/Button';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { edit } from 'constants/placeholders';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const cancelLabel = localize('cancel');
@@ -37,7 +37,7 @@ export default function Description({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   return (
     <div style={{ width: '100%' }}>
       {onEdit ? (

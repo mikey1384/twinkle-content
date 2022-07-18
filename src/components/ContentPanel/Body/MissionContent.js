@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import UsernameText from 'components/Texts/UsernameText';
 import ContentLink from 'components/ContentLink';
-import { borderRadius, Color } from 'constants/css';
+import { borderRadius, Color, Theme } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const taskCompleteLabel = localize('taskComplete');
@@ -19,10 +19,11 @@ MissionContent.propTypes = {
 };
 
 export default function MissionContent({ uploader, rootObj: mission, theme }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     xpNumber: { color: xpNumberColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
 
   const rewardDetails = useMemo(() => {
     return mission.xpReward || mission.coinReward ? (

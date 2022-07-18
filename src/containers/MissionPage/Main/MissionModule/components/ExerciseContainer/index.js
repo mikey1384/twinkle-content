@@ -8,8 +8,7 @@ import CodeSandbox from 'components/Forms/CodeSandbox';
 import useExercises from './useExercises';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 ExerciseContainer.propTypes = {
   codeObj: PropTypes.object,
@@ -42,7 +41,7 @@ export default function ExerciseContainer({
   const onUpdateUserMissionState = useAppContext(
     (v) => v.user.actions.onUpdateUserMissionState
   );
-  const { username, missions } = useMyState();
+  const { username, missions } = useKeyContext((v) => v.myState);
   const { passed, prevPassed, errorMsg, setErrorMsg, success, exercise } =
     useExercises({
       exercises,

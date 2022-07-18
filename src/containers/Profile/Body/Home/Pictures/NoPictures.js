@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 NoPictures.propTypes = {
   numPics: PropTypes.number.isRequired,
@@ -12,7 +12,7 @@ NoPictures.propTypes = {
 };
 
 export default function NoPictures({ numPics, onAddButtonClick, profileId }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
 
   return (
     <ErrorBoundary componentPath="Profile/Body/Home/Pictures/NoPictures/index">

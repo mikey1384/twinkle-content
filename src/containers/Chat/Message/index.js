@@ -33,12 +33,8 @@ import { socket } from 'constants/io';
 import { unix } from 'moment';
 import { MessageStyle } from '../Styles';
 import { fetchURLFromText } from 'helpers/stringHelpers';
-import {
-  useContentState,
-  useMyState,
-  useLazyLoad,
-  useTheme
-} from 'helpers/hooks';
+import { useContentState, useLazyLoad } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
@@ -133,7 +129,7 @@ function Message({
 }) {
   const {
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const spoilerClickedRef = useRef(false);
   const [highlighted, setHighlighted] = useState(false);
   const [reactionsMenuShown, setReactionsMenuShown] = useState(false);
@@ -171,7 +167,7 @@ function Message({
     userId: myId,
     username: myUsername,
     profilePicUrl: myProfilePicUrl
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     thumbUrl: recentThumbUrl,
     isEditing,

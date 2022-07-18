@@ -4,8 +4,7 @@ import AddTutorial from './AddTutorial';
 import ViewTutorial from './ViewTutorial';
 import InteractiveContent from 'components/InteractiveContent';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useMyState } from 'helpers/hooks';
-import { useMissionContext } from 'contexts';
+import { useMissionContext, useKeyContext } from 'contexts';
 import { scrollElementTo, scrollElementToCenter } from 'helpers';
 
 Tutorial.propTypes = {
@@ -23,7 +22,7 @@ export default function Tutorial({
   mission,
   innerRef
 }) {
-  const { managementLevel } = useMyState();
+  const { managementLevel } = useKeyContext((v) => v.myState);
   const myAttempts = useMissionContext((v) => v.state.myAttempts);
   const canEditTutorial = useMemo(
     () => managementLevel >= 2,

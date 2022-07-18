@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useKeyContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import EmailSubmitForm from './EmailSubmitForm';
 import VerificationCodeInput from './VerificationCodeInput';
@@ -10,7 +10,7 @@ export default function EmailVerifier() {
   const {
     link: { color: linkColor },
     success: { color: successColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   return (

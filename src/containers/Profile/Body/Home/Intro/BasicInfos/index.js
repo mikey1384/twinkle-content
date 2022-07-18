@@ -5,13 +5,17 @@ import Icon from 'components/Icon';
 import InfoEditForm from './InfoEditForm';
 import PasswordInputModal from './PasswordInputModal';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, trimUrl } from 'helpers/stringHelpers';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { unix } from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext, useInputContext } from 'contexts';
+import {
+  useAppContext,
+  useChatContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -68,10 +72,10 @@ export default function BasicInfos({
     username: myUsername,
     authLevel: myAuthLevel,
     banned
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor }
-  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
+  } = Theme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
     (v) => v.requestHelpers.uploadProfileInfo

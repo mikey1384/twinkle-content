@@ -27,11 +27,12 @@ import {
   isValidYoutubeUrl,
   replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
 import {
   useContentContext,
   useExploreContext,
-  useInputContext
+  useInputContext,
+  useKeyContext
 } from 'contexts';
 import { css } from '@emotion/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -96,10 +97,10 @@ export default function Details({
     canEditPlaylists,
     canReward,
     twinkleCoins
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown

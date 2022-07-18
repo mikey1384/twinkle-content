@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import UsernameText from 'components/Texts/UsernameText';
-import { useTheme } from 'helpers/hooks';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
+import { useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 InnerContent.propTypes = {
@@ -24,9 +24,10 @@ export default function InnerContent({
   defaultText = '',
   theme
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const userLiked = useMemo(() => {
     for (let like of likes) {
       if (like?.id === userId) {

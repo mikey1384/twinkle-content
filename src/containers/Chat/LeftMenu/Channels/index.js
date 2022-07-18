@@ -9,14 +9,13 @@ import React, {
 import Channel from './Channel';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
 function Channels() {
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadMoreChannels = useAppContext(
     (v) => v.requestHelpers.loadMoreChannels
   );

@@ -5,14 +5,14 @@ import RankBar from 'components/RankBar';
 import UserDetails from 'components/UserDetails';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Profile.propTypes = {
   profile: PropTypes.object.isRequired
 };
 
 export default function Profile({ profile }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   return (
     <div
       style={{

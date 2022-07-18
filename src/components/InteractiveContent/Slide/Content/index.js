@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Content.propTypes = {
   centerRef: PropTypes.func,
@@ -53,7 +53,7 @@ export default function Content({
 }) {
   const {
     button: { color: buttonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const descriptionShown = useMemo(
     () => !stringIsEmpty(description),
     [description]

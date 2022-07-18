@@ -9,8 +9,7 @@ import React, {
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import TextEditSection from './TextEditSection';
-import { useInputContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useInputContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import {
   addEmoji,
@@ -53,10 +52,10 @@ function ContentEditor({
   style,
   title
 }) {
-  const { banned } = useMyState();
+  const { banned } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const defaultInputState = useMemo(
     () => ({
       editedContent: replaceFakeAtSymbol(content || ''),

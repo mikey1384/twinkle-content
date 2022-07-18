@@ -10,7 +10,8 @@ import { Color } from 'constants/css';
 import { css } from '@emotion/css';
 import { mobileFullTextRevealShowDuration } from 'constants/defaultValues';
 import { textIsOverflown, isMobile } from 'helpers';
-import { useContentState, useTheme } from 'helpers/hooks';
+import { useContentState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -37,7 +38,7 @@ function VideoThumb({ className, clickSafe, style, to, user, video }) {
   const {
     link: { color: linkColor },
     userLink: { color: userLinkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const { isDeleted } = useContentState({
     contentType: 'video',
     contentId: video.id

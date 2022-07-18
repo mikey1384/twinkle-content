@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useTheme } from 'helpers/hooks';
 import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const unrankedLabel = localize('unranked');
@@ -26,7 +26,7 @@ export default function MyRank({
 }) {
   const {
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const rankedColor = useMemo(
     () =>
       rank === 1

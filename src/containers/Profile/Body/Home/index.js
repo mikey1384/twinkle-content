@@ -6,8 +6,8 @@ import Intro from './Intro';
 import Achievements from './Achievements';
 import Pictures from './Pictures';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
@@ -21,7 +21,7 @@ Home.propTypes = {
 
 export default function Home({ profile, selectedTheme }) {
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const onDeleteComment = useContentContext((v) => v.actions.onDeleteComment);
   const onEditComment = useContentContext((v) => v.actions.onEditComment);
   const onEditRewardComment = useContentContext(

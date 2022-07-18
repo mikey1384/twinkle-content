@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Link } from 'react-router-dom';
-import { useTheme } from 'helpers/hooks';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
+import { useKeyContext } from 'contexts';
 
 SubjectLink.propTypes = {
   subject: PropTypes.object.isRequired,
@@ -11,9 +11,10 @@ SubjectLink.propTypes = {
 };
 
 export default function SubjectLink({ subject, theme }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     content: { color: contentColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
 
   return (
     <ErrorBoundary componentPath="Comments/SubjectLink">

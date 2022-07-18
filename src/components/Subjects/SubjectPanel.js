@@ -23,8 +23,8 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { stringIsEmpty, addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 import { determineUserCanRewardThis, determineXpButtonDisabled } from 'helpers';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -93,12 +93,12 @@ export default function SubjectPanel({
     canReward,
     twinkleCoins,
     userId: myId
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor },
     content: { color: contentColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   const {
     editRewardComment,

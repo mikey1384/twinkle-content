@@ -10,8 +10,7 @@ import MyRank from 'components/MyRank';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { REWARD_VALUE, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { addCommasToNumber } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useNotiContext } from 'contexts';
+import { useAppContext, useKeyContext, useNotiContext } from 'contexts';
 import localize from 'constants/localize';
 
 const tapToCollectRewardsLabel = localize('tapToCollectRewards');
@@ -52,12 +51,14 @@ function MainFeeds({
   const collectRewardedCoins = useAppContext(
     (v) => v.requestHelpers.collectRewardedCoins
   );
-  const { userId, rank, twinkleXP, twinkleCoins } = useMyState();
+  const { userId, rank, twinkleXP, twinkleCoins } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     alert: { color: alertColor },
     success: { color: successColor },
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const totalRewardedTwinkles = useMemo(
     () => notiObj[userId]?.totalRewardedTwinkles || 0,

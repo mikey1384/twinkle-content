@@ -8,11 +8,10 @@ import ImageModal from 'components/Modals/ImageModal';
 import ImageEditModal from 'components/Modals/ImageEditModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import { Color, borderRadius, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, borderRadius, mobileMaxWidth } from 'constants/css';
 import { cloudFrontURL, MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { isMobile } from 'helpers';
-import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const deviceIsMobile = isMobile(navigator);
@@ -36,7 +35,7 @@ export default function Cover({
     (v) => v.requestHelpers.checkIfUserOnline
   );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     id,
     profilePicUrl,
@@ -70,7 +69,7 @@ export default function Cover({
     cover: { color: coverColor },
     coverText: { color: coverTextColor, shadow: coverTextShadowColor },
     done: { color: doneColor }
-  } = useTheme(selectedTheme || profileTheme || 'logoBlue');
+  } = Theme(selectedTheme || profileTheme || 'logoBlue');
 
   return (
     <ErrorBoundary componentPath="Profile/Cover">

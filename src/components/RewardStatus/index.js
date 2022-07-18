@@ -1,14 +1,14 @@
 import React, { memo, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth, Theme } from 'constants/css';
 import { addCommasToNumber, stringIsEmpty } from 'helpers/stringHelpers';
 import { returnMaxRewards, SELECTED_LANGUAGE } from 'constants/defaultValues';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import Comment from './Comment';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Starmarks from './Starmarks';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const showMoreRewardRecordsLabel = localize('showMoreRewardRecords');
@@ -36,10 +36,10 @@ function RewardStatus({
   style,
   theme
 }) {
-  const { userId } = useMyState();
+  const { userId, profileTheme } = useKeyContext((v) => v.myState);
   const {
     info: { color: infoColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const [numLoaded, setNumLoaded] = useState(2);
   rewards = useMemo(() => {
     const rewardsWithComment = rewards.filter(

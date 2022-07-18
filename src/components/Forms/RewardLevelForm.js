@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const clearLabel = localize('clear');
@@ -32,13 +32,13 @@ export default function RewardLevelForm({
   onSetRewardLevel,
   style
 }) {
-  const { authLevel } = useMyState();
+  const { authLevel } = useKeyContext((v) => v.myState);
   const {
     rewardLevelForm: {
       color: rewardLevelFormColor,
       opacity: rewardLevelFormOpacity
     }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   useEffect(() => {
     if (alreadyPosted) {

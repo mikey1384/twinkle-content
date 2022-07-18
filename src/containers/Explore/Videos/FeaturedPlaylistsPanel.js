@@ -4,8 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ButtonGroup from 'components/Buttons/ButtonGroup';
 import SelectFeaturedPlaylists from '../Modals/SelectFeaturedPlaylists';
 import ReorderFeaturedPlaylists from '../Modals/ReorderFeaturedPlaylists';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const featuredPlaylistsLabel = localize('featuredPlaylists');
@@ -19,7 +18,7 @@ export default function FeaturedPlaylistsPanel() {
   const loadPlaylistList = useAppContext(
     (v) => v.requestHelpers.loadPlaylistList
   );
-  const { canPinPlaylists, userId } = useMyState();
+  const { canPinPlaylists, userId } = useKeyContext((v) => v.myState);
   const featuredPlaylists = useExploreContext(
     (v) => v.state.videos.featuredPlaylists
   );

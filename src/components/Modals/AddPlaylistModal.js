@@ -16,10 +16,10 @@ import {
   addEmoji,
   finalizeEmoji
 } from 'helpers/stringHelpers';
-import { useSearch, useTheme } from 'helpers/hooks';
+import { useSearch } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { isMobile, objectify } from 'helpers';
 import { css } from '@emotion/css';
-import { useAppContext } from 'contexts';
 
 AddPlaylistModal.propTypes = {
   existingVideoIds: PropTypes.array,
@@ -42,7 +42,7 @@ export default function AddPlaylistModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const uploadPlaylist = useAppContext((v) => v.requestHelpers.uploadPlaylist);

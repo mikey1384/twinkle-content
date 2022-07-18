@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StepSlide from '../components/StepSlide';
 import Button from 'components/Button';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { css } from '@emotion/css';
 
 ConnectReplToGitHub.propTypes = {
@@ -24,7 +23,7 @@ export default function ConnectReplToGitHub({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );

@@ -20,7 +20,6 @@ import { stringIsEmpty } from 'helpers/stringHelpers';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useAppContext,
@@ -28,7 +27,8 @@ import {
   useInputContext,
   useNotiContext,
   useViewContext,
-  useChatContext
+  useChatContext,
+  useKeyContext
 } from 'contexts';
 import { GENERAL_CHAT_ID, GENERAL_CHAT_PATH_ID } from 'constants/defaultValues';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -38,10 +38,10 @@ Chat.propTypes = {
 };
 
 function Chat({ onFileUpload }) {
-  const { lastChatPath, userId } = useMyState();
+  const { lastChatPath, userId } = useKeyContext((v) => v.myState);
   const {
     generalChat: { color: generalChatColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const userObj = useAppContext((v) => v.user.state.userObj);

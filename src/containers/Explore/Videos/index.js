@@ -6,8 +6,13 @@ import ContinueWatchingPanel from './ContinueWatchingPanel';
 import AddPlaylistModal from 'components/Modals/AddPlaylistModal';
 import { stringIsEmpty } from 'helpers/stringHelpers';
 import { scrollElementToCenter } from 'helpers';
-import { useMyState, useSearch } from 'helpers/hooks';
-import { useAppContext, useExploreContext, useInputContext } from 'contexts';
+import { useSearch } from 'helpers/hooks';
+import {
+  useAppContext,
+  useExploreContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 
 const addPlaylistLabel = localize('addPlaylist');
@@ -16,7 +21,7 @@ const allPlaylistsLabel = localize('allPlaylists');
 export default function Videos() {
   const loadPlaylists = useAppContext((v) => v.requestHelpers.loadPlaylists);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
-  const { authLevel, userId } = useMyState();
+  const { authLevel, userId } = useKeyContext((v) => v.myState);
   const addPlaylistModalShown = useExploreContext(
     (v) => v.state.videos.addPlaylistModalShown
   );

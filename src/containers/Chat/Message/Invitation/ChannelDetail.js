@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
 import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import UserListModal from 'components/Modals/UserListModal';
 import localize from 'constants/localize';
 
@@ -27,7 +27,7 @@ export default function ChannelDetail({
   const {
     chatInvitation: { color: chatInvitationColor },
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [shownMembers, setShownMembers] = useState([]);
   const [userListModalShown, setUserListModalShown] = useState(false);
   const [more, setMore] = useState(null);

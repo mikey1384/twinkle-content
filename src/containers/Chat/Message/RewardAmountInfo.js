@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
+import { useKeyContext } from 'contexts';
 import { videoRewardHash } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -21,12 +21,12 @@ export default function RewardAmountInfo({
   rewardLevel,
   startingPosition = 0
 }) {
-  const theme = useTheme();
+  const theme = useKeyContext((v) => v.theme);
   const xpLevelColor = useMemo(
     () => theme[`level${rewardLevel}`]?.color,
     [rewardLevel, theme]
   );
-  const { rewardBoostLvl } = useMyState();
+  const { rewardBoostLvl } = useKeyContext((v) => v.myState);
   const watching = startingPosition > 0;
   const xpRewardAmount = useMemo(
     () => rewardLevel * (videoRewardHash?.[rewardBoostLvl]?.xp || 20),

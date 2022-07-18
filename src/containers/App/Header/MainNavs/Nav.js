@@ -2,13 +2,13 @@ import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useTheme } from 'helpers/hooks';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import {
   useAppContext,
   useContentContext,
   useExploreContext,
+  useKeyContext,
   useProfileContext
 } from 'contexts';
 
@@ -41,7 +41,7 @@ function Nav({
 }) {
   const {
     alert: { color: alertColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);

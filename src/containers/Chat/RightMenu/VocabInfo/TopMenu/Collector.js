@@ -6,7 +6,7 @@ import { Color, mobileMaxWidth } from 'constants/css';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { isMobile } from 'helpers';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import Icon from 'components/Icon';
 import localize from 'constants/localize';
 
@@ -19,7 +19,7 @@ const deviceIsMobile = isMobile(navigator);
 const collectedLabel = localize('collected');
 
 export default function Collector({ style, user }) {
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const rankColor = useMemo(() => {
     return user.rank === 1
       ? Color.gold()

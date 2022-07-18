@@ -5,8 +5,7 @@ import Button from 'components/Button';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Icon from 'components/Icon';
 import { scrollElementToCenter } from 'helpers';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { parse } from '@babel/parser';
 
 CodeSandbox.propTypes = {
@@ -35,7 +34,7 @@ export default function CodeSandbox({
   style
 }) {
   const formatCode = useAppContext((v) => v.requestHelpers.formatCode);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const timerRef = useRef(null);
   const ComponentRef = useRef(null);
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);

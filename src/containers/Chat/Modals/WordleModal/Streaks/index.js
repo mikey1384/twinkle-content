@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoundList from 'components/RoundList';
 import Loading from 'components/Loading';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import StreakItem from './StreakItem';
@@ -13,7 +12,7 @@ Streaks.propTypes = {
 };
 
 export default function Streaks({ channelId }) {
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const loadWordleStreaks = useAppContext(
     (v) => v.requestHelpers.loadWordleStreaks
   );

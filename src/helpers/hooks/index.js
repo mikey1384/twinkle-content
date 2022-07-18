@@ -18,7 +18,7 @@ import {
   DEFAULT_PROFILE_THEME,
   SELECTED_LANGUAGE
 } from 'constants/defaultValues';
-import { Color, Theme } from 'constants/css';
+import { Color } from 'constants/css';
 
 const BodyRef = document.scrollingElement || document.documentElement;
 
@@ -100,39 +100,49 @@ export function useMyState() {
   const loaded = useAppContext((v) => v.user.state.loaded);
   const signinModalShown = useAppContext((v) => v.user.state.signinModalShown);
   const myState = useAppContext((v) => v.user.state.userObj[userId] || {});
-
-  return myState.loaded
-    ? {
-        ...myState,
-        missions: {
-          ...(myState?.state?.missions || {}),
-          ...missions
-        },
-        lastChatPath,
-        loaded,
-        numWordsCollected,
-        userId,
-        searchFilter,
-        hideWatched,
-        isCreator:
-          myState.userType === 'admin' || myState.userType === 'creator',
-        loggedIn: true,
-        profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
-        signinModalShown,
-        xpThisMonth
-      }
-    : {
-        loaded,
-        lastChatPath: '',
-        rewardBoostLvl: 0,
-        profileTheme: DEFAULT_PROFILE_THEME,
-        signinModalShown
-      };
-}
-
-export function useTheme(selectedTheme) {
-  const { profileTheme } = useMyState();
-  return Theme(selectedTheme || profileTheme);
+  const result = useMemo(
+    () =>
+      myState.loaded
+        ? {
+            ...myState,
+            missions: {
+              ...(myState?.state?.missions || {}),
+              ...missions
+            },
+            lastChatPath,
+            loaded,
+            numWordsCollected,
+            userId,
+            searchFilter,
+            hideWatched,
+            isCreator:
+              myState.userType === 'admin' || myState.userType === 'creator',
+            loggedIn: true,
+            profileTheme: myState.profileTheme || DEFAULT_PROFILE_THEME,
+            signinModalShown,
+            xpThisMonth
+          }
+        : {
+            loaded,
+            lastChatPath: '',
+            rewardBoostLvl: 0,
+            profileTheme: DEFAULT_PROFILE_THEME,
+            signinModalShown
+          },
+    [
+      hideWatched,
+      lastChatPath,
+      loaded,
+      missions,
+      myState,
+      numWordsCollected,
+      searchFilter,
+      signinModalShown,
+      userId,
+      xpThisMonth
+    ]
+  );
+  return result;
 }
 
 export function useOutsideClick(ref, callback) {

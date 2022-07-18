@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import StartScreen from './StartScreen';
 import SelectFromArchive from './SelectFromArchive';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 AddPictureModal.propTypes = {
   currentPictures: PropTypes.array.isRequired,
@@ -23,7 +23,7 @@ export default function AddPictureModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [section, setSection] = useState('start');
   const [selectedPictureIds, setSelectedPictureIds] = useState([]);
 

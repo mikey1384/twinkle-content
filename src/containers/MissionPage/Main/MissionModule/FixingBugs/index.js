@@ -4,7 +4,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import ExerciseContainer from '../components/ExerciseContainer';
 import exercises from './exercises';
 import TaskComplete from '../components/TaskComplete';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 FixingBugs.propTypes = {
@@ -16,7 +16,7 @@ const exerciseKeys = Object.keys(exercises);
 
 export default function FixingBugs({ task, onSetMissionState }) {
   const { codeObj = {} } = task;
-  const { missions } = useMyState();
+  const { missions } = useKeyContext((v) => v.myState);
   const allPassed = useMemo(() => {
     let passed = true;
     for (let key of exerciseKeys) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { useNavigate, useLocation } from 'react-router-dom';
 import localize from 'constants/localize';
 
@@ -36,10 +36,10 @@ function Channel({
   const currentPathId = useMemo(() => {
     return Number(location.pathname.split('chat/')[1]);
   }, [location.pathname]);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     generalChat: { color: generalChatColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const effectiveChannelName = useMemo(
     () => customChannelNames[channelId] || channelName,
     [channelName, customChannelNames, channelId]

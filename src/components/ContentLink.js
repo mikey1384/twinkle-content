@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Color } from 'constants/css';
+import { Color, Theme } from 'constants/css';
 import { removeLineBreaks } from 'helpers/stringHelpers';
-import { useTheme } from '../helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 ContentLink.propTypes = {
   content: PropTypes.shape({
@@ -34,10 +34,11 @@ export default function ContentLink({
   contentType,
   theme
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     userLink: { color: userLinkColor },
     link: { color: linkColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const destination = useMemo(() => {
     let result = '';
     if (contentType === 'url') {

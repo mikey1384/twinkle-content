@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import GitHubVerifier from './GitHubVerifier';
 import TaskComplete from '../components/TaskComplete';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 GitHub.propTypes = {
   onSetMissionState: PropTypes.func.isRequired,
@@ -11,7 +11,7 @@ GitHub.propTypes = {
 };
 
 export default function GitHub({ onSetMissionState, task }) {
-  const { githubUsername } = useMyState();
+  const { githubUsername } = useKeyContext((v) => v.myState);
   const conditionPassed = useMemo(() => !!githubUsername, [githubUsername]);
 
   return (

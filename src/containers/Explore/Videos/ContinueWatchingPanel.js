@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import SectionPanel from 'components/SectionPanel';
 import VideoThumb from 'components/VideoThumb';
 import Icon from 'components/Icon';
-import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const continueWatchingLabel = localize('continueWatching');
@@ -13,7 +12,7 @@ const loadingLabel = localize('loading');
 const recommendedLabel = localize('recommendedVideos');
 
 export default function ContinueWatchingPanel() {
-  const { userId, loaded: profileLoaded } = useMyState();
+  const { userId, loaded: profileLoaded } = useKeyContext((v) => v.myState);
   const loadContinueWatching = useAppContext(
     (v) => v.requestHelpers.loadContinueWatching
   );

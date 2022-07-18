@@ -6,8 +6,7 @@ import CreateNewRepl from './CreateNewRepl';
 import CopyAndPasteCode from './CopyAndPasteCode';
 import MultiStepContainer from '../../components/MultiStepContainer';
 import TaskComplete from '../../components/TaskComplete';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { scrollElementToCenter } from 'helpers';
 import RequiresComputer from '../../components/RequiresComputer';
 
@@ -17,7 +16,7 @@ ReplitVerifier.propTypes = {
 };
 
 export default function ReplitVerifier({ task, onSetMissionState }) {
-  const { missions } = useMyState();
+  const { missions } = useKeyContext((v) => v.myState);
   const updateMissionStatus = useAppContext(
     (v) => v.requestHelpers.updateMissionStatus
   );

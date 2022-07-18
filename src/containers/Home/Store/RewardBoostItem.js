@@ -5,8 +5,7 @@ import Icon from 'components/Icon';
 import MaxLevelItemInfo from './MaxLevelItemInfo';
 import { css } from '@emotion/css';
 import { Color, Theme, mobileMaxWidth } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import {
   karmaPointTable,
   videoRewardHash,
@@ -174,7 +173,9 @@ RewardBoostItem.propTypes = {
 };
 
 export default function RewardBoostItem({ style }) {
-  const { rewardBoostLvl, karmaPoints, userId } = useMyState();
+  const { rewardBoostLvl, karmaPoints, userId } = useKeyContext(
+    (v) => v.myState
+  );
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const upgradeRewardBoost = useAppContext(
     (v) => v.requestHelpers.upgradeRewardBoost

@@ -6,11 +6,12 @@ import {
   stringIsEmpty,
   trimWhiteSpaces
 } from 'helpers/stringHelpers';
-import { useOutsideClick, useTheme } from 'helpers/hooks';
-import SearchDropdown from 'components/SearchDropdown';
-import Button from 'components/Button';
+import { useOutsideClick } from 'helpers/hooks';
 import { Color } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
+import { useKeyContext } from 'contexts';
+import SearchDropdown from 'components/SearchDropdown';
+import Button from 'components/Button';
 import SubjectsModal from '../../../Modals/SubjectsModal';
 import Input from 'components/Texts/Input';
 import ErrorBoundary from 'components/ErrorBoundary';
@@ -49,7 +50,7 @@ export default function EditSubjectForm({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [exactMatchExists, setExactMatchExists] = useState(false);
   const [title, setTitle] = useState(props.title);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);

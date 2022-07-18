@@ -10,7 +10,6 @@ import { Color, mobileMaxWidth, desktopMinWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { useNavigate, useLocation, matchPath } from 'react-router-dom';
 import { getSectionFromPathname, parseChannelPath } from 'helpers';
-import { useMyState } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
@@ -18,7 +17,8 @@ import {
   useHomeContext,
   useMissionContext,
   useNotiContext,
-  useChatContext
+  useChatContext,
+  useKeyContext
 } from 'contexts';
 import {
   GENERAL_CHAT_ID,
@@ -77,7 +77,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   );
 
   const { searchFilter, userId, username, loggedIn, profilePicUrl } =
-    useMyState();
+    useKeyContext((v) => v.myState);
   const channelOnCall = useChatContext((v) => v.state.channelOnCall);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
   const chatType = useChatContext((v) => v.state.chatType);

@@ -4,7 +4,8 @@ import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState, useWordleLabels } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
+import { useWordleLabels } from 'helpers/hooks';
 import { unix } from 'moment';
 
 WordleResult.propTypes = {
@@ -22,7 +23,7 @@ export default function WordleResult({
   timeStamp,
   wordleResult
 }) {
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   const { resultLabel, solutionLabel } = useWordleLabels({
     ...wordleResult,
     username,

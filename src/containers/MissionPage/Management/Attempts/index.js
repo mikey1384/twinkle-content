@@ -4,8 +4,7 @@ import Attempt from './Attempt';
 import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 const displayedStatus = {
   fail: 'rejected',
@@ -23,7 +22,7 @@ Attempts.propTypes = {
 export default function Attempts({ mission, missionId, onSetMissionState }) {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const { isCreator } = useMyState();
+  const { isCreator } = useKeyContext((v) => v.myState);
   const { managementTab: activeTab = 'pending' } = mission;
   const loadMissionAttemptsForPage = useAppContext(
     (v) => v.requestHelpers.loadMissionAttemptsForPage

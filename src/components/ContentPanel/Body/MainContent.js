@@ -16,10 +16,10 @@ import SecretComment from 'components/SecretComment';
 import MissionContent from './MissionContent';
 import { isMobile, scrollElementToCenter } from 'helpers';
 import { stringIsEmpty, getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, mobileMaxWidth, Theme } from 'constants/css';
 import { css } from '@emotion/css';
-import { useContentState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useAppContext, useKeyContext, useContentContext } from 'contexts';
 import { useNavigate } from 'react-router-dom';
 
 MainContent.propTypes = {
@@ -78,13 +78,14 @@ export default function MainContent({
   const onEditContent = useContentContext((v) => v.actions.onEditContent);
   const onLoadTags = useContentContext((v) => v.actions.onLoadTags);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     byUserIndicator: {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     },
     content: { color: contentColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const { fileType } = useMemo(
     () => (fileName ? getFileInfoFromFileName(fileName) : ''),
     [fileName]

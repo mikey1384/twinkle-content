@@ -5,7 +5,7 @@ import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Loading from 'components/Loading';
 import GrammarQuestionGenerator from './GrammarQuestionGenerator';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Management.propTypes = {
   mission: PropTypes.object,
@@ -14,7 +14,7 @@ Management.propTypes = {
 };
 
 export default function Management({ mission, missionId, onSetMissionState }) {
-  const { isCreator } = useMyState();
+  const { isCreator } = useKeyContext((v) => v.myState);
   if (!isCreator) {
     return (
       <InvalidPage

@@ -8,8 +8,13 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import SecretMessageInput from 'components/Forms/SecretMessageInput';
 import FileUploadStatusIndicator from 'components/FileUploadStatusIndicator';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
-import { useContentState, useTheme } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
+import { useContentState } from 'helpers/hooks';
 import { returnImageFileFromUrl } from 'helpers';
 import { v1 as uuidv1 } from 'uuid';
 import localize from 'constants/localize';
@@ -48,7 +53,7 @@ export default function SubjectInputForm({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const { fileUploadProgress, uploadingFile } = useContentState({
     contentType,
     contentId

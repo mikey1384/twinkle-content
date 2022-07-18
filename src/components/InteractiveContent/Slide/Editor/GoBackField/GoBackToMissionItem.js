@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import { Color, borderRadius } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 GoBackToMissionItem.propTypes = {
@@ -18,7 +18,7 @@ export default function GoBackToMissionItem({
 }) {
   const {
     itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const highlightColor = Color[itemSelectedColor](itemSelectedOpacity);
 
   return (

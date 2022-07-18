@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import StatusMessage from './StatusMessage';
 import Loading from 'components/Loading';
 import QuestionCarousel from './QuestionCarousel';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 
 Questions.propTypes = {
   isRepeating: PropTypes.bool,
@@ -13,7 +12,7 @@ Questions.propTypes = {
 
 export default function Questions({ isRepeating, mission }) {
   const [submitDisabled, setSubmitDisabled] = useState(true);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const [repeatMissionComplete, setRepeatMissionComplete] = useState(false);
   const updateUserCoins = useAppContext(
     (v) => v.requestHelpers.updateUserCoins

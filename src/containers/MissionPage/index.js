@@ -15,14 +15,13 @@ import {
   useNavigate,
   useParams
 } from 'react-router-dom';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useMissionContext } from 'contexts';
+import { useAppContext, useMissionContext, useKeyContext } from 'contexts';
 
 export default function MissionPage() {
   const { missionType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { loaded, userId, isCreator } = useMyState();
+  const { loaded, userId, isCreator } = useKeyContext((v) => v.myState);
   const loadMission = useAppContext((v) => v.requestHelpers.loadMission);
   const loadMissionTypeIdHash = useAppContext(
     (v) => v.requestHelpers.loadMissionTypeIdHash

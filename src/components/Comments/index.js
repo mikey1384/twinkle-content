@@ -16,9 +16,14 @@ import PinnedComment from './PinnedComment';
 import { v1 as uuidv1 } from 'uuid';
 import { returnImageFileFromUrl, scrollElementToCenter } from 'helpers';
 import { css } from '@emotion/css';
-import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState, useContentState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { Color, mobileMaxWidth, Theme } from 'constants/css';
+import { useContentState } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 
 Comments.propTypes = {
   autoExpand: PropTypes.bool,
@@ -97,10 +102,10 @@ function Comments({
   theme,
   userId
 }) {
-  const { banned } = useMyState();
+  const { banned, profileTheme } = useKeyContext((v) => v.myState);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const uploadThumb = useAppContext((v) => v.requestHelpers.uploadThumb);
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const loadComments = useAppContext((v) => v.requestHelpers.loadComments);

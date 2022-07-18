@@ -15,8 +15,12 @@ import request from 'axios';
 import URL from 'constants/URL';
 import { socket } from 'constants/io';
 import { css } from '@emotion/css';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useExploreContext, useNotiContext } from 'contexts';
+import {
+  useAppContext,
+  useExploreContext,
+  useNotiContext,
+  useKeyContext
+} from 'contexts';
 import localize from 'constants/localize';
 
 const hideWatchedLabel = localize('hideWatched');
@@ -59,12 +63,12 @@ export default function NavMenu({ playlistId, videoId, isContinuing }) {
   const toggleHideWatched = useAppContext(
     (v) => v.requestHelpers.toggleHideWatched
   );
-  const { hideWatched, userId } = useMyState();
+  const { hideWatched, userId } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     userLink: { color: userLinkColor },
     spinner: { color: spinnerColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const numNewNotis = useNotiContext((v) => v.state.numNewNotis);
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const totalRewardedTwinkles = useMemo(

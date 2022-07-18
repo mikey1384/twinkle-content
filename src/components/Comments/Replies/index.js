@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import LocalContext from '../Context';
 import Reply from './Reply';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { useTheme } from 'helpers/hooks';
+import { Theme } from 'constants/css';
 import { scrollElementToCenter } from 'helpers';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 
 Replies.propTypes = {
   comment: PropTypes.shape({
@@ -41,6 +41,7 @@ function Replies({
   ReplyRefs,
   theme
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     onDelete,
     onLoadMoreReplies,
@@ -50,7 +51,7 @@ function Replies({
   } = useContext(LocalContext);
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const loadReplies = useAppContext((v) => v.requestHelpers.loadReplies);
   const [deleting, setDeleting] = useState(false);
   const [replying, setReplying] = useState(false);

@@ -2,10 +2,10 @@ import React, { useLayoutEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-import { useTheme } from 'helpers/hooks';
 import { addCommasToNumber } from 'helpers/stringHelpers';
 import { borderRadius, Color } from 'constants/css';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const BodyRef = document.scrollingElement || document.documentElement;
@@ -32,7 +32,7 @@ export default function StartScreen({
   const {
     success: { color: successColor },
     xpNumber: { color: xpNumberColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   useLayoutEffect(() => {
     document.getElementById('App').scrollTop = 0;
     BodyRef.scrollTop = 0;

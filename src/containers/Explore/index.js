@@ -5,8 +5,7 @@ import { css } from '@emotion/css';
 import { mobileMaxWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useExploreContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useExploreContext, useKeyContext } from 'contexts';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Notification from 'components/Notification';
 import SideMenu from 'components/SideMenu';
@@ -29,7 +28,7 @@ Explore.propTypes = {
 export default function Explore({ category }) {
   const searchText = useExploreContext((v) => v.state.search.searchText);
   const onSetPrevUserId = useExploreContext((v) => v.actions.onSetPrevUserId);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const disconnected = useRef(false);
   const ContainerRef = useRef({});
   const SearchBoxRef = useRef(null);

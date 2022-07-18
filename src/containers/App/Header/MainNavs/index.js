@@ -7,12 +7,12 @@ import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { getSectionFromPathname } from 'helpers';
 import { addCommasToNumber, truncateText } from 'helpers/stringHelpers';
-import { useMyState } from 'helpers/hooks';
 import {
   useAppContext,
   useChatContext,
   useHomeContext,
-  useViewContext
+  useViewContext,
+  useKeyContext
 } from 'contexts';
 import { socket } from 'constants/io';
 import localize from 'constants/localize';
@@ -46,7 +46,9 @@ function MainNavs({
   totalRewardAmount
 }) {
   const [twinkleCoinsHovered, setTwinkleCoinsHovered] = useState(false);
-  const { twinkleCoins, userId, banned, lastChatPath } = useMyState();
+  const { twinkleCoins, userId, banned, lastChatPath } = useKeyContext(
+    (v) => v.myState
+  );
   const exploreCategory = useViewContext((v) => v.state.exploreCategory);
   const contentPath = useViewContext((v) => v.state.contentPath);
   const contentNav = useViewContext((v) => v.state.contentNav);

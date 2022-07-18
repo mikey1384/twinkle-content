@@ -7,7 +7,7 @@ import {
   addCommasToNumber,
   getFileInfoFromFileName
 } from 'helpers/stringHelpers';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { returnImageFileFromUrl } from 'helpers';
 import {
   FILE_UPLOAD_XP_REQUIREMENT,
@@ -45,14 +45,16 @@ export default function SecretMessageInput({
   const [onHover, setOnHover] = useState(false);
   const [alertModalShown, setAlertModalShown] = useState(false);
   const FileInputRef = useRef(null);
-  const { authLevel, fileUploadLvl, twinkleXP, userId } = useMyState();
+  const { authLevel, fileUploadLvl, twinkleXP, userId } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     button: { color: buttonColor },
     skeuomorphicDisabled: {
       color: skeuomorphicDisabledColor,
       opacity: skeuomorphicDisabledOpacity
     }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const secretAnswerExceedsCharLimit = useMemo(
     () =>
       exceedsCharLimit({

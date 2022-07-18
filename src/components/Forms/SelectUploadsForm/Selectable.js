@@ -7,7 +7,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { isMobile, textIsOverflown } from 'helpers';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Selectable.propTypes = {
   item: PropTypes.object,
@@ -28,7 +28,7 @@ export default function Selectable({
 }) {
   const {
     itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [onTitleHover, setOnTitleHover] = useState(false);
   const highlightColor = Color[itemSelectedColor](itemSelectedOpacity);
   const ThumbLabelRef = useRef(null);

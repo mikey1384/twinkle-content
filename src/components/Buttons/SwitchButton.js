@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 SwitchButton.propTypes = {
   color: PropTypes.string,
@@ -28,7 +28,7 @@ export default function SwitchButton({
 }) {
   const {
     switch: { color: switchColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
 
   return (
     <ErrorBoundary

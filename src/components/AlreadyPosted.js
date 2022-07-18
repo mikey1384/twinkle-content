@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { Color } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext, useContentContext } from 'contexts';
-import { useContentState, useTheme } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
 
 AlreadyPosted.propTypes = {
   changingPage: PropTypes.bool,
@@ -28,7 +28,7 @@ export default function AlreadyPosted({
   const {
     alreadyPostedByThisUser: { color: alreadyPostedByThisUserColor },
     alreadyPostedByOtherUser: { color: alreadyPostedByOtherUserColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const checkContentUrl = useAppContext(
     (v) => v.requestHelpers.checkContentUrl
   );

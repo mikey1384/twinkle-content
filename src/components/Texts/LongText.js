@@ -5,9 +5,9 @@ import {
   processMentionLink,
   processedStringWithURL
 } from 'helpers/stringHelpers';
-import { Color } from 'constants/css';
-import { useContentState, useTheme } from 'helpers/hooks';
-import { useContentContext } from 'contexts';
+import { Color, Theme } from 'constants/css';
+import { useContentState } from 'helpers/hooks';
+import { useContentContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 import { css } from '@emotion/css';
 
@@ -45,10 +45,11 @@ export default function LongText({
   readMoreColor,
   theme
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     statusMsgLink: { color: statusMsgLinkColor },
     link: { color: linkColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
 
   const onSetFullTextState = useContentContext(
     (v) => v.actions.onSetFullTextState

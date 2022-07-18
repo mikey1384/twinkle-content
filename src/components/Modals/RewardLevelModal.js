@@ -6,8 +6,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import RewardLevelForm from 'components/Forms/RewardLevelForm';
 import RewardLevelExplainer from 'components/RewardLevelExplainer';
 import AlertModal from 'components/Modals/AlertModal';
-import { useAppContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -33,7 +32,7 @@ export default function RewardLevelModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateRewardLevel = useAppContext(
     (v) => v.requestHelpers.updateRewardLevel
   );

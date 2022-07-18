@@ -3,8 +3,8 @@ import React, { memo, useMemo, useState } from 'react';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import ErrorBoundary from 'components/ErrorBoundary';
-import { useAppContext, useContentContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { Theme } from 'constants/css';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const likeLabel = localize('like');
@@ -33,7 +33,7 @@ function LikeButton({
 }) {
   const likeContent = useAppContext((v) => v.requestHelpers.likeContent);
   const onLikeContent = useContentContext((v) => v.actions.onLikeContent);
-  const { userId } = useMyState();
+  const { userId, profileTheme } = useKeyContext((v) => v.myState);
   const [disabled, setDisabled] = useState(false);
   const liked = useMemo(() => {
     let userLikedThis = false;
@@ -45,7 +45,7 @@ function LikeButton({
   const {
     likeButton: { color: likeButtonColor },
     likeButtonPressed: { color: likeButtonPressedColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
 
   return (
     <ErrorBoundary componentPath="LikeButton">

@@ -7,8 +7,12 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import { container } from './Styles';
 import { defaultChatSubject } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext, useNotiContext, useViewContext } from 'contexts';
+import {
+  useAppContext,
+  useNotiContext,
+  useViewContext,
+  useKeyContext
+} from 'contexts';
 import { isMobile } from 'helpers';
 import localize from 'constants/localize';
 
@@ -30,7 +34,7 @@ function Notification({ className, location, style, trackScrollPosition }) {
     (v) => v.requestHelpers.fetchNotifications
   );
   const loadRewards = useAppContext((v) => v.requestHelpers.loadRewards);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const notiObj = useNotiContext((v) => v.state.notiObj);
   const notificationsLoaded = useNotiContext(
     (v) => v.state.notificationsLoaded

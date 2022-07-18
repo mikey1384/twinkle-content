@@ -2,10 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterBar from 'components/FilterBar';
 import Ranker from './Ranker';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useMyState, useTheme } from 'helpers/hooks';
 import localize from 'constants/localize';
 
 const myRankingLabel = localize('myRanking');
@@ -17,10 +16,10 @@ GrammarRankings.propTypes = {
 };
 
 export default function GrammarRankings({ mission, myAttempts }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     tableHeader: { color: tableHeaderColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [allSelected, setAllSelected] = useState(
     myAttempts[mission.id]?.status === 'pass'
   );

@@ -1,9 +1,8 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import WatchProgressBar from './WatchProgressBar';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
@@ -27,11 +26,11 @@ function VideoThumbImage({
   style,
   videoId
 }) {
-  const theme = useTheme();
+  const theme = useKeyContext((v) => v.theme);
   const loadVideoWatchPercentage = useAppContext(
     (v) => v.requestHelpers.loadVideoWatchPercentage
   );
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const [progressBarPercentage, setProgressBarPercentage] = useState(0);
 
   const Stars = useMemo(

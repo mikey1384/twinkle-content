@@ -12,8 +12,8 @@ import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useContentState, useMyState } from 'helpers/hooks';
-import { useAppContext, useContentContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -44,7 +44,7 @@ function Comment({
   const revokeReward = useAppContext((v) => v.requestHelpers.revokeReward);
   const onRevokeReward = useContentContext((v) => v.actions.onRevokeReward);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
-  const { authLevel, canEdit, userId } = useMyState();
+  const { authLevel, canEdit, userId } = useKeyContext((v) => v.myState);
   const { isEditing } = useContentState({
     contentType: 'reward',
     contentId: reward.id

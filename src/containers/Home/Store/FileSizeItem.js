@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ItemPanel from './ItemPanel';
 import Icon from 'components/Icon';
 import MaxLevelItemInfo from './MaxLevelItemInfo';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import {
   translateMBToGB,
   translateMBToGBWithoutSpace
@@ -70,7 +69,11 @@ FileSizeItem.propTypes = {
 };
 
 export default function FileSizeItem({ style }) {
-  const { fileUploadLvl = 0, karmaPoints, userId } = useMyState();
+  const {
+    fileUploadLvl = 0,
+    karmaPoints,
+    userId
+  } = useKeyContext((v) => v.myState);
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const upgradeFileUploadSize = useAppContext(
     (v) => v.requestHelpers.upgradeFileUploadSize

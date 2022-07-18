@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 TwinkleLogo.propTypes = {
@@ -9,7 +9,7 @@ TwinkleLogo.propTypes = {
 };
 
 export default function TwinkleLogo({ style }) {
-  const { logoTwin, logoKle } = useTheme();
+  const { logoTwin, logoKle } = useKeyContext((v) => v.theme);
   const twinColor = useMemo(() => Color[logoTwin.color](), [logoTwin]);
   const kleColor = useMemo(() => Color[logoKle.color](), [logoKle]);
 

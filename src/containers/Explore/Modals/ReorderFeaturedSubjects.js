@@ -5,8 +5,7 @@ import Button from 'components/Button';
 import SortableListGroup from 'components/SortableListGroup';
 import { objectify } from 'helpers';
 import { isEqual } from 'lodash';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext, useExploreContext } from 'contexts';
+import { useAppContext, useExploreContext, useKeyContext } from 'contexts';
 
 ReorderFeaturedSubjects.propTypes = {
   subjectIds: PropTypes.array.isRequired,
@@ -19,7 +18,7 @@ export default function ReorderFeaturedSubjects({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const uploadFeaturedSubjects = useAppContext(
     (v) => v.requestHelpers.uploadFeaturedSubjects

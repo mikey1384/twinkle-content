@@ -9,8 +9,7 @@ import { borderRadius } from 'constants/css';
 import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
 import { css } from '@emotion/css';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const viewProfileLabel = localize('viewProfile');
@@ -26,7 +25,9 @@ export default function ProfileWidget({ onLoadImage, onShowAlert }) {
   const onOpenSigninModal = useAppContext(
     (v) => v.user.actions.onOpenSigninModal
   );
-  const { profilePicUrl, realName, userId, username } = useMyState();
+  const { profilePicUrl, realName, userId, username } = useKeyContext(
+    (v) => v.myState
+  );
   const FileInputRef = useRef(null);
 
   return (

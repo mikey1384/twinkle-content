@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import Input from 'components/Texts/Input';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { addEmoji, finalizeEmoji } from 'helpers/stringHelpers';
 
@@ -21,7 +21,7 @@ BioEditModal.propTypes = {
 export default function BioEditModal({ onHide, onSubmit, ...props }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [firstLine, setFirstLine] = useState(props.firstLine || '');
   const [secondLine, setSecondLine] = useState(props.secondLine || '');
   const [thirdLine, setThirdLine] = useState(props.thirdLine || '');

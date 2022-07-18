@@ -6,8 +6,8 @@ import SectionPanel from 'components/SectionPanel';
 import SelectFeaturedSubjects from '../Modals/SelectFeaturedSubjects';
 import ReorderFeaturedSubjects from '../Modals/ReorderFeaturedSubjects';
 import Button from 'components/Button';
-import { useMyState } from 'helpers/hooks';
 import localize from 'constants/localize';
+import { useKeyContext } from 'contexts';
 
 const featuredLabel = localize('featuredSubjects');
 const noFeaturedSubjectsLabel = localize('noFeaturedSubjects');
@@ -28,7 +28,7 @@ export default function Featured({
   onExpand,
   onSubmit
 }) {
-  const { userId, canPinPlaylists } = useMyState();
+  const { userId, canPinPlaylists } = useKeyContext((v) => v.myState);
   const [reorderModalShown, setReorderModalShown] = useState(false);
   const [selectModalShown, setSelectModalShown] = useState(false);
   const shownSubjects = useMemo(() => {

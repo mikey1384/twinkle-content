@@ -8,8 +8,7 @@ import React, {
 import PropTypes from 'prop-types';
 import Activity from './Activity';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { useAppContext, useChatContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { checkScrollIsAtTheBottom } from 'helpers';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 
@@ -20,14 +19,14 @@ ActivitiesContainer.propTypes = {
 function ActivitiesContainer({ style }) {
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [loadingMore, setLoadingMore] = useState(false);
   const [scrollAtBottom, setScrollAtBottom] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
   const ActivitiesContainerRef = useRef(null);
   const ContentRef = useRef(null);
   const timerRef = useRef(null);
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   useEffect(() => {
     handleSetScrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps

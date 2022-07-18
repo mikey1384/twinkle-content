@@ -9,9 +9,8 @@ import Icon from 'components/Icon';
 import ConfirmModal from 'components/Modals/ConfirmModal';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useManagementContext } from 'contexts';
+import { useAppContext, useManagementContext, useKeyContext } from 'contexts';
 
 EditAccountTypeModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -21,7 +20,7 @@ EditAccountTypeModal.propTypes = {
 export default function EditAccountTypeModal({ onHide, target }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const accountTypeObj = useMemo(() => {
     return target;
     // eslint-disable-next-line react-hooks/exhaustive-deps

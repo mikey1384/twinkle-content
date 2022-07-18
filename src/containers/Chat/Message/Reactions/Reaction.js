@@ -11,11 +11,10 @@ import PropTypes from 'prop-types';
 import Tooltip from './Tooltip';
 import UserListModal from 'components/Modals/UserListModal';
 import LocalContext from '../../Context';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { reactionsObj } from 'constants/defaultValues';
 import { css } from '@emotion/css';
 import { Color, borderRadius, innerBorderRadius } from 'constants/css';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { isMobile } from 'helpers';
 import { isEqual } from 'lodash';
 import localize from 'constants/localize';
@@ -52,13 +51,13 @@ function Reaction({
   const [loadingOtherUsers, setLoadingOtherUsers] = useState(false);
   const [tooltipContext, setTooltipContext] = useState(null);
   const [userListModalShown, setUserListModalShown] = useState(false);
-  const { userId, profilePicUrl } = useMyState();
+  const { userId, profilePicUrl } = useKeyContext((v) => v.myState);
   const {
     reactionButton: {
       color: reactionButtonColor,
       opacity: reactionButtonOpacity
     }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const userReacted = useMemo(
     () => reactedUserIds.includes(userId),
     [reactedUserIds, userId]

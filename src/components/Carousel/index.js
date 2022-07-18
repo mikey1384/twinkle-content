@@ -7,9 +7,8 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import * as d3Ease from 'd3-ease';
 import { Animate } from 'react-move';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
-import { useExploreContext } from 'contexts';
+import { useExploreContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import BottomNavButtons from './BottomNavButtons';
 import localize from 'constants/localize';
@@ -64,7 +63,7 @@ export default function Carousel({
   const {
     carouselProgress: { color: carouselProgressColor },
     carouselProgressComplete: { color: carouselProgressCompleteColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const clickSafe = useExploreContext((v) => v.state.videos.clickSafe);
   const onClickSafeOff = useExploreContext((v) => v.actions.onClickSafeOff);
   const onClickSafeOn = useExploreContext((v) => v.actions.onClickSafeOn);

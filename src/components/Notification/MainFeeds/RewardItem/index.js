@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import renderEnglishText from './localization/english';
 import renderKoreanText from './localization/korean';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
@@ -34,7 +34,7 @@ export default function RewardItem({
     link: { color: linkColor },
     mission: { color: missionColor },
     reward: { color: rewardColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const NotiText = useMemo(() => {
     const params = {
       actionColor,

@@ -6,9 +6,8 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { isMobile } from 'helpers';
-import { useMyState } from 'helpers/hooks';
 import { priceTable } from 'constants/defaultValues';
-import { useAppContext, useContentContext } from 'contexts';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import SwitchButton from './Buttons/SwitchButton';
 import localize from 'constants/localize';
@@ -36,7 +35,9 @@ export default function RecommendationInterface({
   style,
   uploaderId
 }) {
-  const { userId, twinkleCoins, authLevel, userType } = useMyState();
+  const { userId, twinkleCoins, authLevel, userType } = useKeyContext(
+    (v) => v.myState
+  );
   const [recommending, setRecommending] = useState(false);
   const [rewardDisabled, setRewardDisabled] = useState(
     userType?.toLowerCase?.() === 'staff'

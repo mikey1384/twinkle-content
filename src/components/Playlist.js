@@ -7,8 +7,7 @@ import Link from 'components/Link';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { Color } from 'constants/css';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const eitherRemovedOrNeverExistedLabel = localize(
@@ -36,7 +35,7 @@ export default function Playlist({
     loadMoreButton: { color: loadMoreButtonColor },
     link: { color: linkColor },
     userLink: { color: userLinkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [videos, setVideos] = useState([]);
   const [loadMoreButton, setLoadMoreButton] = useState(false);
   const [loading, setLoading] = useState(false);

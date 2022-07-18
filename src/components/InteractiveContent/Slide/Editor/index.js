@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   useAppContext,
   useInputContext,
-  useInteractiveContext
+  useInteractiveContext,
+  useKeyContext
 } from 'contexts';
 import {
   addEmoji,
@@ -25,7 +26,6 @@ import ForkButtonsField from './ForkButtonsField';
 import GoBackField from './GoBackField';
 import { returnImageFileFromUrl } from 'helpers';
 import { edit } from 'constants/placeholders';
-import { useTheme } from 'helpers/hooks';
 import { isEqual } from 'lodash';
 import { v1 as uuidv1 } from 'uuid';
 
@@ -70,7 +70,7 @@ export default function Editor({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const defaultInputState = useMemo(
     () => ({
       editedPortalButton: portalButton || {

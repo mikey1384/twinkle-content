@@ -17,8 +17,8 @@ import {
   replaceFakeAtSymbol
 } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useContentContext, useInputContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import { useContentContext, useInputContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const addedByLabel = localize('addedBy');
@@ -54,10 +54,10 @@ export default function Description({
   userCanEditThis,
   userIsUploader
 }) {
-  const { canDelete, canEdit } = useMyState();
+  const { canDelete, canEdit } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onSetIsEditing = useContentContext((v) => v.actions.onSetIsEditing);
   const inputState = useInputContext((v) => v.state);
   const onSetEditForm = useInputContext((v) => v.actions.onSetEditForm);

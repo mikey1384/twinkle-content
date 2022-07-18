@@ -6,9 +6,8 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import { socket } from 'constants/io';
 import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { priceTable } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
 import { isValidUsername, stringIsEmpty } from 'helpers/stringHelpers';
 import localize from 'constants/localize';
 
@@ -30,7 +29,7 @@ export default function ChangeUsername({ style }) {
   const checkIfUsernameExists = useAppContext(
     (v) => v.requestHelpers.checkIfUsernameExists
   );
-  const { twinkleCoins, userId, banned } = useMyState();
+  const { twinkleCoins, userId, banned } = useKeyContext((v) => v.myState);
   const [loading, setLoading] = useState(false);
   const [changing, setChanging] = useState(false);
   const [newUsername, setNewUsername] = useState('');

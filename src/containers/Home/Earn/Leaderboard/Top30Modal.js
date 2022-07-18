@@ -4,7 +4,7 @@ import Modal from 'components/Modal';
 import Button from 'components/Button';
 import RoundList from 'components/RoundList';
 import RankingsListItem from 'components/RankingsListItem';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 Top30Modal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -14,7 +14,7 @@ Top30Modal.propTypes = {
 };
 
 export default function Top30Modal({ onHide, month, year, users }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const [usermenuShown, setUsermenuShown] = useState(false);
 
   return (

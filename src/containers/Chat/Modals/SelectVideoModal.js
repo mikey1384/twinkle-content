@@ -6,8 +6,8 @@ import SelectUploadsForm from 'components/Forms/SelectUploadsForm';
 import SearchInput from 'components/Texts/SearchInput';
 import { objectify } from 'helpers';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useAppContext, useContentContext } from 'contexts';
-import { useSearch, useTheme } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
+import { useSearch } from 'helpers/hooks';
 
 SelectVideoModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -17,7 +17,7 @@ SelectVideoModal.propTypes = {
 export default function SelectVideoModal({ onDone, onHide }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadUploads = useAppContext((v) => v.requestHelpers.loadUploads);
   const searchContent = useAppContext((v) => v.requestHelpers.searchContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);

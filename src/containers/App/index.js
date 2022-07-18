@@ -31,7 +31,7 @@ import Outgoing from 'components/Stream/Outgoing';
 import InvalidPage from 'components/InvalidPage';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { useLocation, Routes, Route } from 'react-router-dom';
-import { Color, mobileMaxWidth } from 'constants/css';
+import { Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
@@ -49,7 +49,8 @@ import {
   useInputContext,
   useViewContext,
   useNotiContext,
-  useChatContext
+  useChatContext,
+  KeyContext
 } from 'contexts';
 
 const deviceIsMobile = isMobile(navigator);
@@ -80,6 +81,11 @@ function App() {
     (v) => v.requestHelpers.saveChatMessageWithFileAttachment
   );
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
+  const myState = useMyState();
+  const theme = useMemo(
+    () => Theme(myState.profileTheme),
+    [myState.profileTheme]
+  );
   const {
     authLevel,
     profilePicUrl,
@@ -87,7 +93,7 @@ function App() {
     twinkleXP,
     userId,
     username
-  } = useMyState();
+  } = myState;
   const channelOnCall = useChatContext((v) => v.state.channelOnCall);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
   const currentChannelName = useChatContext((v) => v.state.currentChannelName);
@@ -527,121 +533,128 @@ function App() {
         }
       `}
     >
-      {mobileMenuShown && (
-        <MobileMenu
-          username={username}
-          onClose={() => setMobileMenuShown(false)}
-        />
-      )}
-      {updateNoticeShown && (
+      <KeyContext.Provider
+        value={{
+          myState,
+          theme
+        }}
+      >
+        {mobileMenuShown && (
+          <MobileMenu
+            username={username}
+            onClose={() => setMobileMenuShown(false)}
+          />
+        )}
+        {updateNoticeShown && (
+          <div
+            className={css`
+              position: fixed;
+              width: 80%;
+              left: 10%;
+              top: 2rem;
+              z-index: ${100_000};
+              background: ${Color.blue()};
+              color: #fff;
+              padding: 1rem;
+              text-align: center;
+              font-size: 2rem;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              @media (max-width: ${mobileMaxWidth}) {
+                width: 100%;
+                left: 0;
+              }
+            `}
+          >
+            <p>
+              The website has been updated. Click the button below to apply the
+              update.
+            </p>
+            <p style={{ fontSize: '1.3em' }}>
+              {
+                "Warning: Update is mandatory. Some features will not work properly if you don't update!"
+              }
+            </p>
+            {updateDetail && (
+              <p style={{ color: Color.gold() }}>{updateDetail}</p>
+            )}
+            <Button
+              color="gold"
+              filled
+              style={{
+                marginTop: '3rem',
+                fontSize: '3rem',
+                minWidth: '20%',
+                alignSelf: 'center'
+              }}
+              onClick={() => window.location.reload()}
+            >
+              Update!
+            </Button>
+          </div>
+        )}
+        <Header onMobileMenuOpen={() => setMobileMenuShown(true)} />
+        <div
+          id="App"
+          className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
+            margin-top: 4.5rem;
+            height: 100%;
+            @media (max-width: ${mobileMaxWidth}) {
+              margin-top: 0;
+              padding-top: 0;
+            }
+          `}`}
+        >
+          <Routes>
+            <Route path="/users/:username/*" element={<Profile />} />
+            <Route path="/comments/:contentId" element={<ContentPage />} />
+            <Route path="/videos/:videoId" element={<VideoPage />} />
+            <Route path="/links/:linkId" element={<LinkPage />} />
+            <Route path="/subjects/:contentId" element={<ContentPage />} />
+            <Route path="/videos" element={<Explore category="videos" />} />
+            <Route path="/links" element={<Explore category="links" />} />
+            <Route path="/subjects" element={<Explore category="subjects" />} />
+            <Route path="/playlists/*" element={<PlaylistPage />} />
+            <Route path="/playlists" element={<PlaylistPage />} />
+            <Route path="/missions/:missionType/*" element={<MissionPage />} />
+            <Route path="/missions" element={<Mission />} />
+            <Route
+              path="/chat/*"
+              element={<Chat onFileUpload={handleFileUploadOnChat} />}
+            />
+            <Route
+              path="/chat"
+              element={<Chat onFileUpload={handleFileUploadOnChat} />}
+            />
+            <Route path="/management/*" element={<Management />} />
+            <Route path="/reset/*" element={<ResetPassword />} />
+            <Route path="/verify/*" element={<Verify />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/users" element={<Home section="people" />} />
+            <Route path="/store" element={<Home section="store" />} />
+            <Route path="/earn" element={<Home section="earn" />} />
+            <Route
+              path="/"
+              element={
+                <Home section="story" onFileUpload={handleFileUploadOnHome} />
+              }
+            />
+            <Route path="/:username" element={<Redirect />} />
+            <Route path="*" element={<InvalidPage />} />
+          </Routes>
+        </div>
+        {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
+        {channelOnCall.incomingShown && <Incoming />}
+        {outgoingShown && <Outgoing />}
         <div
           className={css`
+            opacity: 0;
             position: fixed;
-            width: 80%;
-            left: 10%;
-            top: 2rem;
-            z-index: ${100_000};
-            background: ${Color.blue()};
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-            font-size: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            @media (max-width: ${mobileMaxWidth}) {
-              width: 100%;
-              left: 0;
-            }
+            background: url('/img/emojis.png');
           `}
-        >
-          <p>
-            The website has been updated. Click the button below to apply the
-            update.
-          </p>
-          <p style={{ fontSize: '1.3em' }}>
-            {
-              "Warning: Update is mandatory. Some features will not work properly if you don't update!"
-            }
-          </p>
-          {updateDetail && (
-            <p style={{ color: Color.gold() }}>{updateDetail}</p>
-          )}
-          <Button
-            color="gold"
-            filled
-            style={{
-              marginTop: '3rem',
-              fontSize: '3rem',
-              minWidth: '20%',
-              alignSelf: 'center'
-            }}
-            onClick={() => window.location.reload()}
-          >
-            Update!
-          </Button>
-        </div>
-      )}
-      <Header onMobileMenuOpen={() => setMobileMenuShown(true)} />
-      <div
-        id="App"
-        className={`${userIsUsingIOS && !usingChat ? 'ios ' : ''}${css`
-          margin-top: 4.5rem;
-          height: 100%;
-          @media (max-width: ${mobileMaxWidth}) {
-            margin-top: 0;
-            padding-top: 0;
-          }
-        `}`}
-      >
-        <Routes>
-          <Route path="/users/:username/*" element={<Profile />} />
-          <Route path="/comments/:contentId" element={<ContentPage />} />
-          <Route path="/videos/:videoId" element={<VideoPage />} />
-          <Route path="/links/:linkId" element={<LinkPage />} />
-          <Route path="/subjects/:contentId" element={<ContentPage />} />
-          <Route path="/videos" element={<Explore category="videos" />} />
-          <Route path="/links" element={<Explore category="links" />} />
-          <Route path="/subjects" element={<Explore category="subjects" />} />
-          <Route path="/playlists/*" element={<PlaylistPage />} />
-          <Route path="/playlists" element={<PlaylistPage />} />
-          <Route path="/missions/:missionType/*" element={<MissionPage />} />
-          <Route path="/missions" element={<Mission />} />
-          <Route
-            path="/chat/*"
-            element={<Chat onFileUpload={handleFileUploadOnChat} />}
-          />
-          <Route
-            path="/chat"
-            element={<Chat onFileUpload={handleFileUploadOnChat} />}
-          />
-          <Route path="/management/*" element={<Management />} />
-          <Route path="/reset/*" element={<ResetPassword />} />
-          <Route path="/verify/*" element={<Verify />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/users" element={<Home section="people" />} />
-          <Route path="/store" element={<Home section="store" />} />
-          <Route path="/earn" element={<Home section="earn" />} />
-          <Route
-            path="/"
-            element={
-              <Home section="story" onFileUpload={handleFileUploadOnHome} />
-            }
-          />
-          <Route path="/:username" element={<Redirect />} />
-          <Route path="*" element={<InvalidPage />} />
-        </Routes>
-      </div>
-      {signinModalShown && <SigninModal show onHide={onCloseSigninModal} />}
-      {channelOnCall.incomingShown && <Incoming />}
-      {outgoingShown && <Outgoing />}
-      <div
-        className={css`
-          opacity: 0;
-          position: fixed;
-          background: url('/img/emojis.png');
-        `}
-      />
+        />
+      </KeyContext.Provider>
     </ErrorBoundary>
   );
 }

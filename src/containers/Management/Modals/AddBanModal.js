@@ -7,8 +7,8 @@ import Table from '../Table';
 import RedTimes from '../RedTimes';
 import SearchInput from 'components/Texts/SearchInput';
 import Loading from 'components/Loading';
-import { useSearch, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useManagementContext } from 'contexts';
+import { useSearch } from 'helpers/hooks';
+import { useAppContext, useManagementContext, useKeyContext } from 'contexts';
 import { isEqual } from 'lodash';
 import { css } from '@emotion/css';
 import localize from 'constants/localize';
@@ -20,10 +20,10 @@ AddBanModal.propTypes = {
 };
 
 export default function AddBanModal({ onHide }) {
-  const { authLevel } = useMyState();
+  const { authLevel } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [searchText, setSearchText] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);

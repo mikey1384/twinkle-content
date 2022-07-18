@@ -7,8 +7,7 @@ import Icon from 'components/Icon';
 import Tabs from './Tabs';
 import { Color, desktopMinWidth, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useChatContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
+import { useChatContext, useKeyContext } from 'contexts';
 import { useNavigate } from 'react-router-dom';
 import localize from 'constants/localize';
 
@@ -25,7 +24,7 @@ function LeftMenu({ onNewButtonClick }) {
       color: chatFlatButtonColor,
       opacity: chatFlatButtonOpacity
     }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const chatType = useChatContext((v) => v.state.chatType);
   const loadingVocabulary = useChatContext((v) => v.state.loadingVocabulary);
   const leftMenuTopButtonColor = useMemo(

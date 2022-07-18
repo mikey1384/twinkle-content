@@ -6,9 +6,9 @@ import FileViewer from 'components/FileViewer';
 import AlertModal from 'components/Modals/AlertModal';
 import FileContent from 'components/FileContent';
 import { mb, returnMaxUploadSize } from 'constants/defaultValues';
-import { useMyState } from 'helpers/hooks';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
 import { returnImageFileFromUrl } from 'helpers';
+import { useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 
 FileField.propTypes = {
@@ -30,7 +30,7 @@ export default function FileField({
   thumbUrl,
   uploadingFile
 }) {
-  const { fileUploadLvl } = useMyState();
+  const { fileUploadLvl } = useKeyContext((v) => v.myState);
   const maxSize = useMemo(
     () => returnMaxUploadSize(fileUploadLvl),
     [fileUploadLvl]

@@ -5,9 +5,8 @@ import Button from 'components/Button';
 import { mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { parseChannelPath } from 'helpers';
-import { useMyState, useTheme } from 'helpers/hooks';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const alreadyJoinedLabel = localize('alreadyJoined');
@@ -29,10 +28,10 @@ export default function Invitation({
   onAcceptGroupInvitation,
   sender
 }) {
-  const { userId } = useMyState();
+  const { userId } = useKeyContext((v) => v.myState);
   const {
     chatInvitation: { color: chatInvitationColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadChatChannel = useAppContext(
     (v) => v.requestHelpers.loadChatChannel
   );

@@ -4,8 +4,7 @@ import Attachment from './Attachment';
 import { css } from '@emotion/css';
 import { borderRadius, Color } from 'constants/css';
 import { stringIsEmpty } from 'helpers/stringHelpers';
-import { useInteractiveContext } from 'contexts';
-import { useTheme } from 'helpers/hooks';
+import { useInteractiveContext, useKeyContext } from 'contexts';
 
 SlideListItem.propTypes = {
   interactiveId: PropTypes.number.isRequired,
@@ -24,7 +23,7 @@ export default function SlideListItem({
 }) {
   const {
     itemSelected: { color: itemSelectedColor, opacity: itemSelectedOpacity }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onSetSlideState = useInteractiveContext(
     (v) => v.actions.onSetSlideState
   );

@@ -8,9 +8,10 @@ import Icon from 'components/Icon';
 import Loading from 'components/Loading';
 import Button from 'components/Button';
 import { addEmoji, stringIsEmpty } from 'helpers/stringHelpers';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useTheme, useOutsideClick } from 'helpers/hooks';
+import { useOutsideClick } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const editLabel = localize('edit');
@@ -60,16 +61,15 @@ export default function SectionPanel({
   innerStyle = {},
   title
 }) {
-  const {
-    success: { color: successColor }
-  } = useTheme();
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const [savingEdit, setSavingEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const {
+    success: { color: successColor },
     sectionPanel: { color: sectionPanelColor }
-  } = useTheme(customColorTheme);
+  } = Theme(customColorTheme || profileTheme);
   const TitleInputRef = useRef(null);
   useOutsideClick(TitleInputRef, () => {
     setOnEdit(false);

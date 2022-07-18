@@ -7,8 +7,7 @@ import ConfirmModal from 'components/Modals/ConfirmModal';
 import Icon from 'components/Icon';
 import { Color } from 'constants/css';
 import { socket } from 'constants/io';
-import { useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from 'components/ErrorBoundary';
 import localize from 'constants/localize';
@@ -49,11 +48,13 @@ export default function ChessModal({
   opponentName,
   socketConnected
 }) {
-  const { banned, userId, username, profilePicUrl } = useMyState();
+  const { banned, userId, username, profilePicUrl } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     warning: { color: warningColor },
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const fetchCurrentChessState = useAppContext(
     (v) => v.requestHelpers.fetchCurrentChessState
   );

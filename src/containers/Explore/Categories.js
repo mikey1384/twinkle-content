@@ -5,8 +5,7 @@ import Link from 'components/Link';
 import Icon from 'components/Icon';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -27,10 +26,10 @@ export default function Categories({
   const onChangeDefaultSearchFilter = useAppContext(
     (v) => v.user.actions.onChangeDefaultSearchFilter
   );
-  const { searchFilter: defaultSearchFilter } = useMyState();
+  const { searchFilter: defaultSearchFilter } = useKeyContext((v) => v.myState);
   const {
     search: { color: searchColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
 
   return (

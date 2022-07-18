@@ -11,6 +11,7 @@ import { NotiContext } from './Notification';
 import { ProfileContext } from './Profile';
 import { MissionContext } from './Mission';
 import { ViewContext } from './View';
+import { KeyContext } from './KeyContext';
 
 export function useAppContext(fn) {
   return useContextSelector(AppContext, fn);
@@ -47,4 +48,8 @@ export function useMissionContext(fn) {
 }
 export function useViewContext(fn) {
   return useContextSelector(ViewContext, fn);
+}
+
+export function useKeyContext(fn) {
+  return useContextSelector(KeyContext, fn);
 }

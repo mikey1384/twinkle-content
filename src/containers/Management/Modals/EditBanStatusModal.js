@@ -8,8 +8,7 @@ import Button from 'components/Button';
 import { css } from '@emotion/css';
 import { Color } from 'constants/css';
 import { isEqual } from 'lodash';
-import { useTheme } from 'helpers/hooks';
-import { useAppContext, useManagementContext } from 'contexts';
+import { useAppContext, useKeyContext, useManagementContext } from 'contexts';
 
 EditBanStatusModal.propTypes = {
   onHide: PropTypes.func.isRequired,
@@ -19,7 +18,7 @@ EditBanStatusModal.propTypes = {
 export default function EditBanStatusModal({ onHide, target }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const updateBanStatus = useAppContext(
     (v) => v.requestHelpers.updateBanStatus
   );

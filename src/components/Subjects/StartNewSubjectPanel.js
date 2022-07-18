@@ -4,8 +4,8 @@ import SubjectInputForm from './SubjectInputForm';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { charLimit } from 'constants/defaultValues';
-import { useAppContext, useContentContext } from 'contexts';
-import { useContentState, useMyState } from 'helpers/hooks';
+import { useAppContext, useContentContext, useKeyContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
 import localize from 'constants/localize';
@@ -28,7 +28,7 @@ export default function StartNewSubjectPanel({
   onUploadSubject
 }) {
   const uploadSubject = useAppContext((v) => v.requestHelpers.uploadSubject);
-  const { canEditRewardLevel } = useMyState();
+  const { canEditRewardLevel } = useKeyContext((v) => v.myState);
   const onSetSubjectFormShown = useContentContext(
     (v) => v.actions.onSetSubjectFormShown
   );

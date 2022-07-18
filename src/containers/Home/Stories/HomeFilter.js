@@ -7,8 +7,7 @@ import { PropTypes } from 'prop-types';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { isMobile } from 'helpers';
-import { useMyState } from 'helpers/hooks';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import localize from 'constants/localize';
 
 const allPostsLabel = localize('allPosts');
@@ -57,7 +56,7 @@ export default function HomeFilter({
   const toggleHideWatched = useAppContext(
     (v) => v.requestHelpers.toggleHideWatched
   );
-  const { hideWatched, userId } = useMyState();
+  const { hideWatched, userId } = useKeyContext((v) => v.myState);
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {

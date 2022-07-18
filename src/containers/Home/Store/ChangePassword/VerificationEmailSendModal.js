@@ -5,17 +5,17 @@ import Button from 'components/Button';
 import CheckYourEmail from 'components/CheckYourEmail';
 import SelectEmail from 'components/SelectEmail';
 import AskForHelp from 'components/AskForHelp';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 VerificationEmailSendModal.propTypes = {
   onHide: PropTypes.func.isRequired
 };
 
 export default function VerificationEmailSendModal({ onHide }) {
-  const { email, verifiedEmail, userId } = useMyState();
+  const { email, verifiedEmail, userId } = useKeyContext((v) => v.myState);
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const emailExists = useMemo(
     () => email || verifiedEmail,
     [email, verifiedEmail]

@@ -4,9 +4,8 @@ import PlaylistModal from 'components/Modals/PlaylistModal';
 import TagModal from './TagModal';
 import { hashify } from 'helpers/stringHelpers';
 import { css } from '@emotion/css';
-import { Color } from 'constants/css';
-import { useAppContext } from 'contexts';
-import { useMyState, useTheme } from 'helpers/hooks';
+import { Color, Theme } from 'constants/css';
+import { useAppContext, useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -31,13 +30,13 @@ function TagStatus({
   theme,
   tags
 }) {
+  const { canEditPlaylists, profileTheme } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const fetchPlaylistsContaining = useAppContext(
     (v) => v.requestHelpers.fetchPlaylistsContaining
   );
-  const { canEditPlaylists } = useMyState();
   const [shownPlaylistId, setShownPlaylistId] = useState();
   const [shownPlaylistTitle, setShownPlaylistTitle] = useState('');
   const [tagModalShown, setTagModalShown] = useState(false);

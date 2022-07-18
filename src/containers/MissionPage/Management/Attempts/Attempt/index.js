@@ -6,8 +6,8 @@ import ApproveInterface from './ApproveInterface';
 import LongText from 'components/Texts/LongText';
 import { Color, borderRadius } from 'constants/css';
 import { panel } from '../../../Styles';
-import { useTheme } from 'helpers/hooks';
 import { timeSince } from 'helpers/timeStampHelpers';
+import { useKeyContext } from 'contexts';
 import { stringIsEmpty, processedStringWithURL } from 'helpers/stringHelpers';
 
 Attempt.propTypes = {
@@ -27,7 +27,7 @@ export default function Attempt({
 }) {
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   return (
     <div
       style={{ width: '100%', paddingBottom: '1.5rem', ...style }}

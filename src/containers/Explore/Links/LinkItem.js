@@ -11,8 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useExploreContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useExploreContext,
+  useKeyContext
+} from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import localize from 'constants/localize';
 
@@ -40,10 +45,12 @@ export default function LinkItem({
   const navigate = useNavigate();
   const deleteContent = useAppContext((v) => v.requestHelpers.deleteContent);
   const editContent = useAppContext((v) => v.requestHelpers.editContent);
-  const { authLevel, canDelete, canEdit, userId } = useMyState();
+  const { authLevel, canDelete, canEdit, userId } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     link: { color: linkColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const onEditLinkTitle = useExploreContext((v) => v.actions.onEditLinkTitle);
   const onDeleteContent = useContentContext((v) => v.actions.onDeleteContent);
   const onInitContent = useContentContext((v) => v.actions.onInitContent);

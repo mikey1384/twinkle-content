@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
 import localize from 'constants/localize';
-import { useTheme } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 const areYouSureLabel = localize('areYouSure');
 const cancelLabel = localize('cancel');
@@ -33,7 +33,7 @@ export default function ConfirmModal({
 }) {
   const {
     done: { color: doneColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const [submitting, setSubmitting] = useState(false);
   return (
     <Modal modalOverModal={modalOverModal} onHide={onHide}>

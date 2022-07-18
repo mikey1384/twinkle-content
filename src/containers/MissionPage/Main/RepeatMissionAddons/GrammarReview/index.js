@@ -5,9 +5,8 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
 import QuestionListItem from './QuestionListItem';
-import { useAppContext } from 'contexts';
+import { useAppContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
-import { useTheme } from 'helpers/hooks';
 import { mobileMaxWidth } from 'constants/css';
 
 GrammarReview.propTypes = {
@@ -27,7 +26,7 @@ export default function GrammarReview({
 }) {
   const {
     loadMoreButton: { color: loadMoreButtonColor }
-  } = useTheme();
+  } = useKeyContext((v) => v.theme);
   const loadMoreGrammarAttempts = useAppContext(
     (v) => v.requestHelpers.loadMoreGrammarAttempts
   );

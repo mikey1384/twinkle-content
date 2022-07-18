@@ -20,7 +20,7 @@ import ContentFileViewer from 'components/ContentFileViewer';
 import SecretComment from 'components/SecretComment';
 import Icon from 'components/Icon';
 import LoginToViewContent from 'components/LoginToViewContent';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
 import {
@@ -29,8 +29,13 @@ import {
   isMobile
 } from 'helpers';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
-import { useContentState, useMyState, useTheme } from 'helpers/hooks';
-import { useAppContext, useContentContext, useInputContext } from 'contexts';
+import { useContentState } from 'helpers/hooks';
+import {
+  useAppContext,
+  useContentContext,
+  useInputContext,
+  useKeyContext
+} from 'contexts';
 import { useNavigate } from 'react-router-dom';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 import { v1 as uuidv1 } from 'uuid';
@@ -76,16 +81,17 @@ export default function TargetContent({
   const {
     authLevel,
     canReward,
+    profileTheme,
     profilePicUrl,
     userId,
     twinkleCoins,
     username
-  } = useMyState();
+  } = useKeyContext((v) => v.myState);
   const {
     link: { color: linkColor },
     content: { color: contentColor },
     reward: { color: rewardColor }
-  } = useTheme(theme);
+  } = Theme(theme || profileTheme);
   const onSetXpRewardInterfaceShown = useContentContext(
     (v) => v.actions.onSetXpRewardInterfaceShown
   );

@@ -4,8 +4,7 @@ import FilterBar from 'components/FilterBar';
 import Loading from 'components/Loading';
 import QuestionListItem from './QuestionListItem';
 import LoadMoreButton from 'components/Buttons/LoadMoreButton';
-import { useAppContext } from 'contexts';
-import { useMyState } from 'helpers/hooks';
+import { useAppContext, useKeyContext } from 'contexts';
 
 SubmittedQuestions.propTypes = {
   style: PropTypes.object,
@@ -18,7 +17,7 @@ export default function SubmittedQuestions({
   mission,
   onSetMissionState
 }) {
-  const { isCreator } = useMyState();
+  const { isCreator } = useKeyContext((v) => v.myState);
   const {
     managementTab: activeTab = 'pending',
     loadMoreGrammarQuestionsButton: loadMoreButton

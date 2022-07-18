@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import ProfilePic from 'components/ProfilePic';
 import UsernameText from 'components/Texts/UsernameText';
 import Icon from 'components/Icon';
-import { useAppContext, useChatContext } from 'contexts';
+import { useAppContext, useChatContext, useKeyContext } from 'contexts';
 import { css } from '@emotion/css';
 import { Color, mobileMaxWidth } from 'constants/css';
-import { useMyState } from 'helpers/hooks';
 
 MemberListItem.propTypes = {
   onlineMembers: PropTypes.object,
@@ -24,7 +23,7 @@ function MemberListItem({ onlineMembers, creatorId, member, style }) {
     [chatStatus, member.id]
   );
 
-  const { userId: myId } = useMyState();
+  const { userId: myId } = useKeyContext((v) => v.myState);
   return username || member.username ? (
     <div
       style={{

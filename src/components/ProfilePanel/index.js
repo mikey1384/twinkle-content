@@ -13,20 +13,16 @@ import UserDetails from 'components/UserDetails';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { MAX_PROFILE_PIC_SIZE } from 'constants/defaultValues';
-import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
+import { borderRadius, Color, Theme, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
 import { timeSince } from 'helpers/timeStampHelpers';
-import {
-  useContentState,
-  useLazyLoad,
-  useMyState,
-  useTheme
-} from 'helpers/hooks';
+import { useContentState, useLazyLoad } from 'helpers/hooks';
 import { useInView } from 'react-intersection-observer';
 import {
   useAppContext,
   useChatContext,
   useContentContext,
+  useKeyContext,
   useProfileContext
 } from 'contexts';
 import localize from 'constants/localize';
@@ -168,10 +164,12 @@ function ProfilePanel({ expandable, profileId, style }) {
   const uploadBio = useAppContext((v) => v.requestHelpers.uploadBio);
   const onResetProfile = useProfileContext((v) => v.actions.onResetProfile);
 
-  const { isCreator, userId, username, banned, authLevel } = useMyState();
+  const { isCreator, userId, username, banned, authLevel } = useKeyContext(
+    (v) => v.myState
+  );
   const {
     profilePanel: { color: profilePanelColor }
-  } = useTheme(profileTheme || 'logoBlue');
+  } = Theme(profileTheme || 'logoBlue');
 
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);

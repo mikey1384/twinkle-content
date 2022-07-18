@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import RegularMenu from './RegularMenu';
 import TeacherMenu from './TeacherMenu';
-import { useMyState } from 'helpers/hooks';
+import { useKeyContext } from 'contexts';
 
 CreateNewChatModal.propTypes = {
   creatingChat: PropTypes.bool,
@@ -12,7 +12,7 @@ CreateNewChatModal.propTypes = {
 };
 
 export default function CreateNewChatModal({ creatingChat, onHide, onDone }) {
-  const { authLevel } = useMyState();
+  const { authLevel } = useKeyContext((v) => v.myState);
   return (
     <Modal onHide={onHide}>
       {authLevel > 2 ? (
