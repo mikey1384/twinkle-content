@@ -164,6 +164,7 @@ export default function FilterBar({
   }, [
     inverted,
     filterColor,
+    filterOpacity,
     bordered,
     dropdownButton,
     filterTextColor,
