@@ -44,6 +44,7 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
       ),
     [pathname]
   );
+
   const navigate = useNavigate();
   const currentPathId = useMemo(() => pathname.split('chat/')[1], [pathname]);
   const usingChat = useMemo(
