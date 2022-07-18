@@ -112,6 +112,7 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:clap\:)/gi, '👏')
     .replace(/(\:colored pencil\:)/gi, '🖍️')
     .replace(/(\:computer\:)/gi, '🖥')
+    .replace(/(\:congrats\:)/gi, '🎊')
     .replace(/(\:congratulations\:)/gi, '🎊')
     .replace(/(\:confounded\:)/gi, '😖')
     .replace(/(\:confused\:)/gi, '😕')
@@ -165,6 +166,8 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:lol\:)/gi, '🤣')
     .replace(/(\:love\:)/gi, '😍')
     .replace(/(\:mad\:)/gi, '😡')
+    .replace(/(\:mindblown\:)/gi, '🤯')
+    .replace(/(\:mindblowing\:)/gi, '🤯')
     .replace(/(\:money\:)/gi, '💰')
     .replace(/(\:monkey\:)/gi, '🐵')
     .replace(/(\:monocle\:)/gi, '🧐')
@@ -251,7 +254,8 @@ export function addAdvancedEmoji(string) {
     .replace(/(\:yummy\:)/gi, '😋')
     .replace(/(\:zombie\:)/gi, '🧟')
     .replace(/(\:zipper\:)/gi, '🤐')
-    .replace(/(\:zzz\:)/gi, '💤');
+    .replace(/(\:zzz\:)/gi, '💤')
+    .replace(/(\:\^\^\:)/gi, '😊');
 }
 
 export function capitalize(string = '') {
