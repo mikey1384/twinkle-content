@@ -52,6 +52,10 @@ export default function LinkPage() {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     },
+    byUserIndicatorText: {
+      color: byUserIndicatorTextColor,
+      shadow: byUserIndicatorTextShadowColor
+    },
     reward: { color: rewardColor }
   } = useKeyContext((v) => v.theme);
   const onEditLinkPage = useExploreContext((v) => v.actions.onEditLinkPage);
@@ -310,7 +314,10 @@ export default function LinkPage() {
             style={{
               padding: '0.7rem',
               background: Color[byUserIndicatorColor](byUserIndicatorOpacity),
-              color: '#fff',
+              color: Color[byUserIndicatorTextColor](),
+              textShadow: byUserIndicatorTextShadowColor
+                ? `0 0 2px ${Color[byUserIndicatorTextShadowColor]()}`
+                : 'none',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',

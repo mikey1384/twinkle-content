@@ -29,13 +29,14 @@ export default function FilterBar({
   const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     alert: { color: alertColor },
-    filter: { color: filterColor },
-    filterActive: { color: filterActiveColor }
+    filter: { color: filterColor, opacity: filterOpacity },
+    filterActive: { color: filterActiveColor },
+    filterText: { color: filterTextColor, shadow: filterTextShadowColor }
   } = useTheme(color || profileTheme);
 
   const FilterBarStyle = useMemo(() => {
     return `${css`
-      background: ${inverted ? Color[filterColor](0.7) : '#fff'};
+      background: ${inverted ? Color[filterColor](filterOpacity) : '#fff'};
       height: 6rem;
       margin-bottom: 1rem;
       ${!inverted && bordered
@@ -75,9 +76,12 @@ export default function FilterBar({
           height: 100%;
           width: 100%;
           border-bottom: ${inverted ? '' : `1px solid ${Color.borderGray()}`};
-          color: ${inverted ? '#fff' : Color.gray()};
+          color: ${inverted ? Color[filterTextColor]() : Color.gray()};
+          text-shadow: ${inverted && filterTextShadowColor
+            ? `0 0 2px ${Color[filterTextShadowColor]()}`
+            : 'none'};
           > a {
-            color: ${inverted ? '#fff' : Color.gray()};
+            color: ${inverted ? Color[filterTextColor]() : Color.gray()};
             text-decoration: none;
           }
           &.alert {
@@ -89,9 +93,16 @@ export default function FilterBar({
           border-bottom: ${inverted
             ? ''
             : `3px solid ${Color[filterActiveColor]()}`};
-          color: ${inverted ? '#fff' : Color[filterActiveColor]()};
+          color: ${inverted
+            ? Color[filterTextColor]()
+            : Color[filterActiveColor]()};
           > a {
-            color: ${inverted ? '#fff' : Color[filterActiveColor]()};
+            color: ${inverted
+              ? Color[filterTextColor]()
+              : Color[filterActiveColor]()};
+            text-shadow: ${inverted && filterTextShadowColor
+              ? `0 0 4px ${Color[filterTextShadowColor]()}`
+              : 'none'};
           }
           @media (max-width: ${mobileMaxWidth}) {
             border-bottom: ${inverted
@@ -119,7 +130,12 @@ export default function FilterBar({
         }
         > nav:hover {
           background: ${inverted ? Color[filterActiveColor]() : ''};
-          color: ${inverted ? '#fff' : Color[filterActiveColor]()};
+          color: ${inverted
+            ? Color[filterTextColor]()
+            : Color[filterActiveColor]()};
+          text-shadow: ${inverted && filterTextShadowColor
+            ? `0 0 4px ${Color[filterTextShadowColor]()}`
+            : 'none'};
           border-bottom: ${inverted
             ? ''
             : `3px solid ${Color[filterActiveColor]()}`};
@@ -128,7 +144,12 @@ export default function FilterBar({
             border-bottom: 3px solid ${Color[alertColor]()}!important;
           }
           > a {
-            color: ${inverted ? '#fff' : Color[filterActiveColor]()};
+            color: ${inverted
+              ? Color[filterTextColor]()
+              : Color[filterActiveColor]()};
+            text-shadow: ${inverted && filterTextShadowColor
+              ? `0 0 4px ${Color[filterTextShadowColor]()}`
+              : 'none'};
             font-weight: bold;
           }
         }
@@ -141,13 +162,15 @@ export default function FilterBar({
       }
     `} ${className}`;
   }, [
-    alertColor,
-    bordered,
-    className,
-    dropdownButton,
     inverted,
+    filterColor,
+    bordered,
+    dropdownButton,
+    filterTextColor,
+    filterTextShadowColor,
+    alertColor,
     filterActiveColor,
-    filterColor
+    className
   ]);
 
   return (

@@ -7,6 +7,7 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-react": "^7.17.12",
     "@emotion/css": "^11.9.0",
+    "@emotion/react": "^11.9.3",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/pro-light-svg-icons": "^6.1.1",

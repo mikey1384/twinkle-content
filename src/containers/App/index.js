@@ -33,6 +33,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import { useLocation, Routes, Route } from 'react-router-dom';
 import { Color, mobileMaxWidth } from 'constants/css';
 import { css } from '@emotion/css';
+import { Global } from '@emotion/react';
 import { socket } from 'constants/io';
 import { addEvent, removeEvent } from 'helpers/listenerHelpers';
 import { finalizeEmoji } from 'helpers/stringHelpers';
@@ -83,6 +84,9 @@ function App() {
   const reportError = useAppContext((v) => v.requestHelpers.reportError);
   const myState = useMyState();
   const theme = useTheme(myState.profileTheme);
+  const {
+    background: { color: backgroundColor }
+  } = theme;
   const {
     authLevel,
     profilePicUrl,
@@ -652,6 +656,13 @@ function App() {
           `}
         />
       </KeyContext.Provider>
+      <Global
+        styles={{
+          body: {
+            background: Color[backgroundColor]()
+          }
+        }}
+      />
     </ErrorBoundary>
   );
 }

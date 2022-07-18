@@ -80,6 +80,10 @@ function XPVideoPlayer({
     byUserIndicator: {
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
+    },
+    byUserIndicatorText: {
+      color: byUserIndicatorTextColor,
+      shadow: byUserIndicatorTextShadowColor
     }
   } = useKeyContext((v) => v.theme);
   const coinRewardAmount = useMemo(
@@ -377,7 +381,10 @@ function XPVideoPlayer({
             align-items: center;
             font-weight: bold;
             font-size: 1.5rem;
-            color: #fff;
+            color: ${Color[byUserIndicatorTextColor]()};
+            text-shadow: ${byUserIndicatorTextShadowColor
+              ? `0 0 2px ${Color[byUserIndicatorTextShadowColor]()}`
+              : 'none'};
             justify-content: center;
             padding: 0.5rem;
             @media (max-width: ${mobileMaxWidth}) {

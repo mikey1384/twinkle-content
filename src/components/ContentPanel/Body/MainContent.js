@@ -84,6 +84,10 @@ export default function MainContent({
       color: byUserIndicatorColor,
       opacity: byUserIndicatorOpacity
     },
+    byUserIndicatorText: {
+      color: byUserIndicatorTextColor,
+      shadow: byUserIndicatorTextShadowColor
+    },
     content: { color: contentColor }
   } = useTheme(theme || profileTheme);
   const { fileType } = useMemo(
@@ -164,7 +168,10 @@ export default function MainContent({
               ...(subjectIsAttachedToVideo ? { marginTop: '0.5rem' } : {}),
               padding: '0.7rem',
               background: Color[byUserIndicatorColor](byUserIndicatorOpacity),
-              color: '#fff',
+              color: Color[byUserIndicatorTextColor](),
+              textShadow: byUserIndicatorTextShadowColor
+                ? `0 0 2px ${Color[byUserIndicatorTextShadowColor]()}`
+                : 'none',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',

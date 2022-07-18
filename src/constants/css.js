@@ -45,6 +45,7 @@ export const Color = {
   wellGray: (opacity = 1) => `rgba(235,235,235,${opacity})`,
   inputGray: (opacity = 1) => `rgba(238,238,245,${opacity})`,
   highlightGray: (opacity = 1) => `rgba(242,242,242,${opacity})`,
+  whiteBlueGray: (opacity = 1) => `rgba(247,247,252,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
   redOrange: (opacity = 1) => `rgba(255,90,70,${opacity})`,
@@ -70,7 +71,9 @@ export const Color = {
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
+  brightGold: (opacity = 1) => `rgba(255,213,100,${opacity})`,
   gold: (opacity = 1) => `rgba(255,203,50,${opacity})`,
+  goldOrange: (opacity = 1) => `rgba(255,185,60,${opacity})`,
   yellow: (opacity = 1) => `rgba(255,255,55,${opacity})`
 };
 
@@ -89,18 +92,35 @@ export function Theme(color = 'logoBlue') {
           black: 'darkerGray',
           red: 'redOrange',
           darkBlue: 'armyGreen',
-          vantaBlack: 'armyGreen'
+          vantaBlack: 'armyGreen',
+          gold: 'pinkOrange'
         }[color] || 'green'
     },
     alert: {
-      color: 'gold'
+      color:
+        {
+          gold: 'orange'
+        }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
     alreadyPostedByThisUser: { color: 'blue' },
+    background: {
+      color:
+        {
+          gold: 'whiteBlueGray'
+        }[color] || 'whiteGray'
+    },
     button: { color },
     byUserIndicator: {
       color,
       opacity: strongColors.includes(color) ? 0.7 : 0.9
+    },
+    byUserIndicatorText: {
+      color: 'white',
+      shadow:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || ''
     },
     carousel: { color },
     carouselProgress: { color: 'logoBlue' },
@@ -116,7 +136,8 @@ export function Theme(color = 'logoBlue') {
           black: 'darkOceanBlue',
           red: 'redOrange',
           darkBlue: 'armyGreen',
-          vantaBlack: 'armyGreen'
+          vantaBlack: 'armyGreen',
+          gold: 'pinkOrange'
         }[color] || 'green'
     },
     cover: { color },
@@ -143,8 +164,19 @@ export function Theme(color = 'logoBlue') {
     filter: {
       color:
         {
-          gold: 'gold'
-        }[color] || color
+          gold: 'brightGold'
+        }[color] || color,
+      opacity:
+        {
+          gold: 1
+        }[color] || 0.7
+    },
+    filterText: {
+      color: 'white',
+      shadow:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || ''
     },
     filterActive: {
       color:
@@ -167,7 +199,8 @@ export function Theme(color = 'logoBlue') {
           black: 'oceanBlue',
           red: 'lightRed',
           darkBlue: 'oceanBlue',
-          vantaBlack: 'oceanBlue'
+          vantaBlack: 'oceanBlue',
+          gold: 'lightOrange'
         }[color] || 'lightOceanBlue'
     },
     itemSelected: { color, opacity: strongColors.includes(color) ? 0.7 : 0.8 },
@@ -178,14 +211,21 @@ export function Theme(color = 'logoBlue') {
     level5: { color: 'gold' },
     likeButton: {
       color:
-        { green: 'yellowGreen', rose: 'skyBlue', red: 'pinkOrange' }[color] ||
-        'lightBlue'
+        {
+          green: 'yellowGreen',
+          rose: 'skyBlue',
+          red: 'pinkOrange',
+          gold: 'lighterOrange'
+        }[color] || 'lightBlue'
     },
     likeButtonPressed: {
       color:
-        { green: 'darkYellowGreen', rose: 'oceanBlue', red: 'passionFruit' }[
-          color
-        ] || 'logoBlue'
+        {
+          green: 'darkYellowGreen',
+          rose: 'oceanBlue',
+          red: 'passionFruit',
+          gold: 'lightOrange'
+        }[color] || 'logoBlue'
     },
     link: {
       color:
@@ -195,7 +235,8 @@ export function Theme(color = 'logoBlue') {
           rose: 'darkOceanBlue',
           pink: 'oceanBlue',
           black: 'bluerGray',
-          vantaBlack: 'darkerOceanBlue'
+          vantaBlack: 'darkerOceanBlue',
+          gold: 'oceanBlue'
         }[color] || 'blue'
     },
     loadMoreButton: {
@@ -209,7 +250,8 @@ export function Theme(color = 'logoBlue') {
           black: 'darkGray',
           red: 'lightRed',
           darkBlue: 'lightOceanBlue',
-          vantaBlack: 'black'
+          vantaBlack: 'black',
+          gold: 'lightOceanBlue'
         }[color] || 'lightBlue'
     },
     login: { color: 'green' },
@@ -251,7 +293,8 @@ export function Theme(color = 'logoBlue') {
           green: 'blueGreen',
           orange: 'cranberry',
           rose: 'passionFruit',
-          pink: 'strongPink'
+          pink: 'strongPink',
+          gold: 'brownOrange'
         }[color] || color
     },
     warning: { color: 'pink' },
