@@ -20,10 +20,12 @@ export default function Profile() {
   const onSetUserState = useAppContext((v) => v.user.actions.onSetUserState);
   const onSetProfileId = useProfileContext((v) => v.actions.onSetProfileId);
   const onUserNotExist = useProfileContext((v) => v.actions.onUserNotExist);
-  const [selectedTheme, setSelectedTheme] = useState('logoBlue');
   const [loading, setLoading] = useState(false);
   const { notExist, profileId } = useProfileState(params.username);
   const profile = useAppContext((v) => v.user.state.userObj[profileId] || {});
+  const [selectedTheme, setSelectedTheme] = useState(
+    profile?.profileTheme || 'logoBlue'
+  );
   useEffect(() => {
     if (!notExist && !profile.loaded) {
       init();
