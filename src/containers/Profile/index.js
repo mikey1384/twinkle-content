@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Cover from './Cover';
 import Body from './Body';
 import ErrorBoundary from 'components/ErrorBoundary';
+import { Color } from 'constants/css';
 import { css } from '@emotion/css';
+import { Global } from '@emotion/react';
 import { useAppContext, useProfileContext, useKeyContext } from 'contexts';
-import { useProfileState } from 'helpers/hooks';
+import { useProfileState, useTheme } from 'helpers/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import InvalidPage from 'components/InvalidPage';
 import Loading from 'components/Loading';
@@ -26,6 +28,9 @@ export default function Profile() {
   const [selectedTheme, setSelectedTheme] = useState(
     profile?.profileTheme || 'logoBlue'
   );
+  const {
+    background: { color: backgroundColor }
+  } = useTheme(selectedTheme);
   useEffect(() => {
     if (!notExist && !profile.loaded) {
       init();
@@ -111,6 +116,13 @@ export default function Profile() {
           text={!userId ? 'Please Log In or Sign Up' : ''}
         />
       )}
+      <Global
+        styles={{
+          body: {
+            background: Color[backgroundColor]()
+          }
+        }}
+      />
     </ErrorBoundary>
   );
 
