@@ -298,6 +298,13 @@ export function Theme(color = 'logoBlue') {
     rewardableRecommendation: { color, opacity: 0.1 },
     search: { color },
     sectionPanel: { color },
+    sectionPanelText: {
+      color,
+      shadow:
+        {
+          gold: 'brownOrange'
+        }[color] || ''
+    },
     showMeAnotherSubjectButton: { color: 'green' },
     skeuomorphicDisabled: { color, opacity: 0.2 },
     spinner: { color },

@@ -68,7 +68,11 @@ export default function SectionPanel({
   const [editedTitle, setEditedTitle] = useState(title);
   const {
     success: { color: successColor },
-    sectionPanel: { color: sectionPanelColor }
+    sectionPanel: { color: sectionPanelColor },
+    sectionPanelText: {
+      color: sectionPanelTextColor,
+      shadow: sectionPanelTextShadowColor
+    }
   } = useTheme(customColorTheme || profileTheme);
   const TitleInputRef = useRef(null);
   useOutsideClick(TitleInputRef, () => {
@@ -91,7 +95,10 @@ export default function SectionPanel({
           grid-template-areas: 'title search buttons';
           grid-template-columns: auto ${onSearch ? '40%' : 'auto'} auto;
           background: #fff;
-          color: ${Color[sectionPanelColor]()};
+          color: ${Color[sectionPanelTextColor]()};
+          text-shadow: ${sectionPanelTextShadowColor
+            ? `0 1px ${Color[sectionPanelTextShadowColor]()}`
+            : 'none'};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};
           padding: 1rem;
