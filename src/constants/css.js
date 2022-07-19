@@ -74,6 +74,7 @@ export const Color = {
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
   brightGold: (opacity = 1) => `rgba(255,213,100,${opacity})`,
   gold: (opacity = 1) => `rgba(255,203,50,${opacity})`,
+  darkGold: (opacity = 1) => `rgba(250,193,50,${opacity})`,
   goldOrange: (opacity = 1) => `rgba(255,185,60,${opacity})`,
   yellow: (opacity = 1) => `rgba(255,255,55,${opacity})`
 };
@@ -118,14 +119,17 @@ export function Theme(color = 'logoBlue') {
         }[color] || color
     },
     byUserIndicator: {
-      color,
+      color:
+        {
+          gold: 'darkGold'
+        }[color] || color,
       opacity: strongColors.includes(color) ? 0.7 : 0.9
     },
     byUserIndicatorText: {
       color: 'white',
       shadow:
         {
-          gold: 'darkBrownOrange'
+          gold: 'orange'
         }[color] || ''
     },
     carousel: { color },
@@ -198,7 +202,7 @@ export function Theme(color = 'logoBlue') {
     filterActive: {
       color:
         {
-          gold: 'brownOrange'
+          gold: 'darkGold'
         }[color] || color
     },
     generalChat: {
@@ -206,7 +210,7 @@ export function Theme(color = 'logoBlue') {
         {
           black: 'darkBlue',
           vantaBlack: 'darkBlue',
-          gold: 'goldOrange'
+          gold: 'darkGold'
         }[color] || color
     },
     header: {
@@ -281,7 +285,7 @@ export function Theme(color = 'logoBlue') {
     },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
-    logoKle: { color: { gold: 'gold' }[color] || 'logoGreen' },
+    logoKle: { color: { gold: 'darkGold' }[color] || 'logoGreen' },
     mention: {
       color: { pink: 'orange', gold: 'magenta' }[color] || 'passionFruit'
     },
@@ -335,7 +339,7 @@ export function Theme(color = 'logoBlue') {
           orange: 'cranberry',
           rose: 'passionFruit',
           pink: 'strongPink',
-          gold: 'brownOrange'
+          gold: 'darkGold'
         }[color] || color
     },
     warning: { color: 'pink' },
