@@ -194,10 +194,7 @@ export function Theme(color = 'logoBlue') {
         }[color] || ''
     },
     filterActive: {
-      color:
-        {
-          gold: 'brownOrange'
-        }[color] || color
+      color
     },
     generalChat: {
       color:
@@ -296,7 +293,13 @@ export function Theme(color = 'logoBlue') {
     },
     rewardLevelForm: { color, opacity: strongColors.includes(color) ? 0.9 : 1 },
     rewardableRecommendation: { color, opacity: 0.1 },
-    search: { color },
+    search: {
+      color,
+      shadow:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || ''
+    },
     sectionPanel: { color },
     sectionPanelText: {
       color,

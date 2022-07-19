@@ -97,7 +97,7 @@ export default function SectionPanel({
           background: #fff;
           color: ${Color[sectionPanelTextColor]()};
           text-shadow: ${sectionPanelTextShadowColor
-            ? `0 1px ${Color[sectionPanelTextShadowColor]()}`
+            ? `0 0.05rem ${Color[sectionPanelTextShadowColor]()}`
             : 'none'};
           border-top-left-radius: ${borderRadius};
           border-top-right-radius: ${borderRadius};

@@ -77,9 +77,6 @@ export default function FilterBar({
           width: 100%;
           border-bottom: ${inverted ? '' : `1px solid ${Color.borderGray()}`};
           color: ${inverted ? Color[filterTextColor]() : Color.gray()};
-          text-shadow: ${inverted && filterTextShadowColor
-            ? `0 0 1px ${Color[filterTextShadowColor]()}`
-            : 'none'};
           > a {
             color: ${inverted ? Color[filterTextColor]() : Color.gray()};
             text-decoration: none;
@@ -96,13 +93,13 @@ export default function FilterBar({
           color: ${inverted
             ? Color[filterTextColor]()
             : Color[filterActiveColor]()};
+          text-shadow: ${inverted && filterTextShadowColor
+            ? `0 1px ${Color[filterTextShadowColor]()}`
+            : 'none'};
           > a {
             color: ${inverted
               ? Color[filterTextColor]()
               : Color[filterActiveColor]()};
-            text-shadow: ${inverted && filterTextShadowColor
-              ? `0 0 4px ${Color[filterTextShadowColor]()}`
-              : 'none'};
           }
           @media (max-width: ${mobileMaxWidth}) {
             border-bottom: ${inverted
@@ -134,7 +131,7 @@ export default function FilterBar({
             ? Color[filterTextColor]()
             : Color[filterActiveColor]()};
           text-shadow: ${inverted && filterTextShadowColor
-            ? `0 0 4px ${Color[filterTextShadowColor]()}`
+            ? `0 1px ${Color[filterTextShadowColor]()}`
             : 'none'};
           border-bottom: ${inverted
             ? ''
@@ -147,9 +144,6 @@ export default function FilterBar({
             color: ${inverted
               ? Color[filterTextColor]()
               : Color[filterActiveColor]()};
-            text-shadow: ${inverted && filterTextShadowColor
-              ? `0 0 4px ${Color[filterTextShadowColor]()}`
-              : 'none'};
             font-weight: bold;
           }
         }

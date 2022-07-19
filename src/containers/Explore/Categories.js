@@ -28,7 +28,7 @@ export default function Categories({
   );
   const { searchFilter: defaultSearchFilter } = useKeyContext((v) => v.myState);
   const {
-    search: { color: searchColor }
+    search: { color: searchColor, shadow: searchShadowColor }
   } = useKeyContext((v) => v.theme);
   const [changingDefaultFilter, setChangingDefaultFilter] = useState(false);
 
@@ -46,6 +46,9 @@ export default function Categories({
         className={css`
           width: 80%;
           color: ${Color[searchColor]()};
+          text-shadow: ${searchShadowColor
+            ? `0 0.05rem ${Color[searchShadowColor]()}`
+            : 'none'};
           > nav {
             width: 100%;
             text-align: center;
