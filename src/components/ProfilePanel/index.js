@@ -168,7 +168,8 @@ function ProfilePanel({ expandable, profileId, style }) {
     (v) => v.myState
   );
   const {
-    profilePanel: { color: profilePanelColor }
+    profilePanel: { color: profilePanelColor },
+    coverText: { color: coverTextColor, shadow: coverTextShadowColor }
   } = useTheme(profileTheme || 'logoBlue');
 
   const [bioEditModalShown, setBioEditModalShown] = useState(false);
@@ -287,7 +288,10 @@ function ProfilePanel({ expandable, profileId, style }) {
                 <div
                   style={{
                     fontSize: '2.2rem',
-                    color: '#fff'
+                    color: Color[coverTextColor](),
+                    textShadow: coverTextShadowColor
+                      ? `1px 1px ${Color[coverTextShadowColor]()}`
+                      : 'none'
                   }}
                 >
                   {userType.includes('teacher') ? 'teacher' : userType}
