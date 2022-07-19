@@ -10,7 +10,6 @@ import { Color, mobileMaxWidth, desktopMinWidth } from 'constants/css';
 import { socket } from 'constants/io';
 import { useNavigate, useLocation, matchPath } from 'react-router-dom';
 import { getSectionFromPathname, parseChannelPath } from 'helpers';
-import { useTheme } from 'helpers/hooks';
 import {
   useAppContext,
   useContentContext,
@@ -78,14 +77,12 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
     (v) => v.requestHelpers.updateChatLastRead
   );
 
+  const { searchFilter, userId, username, loggedIn, profilePicUrl } =
+    useKeyContext((v) => v.myState);
   const {
-    searchFilter,
-    userId,
-    username,
-    loggedIn,
-    profilePicUrl,
-    profileTheme
-  } = useKeyContext((v) => v.myState);
+    header: { color: headerColor }
+  } = useKeyContext((v) => v.theme);
+
   const channelOnCall = useChatContext((v) => v.state.channelOnCall);
   const channelsObj = useChatContext((v) => v.state.channelsObj);
   const chatType = useChatContext((v) => v.state.chatType);
@@ -217,10 +214,6 @@ export default function Header({ onMobileMenuOpen, style = {} }) {
   const onUpdateMissionAttempt = useMissionContext(
     (v) => v.actions.onUpdateMissionAttempt
   );
-
-  const {
-    header: { color: headerColor }
-  } = useTheme(profileTheme);
 
   const prevProfilePicUrl = useRef(profilePicUrl);
   const peersRef = useRef({});
