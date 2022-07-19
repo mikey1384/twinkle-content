@@ -23,6 +23,10 @@ function LeftMenu({ onNewButtonClick }) {
     chatFlatButton: {
       color: chatFlatButtonColor,
       opacity: chatFlatButtonOpacity
+    },
+    chatFlatButtonText: {
+      color: chatFlatButtonTextColor,
+      shadow: chatFlatButtonTextShadowColor
     }
   } = useKeyContext((v) => v.theme);
   const chatType = useChatContext((v) => v.state.chatType);
@@ -55,7 +59,10 @@ function LeftMenu({ onNewButtonClick }) {
         className={`unselectable ${css`
           padding: 1rem;
           background: ${leftMenuTopButtonColor};
-          color: #fff;
+          color: ${Color[chatFlatButtonTextColor]()};
+          ${chatFlatButtonTextShadowColor
+            ? `text-shadow: 0 0 1px ${Color[chatFlatButtonTextShadowColor]()}`
+            : ''};
           display: flex;
           justify-content: center;
           align-items: center;

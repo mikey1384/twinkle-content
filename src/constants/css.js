@@ -110,7 +110,12 @@ export function Theme(color = 'logoBlue') {
           gold: 'whiteBlueGray'
         }[color] || 'whiteGray'
     },
-    button: { color },
+    button: {
+      color:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || color
+    },
     byUserIndicator: {
       color,
       opacity: strongColors.includes(color) ? 0.7 : 0.9
@@ -125,6 +130,21 @@ export function Theme(color = 'logoBlue') {
     carousel: { color },
     carouselProgress: { color: 'logoBlue' },
     carouselProgressComplete: { color: 'blue' },
+    chatFlatButton: {
+      color:
+        {
+          gold: 'brownOrange'
+        }[color] || color,
+      opacity: 0.8
+    },
+    chatFlatButtonText: {
+      color: 'white',
+      shadow:
+        {
+          gold: 'orange'
+        }[color] || ''
+    },
+    chatInvitation: { color },
     content: {
       color:
         {
@@ -156,11 +176,6 @@ export function Theme(color = 'logoBlue') {
         }[color] || 'rose'
     },
     done: { color: 'blue' },
-    chatFlatButton: {
-      color,
-      opacity: 0.8
-    },
-    chatInvitation: { color },
     filter: {
       color:
         {
@@ -185,7 +200,12 @@ export function Theme(color = 'logoBlue') {
         }[color] || color
     },
     generalChat: {
-      color: color === 'black' || color === 'vantablack' ? 'darkBlue' : color
+      color:
+        {
+          black: 'darkBlue',
+          vantaBlack: 'darkBlue',
+          gold: 'brownOrange'
+        }[color] || color
     },
     homeMenuItemActive: { color },
     info: {
@@ -256,7 +276,7 @@ export function Theme(color = 'logoBlue') {
     },
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
-    logoKle: { color: 'logoGreen' },
+    logoKle: { color: { gold: 'gold' }[color] || 'logoGreen' },
     mention: { color: { pink: 'orange' }[color] || 'passionFruit' },
     mission: { color: 'orange' },
     profilePanel: { color },
