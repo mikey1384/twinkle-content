@@ -94,8 +94,7 @@ export function Theme(color = 'logoBlue') {
           black: 'darkerGray',
           red: 'redOrange',
           darkBlue: 'armyGreen',
-          vantaBlack: 'armyGreen',
-          gold: 'bluerGray'
+          vantaBlack: 'armyGreen'
         }[color] || 'green'
     },
     alert: {
@@ -187,8 +186,7 @@ export function Theme(color = 'logoBlue') {
           black: 'darkOceanBlue',
           red: 'redOrange',
           darkBlue: 'armyGreen',
-          vantaBlack: 'armyGreen',
-          gold: 'bluerGray'
+          vantaBlack: 'armyGreen'
         }[color] || 'green'
     },
     cover: { color },
