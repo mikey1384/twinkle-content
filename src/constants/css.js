@@ -115,7 +115,7 @@ export function Theme(color = 'logoBlue') {
     button: {
       color:
         {
-          gold: 'darkBrownOrange'
+          gold: 'orange'
         }[color] || color
     },
     byUserIndicator: {
