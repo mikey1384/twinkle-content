@@ -19,7 +19,8 @@ function ChatSearchBox({ style }) {
     (v) => v.myState
   );
   const {
-    generalChat: { color: generalChatColor }
+    generalChat: { color: generalChatColor },
+    chatGroup: { color: chatGroupColor }
   } = useKeyContext((v) => v.theme);
   const chatSearchResults = useChatContext((v) => v.state.chatSearchResults);
   const selectedChannelId = useChatContext((v) => v.state.selectedChannelId);
@@ -88,7 +89,9 @@ function ChatSearchBox({ style }) {
             <span
               style={{
                 color:
-                  Color[item.channelId === 2 ? generalChatColor : 'logoBlue'](),
+                  Color[
+                    item.channelId === 2 ? generalChatColor : chatGroupColor
+                  ](),
                 fontWeight: 'bold'
               }}
             >

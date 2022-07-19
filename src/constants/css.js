@@ -138,18 +138,38 @@ export function Theme(color = 'logoBlue') {
     chatFlatButton: {
       color:
         {
-          gold: 'goldOrange'
+          gold: 'darkBrownOrange'
         }[color] || color,
-      opacity: 0.8
+      opacity:
+        {
+          gold: 1
+        }[color] || 0.8
+    },
+    chatFlatButtonHovered: {
+      color:
+        {
+          gold: 'gold'
+        }[color] || color
     },
     chatFlatButtonText: {
       color: 'white',
       shadow:
         {
-          gold: 'orange'
+          gold: 'darkBrownOrange'
         }[color] || ''
     },
-    chatInvitation: { color },
+    chatGroup: {
+      color:
+        {
+          gold: 'pinkOrange'
+        }[color] || 'logoBlue'
+    },
+    chatInvitation: {
+      color:
+        {
+          gold: 'pinkOrange'
+        }[color] || color
+    },
     content: {
       color:
         {
@@ -210,7 +230,7 @@ export function Theme(color = 'logoBlue') {
         {
           black: 'darkBlue',
           vantaBlack: 'darkBlue',
-          gold: 'darkGold'
+          gold: 'logoBlue'
         }[color] || color
     },
     header: {

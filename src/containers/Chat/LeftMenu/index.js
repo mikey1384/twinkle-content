@@ -24,6 +24,7 @@ function LeftMenu({ onNewButtonClick }) {
       color: chatFlatButtonColor,
       opacity: chatFlatButtonOpacity
     },
+    chatFlatButtonHovered: { color: chatFlatButtonHoveredColor },
     chatFlatButtonText: {
       color: chatFlatButtonTextColor,
       shadow: chatFlatButtonTextShadowColor
@@ -36,8 +37,8 @@ function LeftMenu({ onNewButtonClick }) {
     [chatFlatButtonColor, chatFlatButtonOpacity]
   );
   const leftMenuTopButtonHoverColor = useMemo(
-    () => Color[chatFlatButtonColor](),
-    [chatFlatButtonColor]
+    () => Color[chatFlatButtonHoveredColor](),
+    [chatFlatButtonHoveredColor]
   );
 
   return (
