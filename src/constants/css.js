@@ -144,7 +144,7 @@ export function Theme(color = 'logoBlue') {
     chatFlatButton: {
       color:
         {
-          gold: 'darkBrownOrange'
+          gold: 'brownOrange'
         }[color] || color,
       opacity:
         {
