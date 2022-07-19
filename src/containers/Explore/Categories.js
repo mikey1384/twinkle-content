@@ -47,7 +47,7 @@ export default function Categories({
           width: 80%;
           color: ${Color[searchColor]()};
           text-shadow: ${searchShadowColor
-            ? `0 0.05rem ${Color[searchShadowColor]()}`
+            ? `0.05rem 0.05rem ${Color[searchShadowColor]()}`
             : 'none'};
           > nav {
             width: 100%;

@@ -30,6 +30,7 @@ export default function FilterBar({
   const {
     alert: { color: alertColor },
     filter: { color: filterColor, opacity: filterOpacity },
+    invertedFilterActive: { color: invertedFilterActiveColor },
     filterActive: { color: filterActiveColor },
     filterText: { color: filterTextColor, shadow: filterTextShadowColor }
   } = useTheme(color || profileTheme);
@@ -86,7 +87,7 @@ export default function FilterBar({
           }
         }
         > nav.active {
-          background: ${inverted ? Color[filterActiveColor]() : ''};
+          background: ${inverted ? Color[invertedFilterActiveColor]() : ''};
           border-bottom: ${inverted
             ? ''
             : `3px solid ${Color[filterActiveColor]()}`};
@@ -126,7 +127,7 @@ export default function FilterBar({
             : ''};
         }
         > nav:hover {
-          background: ${inverted ? Color[filterActiveColor]() : ''};
+          background: ${inverted ? Color[invertedFilterActiveColor]() : ''};
           color: ${inverted
             ? Color[filterTextColor]()
             : Color[filterActiveColor]()};
@@ -162,9 +163,10 @@ export default function FilterBar({
     bordered,
     dropdownButton,
     filterTextColor,
-    filterTextShadowColor,
     alertColor,
+    invertedFilterActiveColor,
     filterActiveColor,
+    filterTextShadowColor,
     className
   ]);
 

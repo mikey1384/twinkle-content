@@ -45,7 +45,7 @@ export const Color = {
   wellGray: (opacity = 1) => `rgba(235,235,235,${opacity})`,
   inputGray: (opacity = 1) => `rgba(238,238,245,${opacity})`,
   highlightGray: (opacity = 1) => `rgba(242,242,242,${opacity})`,
-  whiteBlueGray: (opacity = 1) => `rgba(247,247,252,${opacity})`,
+  whiteBlueGray: (opacity = 1) => `rgba(250,250,255,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
   redOrange: (opacity = 1) => `rgba(255,90,70,${opacity})`,
@@ -179,7 +179,7 @@ export function Theme(color = 'logoBlue') {
     filter: {
       color:
         {
-          gold: 'brightGold'
+          gold: 'darkBrownOrange'
         }[color] || color,
       opacity:
         {
@@ -193,15 +193,18 @@ export function Theme(color = 'logoBlue') {
           gold: 'darkBrownOrange'
         }[color] || ''
     },
+    invertedFilterActive: { color },
     filterActive: {
-      color
+      color:
+        {
+          gold: 'darkBrownOrange'
+        }[color] || color
     },
     generalChat: {
       color:
         {
           black: 'darkBlue',
-          vantaBlack: 'darkBlue',
-          gold: 'brownOrange'
+          vantaBlack: 'darkBlue'
         }[color] || color
     },
     homeMenuItemActive: { color },
