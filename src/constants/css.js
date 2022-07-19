@@ -45,7 +45,7 @@ export const Color = {
   wellGray: (opacity = 1) => `rgba(235,235,235,${opacity})`,
   inputGray: (opacity = 1) => `rgba(238,238,245,${opacity})`,
   highlightGray: (opacity = 1) => `rgba(242,242,242,${opacity})`,
-  whiteBlueGray: (opacity = 1) => `rgba(250,250,255,${opacity})`,
+  whiteBlueGray: (opacity = 1) => `rgba(248,248,255,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
   redOrange: (opacity = 1) => `rgba(255,90,70,${opacity})`,
@@ -99,7 +99,7 @@ export function Theme(color = 'logoBlue') {
     alert: {
       color:
         {
-          gold: 'orange'
+          gold: 'pinkOrange'
         }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
@@ -133,7 +133,7 @@ export function Theme(color = 'logoBlue') {
     chatFlatButton: {
       color:
         {
-          gold: 'brownOrange'
+          gold: 'goldOrange'
         }[color] || color,
       opacity: 0.8
     },
@@ -197,14 +197,15 @@ export function Theme(color = 'logoBlue') {
     filterActive: {
       color:
         {
-          gold: 'darkBrownOrange'
+          gold: 'brownOrange'
         }[color] || color
     },
     generalChat: {
       color:
         {
           black: 'darkBlue',
-          vantaBlack: 'darkBlue'
+          vantaBlack: 'darkBlue',
+          gold: 'goldOrange'
         }[color] || color
     },
     homeMenuItemActive: { color },

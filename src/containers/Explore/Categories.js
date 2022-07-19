@@ -46,9 +46,6 @@ export default function Categories({
         className={css`
           width: 80%;
           color: ${Color[searchColor]()};
-          text-shadow: ${searchShadowColor
-            ? `0.05rem 0.05rem ${Color[searchShadowColor]()}`
-            : 'none'};
           > nav {
             width: 100%;
             text-align: center;
@@ -57,6 +54,9 @@ export default function Categories({
               font-weight: bold;
               text-transform: capitalize;
               font-size: 3.5rem;
+              text-shadow: ${searchShadowColor
+                ? `0.05rem 0.05rem ${Color[searchShadowColor]()}`
+                : 'none'};
               > svg {
                 font-size: 3.2rem;
                 @media (max-width: ${mobileMaxWidth}) {
