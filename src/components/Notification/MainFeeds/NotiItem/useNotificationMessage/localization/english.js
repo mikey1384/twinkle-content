@@ -14,6 +14,7 @@ export default function renderEnglishMessage({
   linkColor,
   mentionColor,
   missionColor,
+  recommendationColor,
   rewardRootId,
   rewardType,
   rewardColor,
@@ -88,7 +89,9 @@ export default function renderEnglishMessage({
     case 'recommendation':
       return (
         <>
-          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+          <span
+            style={{ color: Color[recommendationColor](), fontWeight: 'bold' }}
+          >
             recommended
           </span>{' '}
           <span>your</span>{' '}

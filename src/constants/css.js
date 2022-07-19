@@ -68,6 +68,7 @@ export const Color = {
   lightRed: (opacity = 1) => `rgba(255,130,134,${opacity})`,
   red: (opacity = 1) => `rgba(255,65,54,${opacity})`,
   darkRed: (opacity = 1) => `rgba(235,0,60,${opacity})`,
+  magenta: (opacity = 1) => `rgba(223,50,150,${opacity})`,
   rose: (opacity = 1) => `rgba(223,0,102,${opacity})`,
   vantaBlack: (opacity = 1) => `rgba(0,0,0,${opacity})`,
   white: (opacity = 1) => `rgba(255,255,255,${opacity})`,
@@ -208,6 +209,9 @@ export function Theme(color = 'logoBlue') {
           gold: 'goldOrange'
         }[color] || color
     },
+    header: {
+      color: 'white'
+    },
     homeMenuItemActive: { color },
     info: {
       color:
@@ -278,11 +282,14 @@ export function Theme(color = 'logoBlue') {
     login: { color: 'green' },
     logoTwin: { color: 'logoBlue' },
     logoKle: { color: { gold: 'gold' }[color] || 'logoGreen' },
-    mention: { color: { pink: 'orange' }[color] || 'passionFruit' },
+    mention: {
+      color: { pink: 'orange', gold: 'magenta' }[color] || 'passionFruit'
+    },
     mission: { color: 'orange' },
     profilePanel: { color },
     progressBar: { color },
     reactionButton: { color, opacity: 0.2 },
+    recommendation: { color: { gold: 'passionFruit' }[color] || 'brownOrange' },
     reward: {
       color:
         {

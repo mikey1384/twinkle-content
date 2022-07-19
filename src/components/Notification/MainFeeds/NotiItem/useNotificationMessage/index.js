@@ -25,6 +25,7 @@ export default function useNotificationMessage({
     link: { color: linkColor },
     mention: { color: mentionColor },
     mission: { color: missionColor },
+    recommendation: { color: recommendationColor },
     reward: { color: rewardColor }
   } = useKeyContext((v) => v.theme);
   const NotificationMessage = useMemo(() => {
@@ -41,6 +42,7 @@ export default function useNotificationMessage({
       linkColor,
       mentionColor,
       missionColor,
+      recommendationColor,
       rewardColor,
       rewardRootId,
       rewardType,
@@ -56,6 +58,9 @@ export default function useNotificationMessage({
       ? renderKoreanMessage(params)
       : renderEnglishMessage(params);
   }, [
+    targetComment,
+    userId,
+    targetSubject,
     actionObj,
     actionColor,
     infoColor,
@@ -64,17 +69,15 @@ export default function useNotificationMessage({
     linkColor,
     mentionColor,
     missionColor,
+    recommendationColor,
     rewardColor,
     rewardRootId,
+    rewardType,
     rewardRootMissionType,
     rewardRootType,
-    rewardType,
     rootMissionType,
-    targetComment,
     targetObj,
-    targetSubject,
-    user,
-    userId
+    user
   ]);
 
   return NotificationMessage;

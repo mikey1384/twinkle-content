@@ -15,6 +15,7 @@ export default function renderEnglishMessage({
   linkColor,
   mentionColor,
   missionColor,
+  recommendationColor,
   rewardColor,
   rewardRootId,
   rewardType,
@@ -109,7 +110,9 @@ export default function renderEnglishMessage({
           targetObj.contentType === 'subject'
             ? '를'
             : '을'}{' '}
-          <span style={{ color: Color.brownOrange(), fontWeight: 'bold' }}>
+          <span
+            style={{ color: Color[recommendationColor](), fontWeight: 'bold' }}
+          >
             추천했습니다
           </span>
         </>
