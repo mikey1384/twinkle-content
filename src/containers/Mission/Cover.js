@@ -22,7 +22,8 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
   const navigate = useNavigate();
   const { profilePicUrl, userId, username } = useKeyContext((v) => v.myState);
   const {
-    cover: { color: coverColor }
+    cover: { color: coverColor },
+    coverText: { color: coverTextColor, shadow: coverTextShadowColor }
   } = useKeyContext((v) => v.theme);
   const loadMissionRankings = useAppContext(
     (v) => v.requestHelpers.loadMissionRankings
@@ -109,7 +110,10 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
           className={css`
             margin-left: 3rem;
             font-size: 3rem;
-            color: #fff;
+            color: ${Color[coverTextColor]()};
+            ${coverTextShadowColor
+              ? `text-shadow: 1px 1px ${Color[coverTextShadowColor]()};`
+              : ''}
             font-weight: bold;
             @media (max-width: ${mobileMaxWidth}) {
               margin-left: 1.5rem;
@@ -125,7 +129,10 @@ export default function Cover({ missionIds, missionObj, myAttempts }) {
           height: 100%;
           display: flex;
           align-items: center;
-          color: #fff;
+          color: ${Color[coverTextColor]()};
+          ${coverTextShadowColor
+            ? `text-shadow: 1px 1px ${Color[coverTextShadowColor]()};`
+            : ''}
           justify-content: center;
           flex-direction: column;
           font-weight: bold;

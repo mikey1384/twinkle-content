@@ -383,7 +383,7 @@ function XPVideoPlayer({
             font-size: 1.5rem;
             color: ${Color[byUserIndicatorTextColor]()};
             text-shadow: ${byUserIndicatorTextShadowColor
-              ? `0 0 2px ${Color[byUserIndicatorTextShadowColor]()}`
+              ? `0 0 1px ${Color[byUserIndicatorTextShadowColor]()}`
               : 'none'};
             justify-content: center;
             padding: 0.5rem;

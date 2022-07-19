@@ -316,7 +316,7 @@ export default function LinkPage() {
               background: Color[byUserIndicatorColor](byUserIndicatorOpacity),
               color: Color[byUserIndicatorTextColor](),
               textShadow: byUserIndicatorTextShadowColor
-                ? `0 0 2px ${Color[byUserIndicatorTextShadowColor]()}`
+                ? `0 0 1px ${Color[byUserIndicatorTextShadowColor]()}`
                 : 'none',
               display: 'flex',
               justifyContent: 'center',

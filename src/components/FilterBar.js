@@ -78,7 +78,7 @@ export default function FilterBar({
           border-bottom: ${inverted ? '' : `1px solid ${Color.borderGray()}`};
           color: ${inverted ? Color[filterTextColor]() : Color.gray()};
           text-shadow: ${inverted && filterTextShadowColor
-            ? `0 0 2px ${Color[filterTextShadowColor]()}`
+            ? `0 0 1px ${Color[filterTextShadowColor]()}`
             : 'none'};
           > a {
             color: ${inverted ? Color[filterTextColor]() : Color.gray()};
