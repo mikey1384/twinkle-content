@@ -37,7 +37,7 @@ export const Color = {
   lightBlueGray: (opacity = 1) => `rgba(91,105,125,${opacity})`,
   darkBlueGray: (opacity = 1) => `rgba(41,55,75,${opacity})`,
   lightBluerGray: (opacity = 1) => `rgba(71,105,155,${opacity})`,
-  bluerGray: (opacity = 1) => `rgba(51,75,135,${opacity})`,
+  bluerGray: (opacity = 1) => `rgba(65,95,135,${opacity})`,
   darkBluerGray: (opacity = 1) => `rgba(51,65,115,${opacity})`,
   borderGray: (opacity = 1) => `rgba(204,204,204,${opacity})`,
   checkboxAreaGray: (opacity = 1) => `rgba(229,229,229,${opacity})`,
@@ -95,13 +95,13 @@ export function Theme(color = 'logoBlue') {
           red: 'redOrange',
           darkBlue: 'armyGreen',
           vantaBlack: 'armyGreen',
-          gold: 'pinkOrange'
+          gold: 'bluerGray'
         }[color] || 'green'
     },
     alert: {
       color:
         {
-          gold: 'pinkOrange'
+          gold: 'brownOrange'
         }[color] || 'gold'
     },
     alreadyPostedByOtherUser: { color: 'red' },
@@ -188,7 +188,7 @@ export function Theme(color = 'logoBlue') {
           red: 'redOrange',
           darkBlue: 'armyGreen',
           vantaBlack: 'armyGreen',
-          gold: 'pinkOrange'
+          gold: 'bluerGray'
         }[color] || 'green'
     },
     cover: { color },
@@ -211,7 +211,7 @@ export function Theme(color = 'logoBlue') {
     filter: {
       color:
         {
-          gold: 'darkBrownOrange'
+          gold: 'brownOrange'
         }[color] || color,
       opacity:
         {
