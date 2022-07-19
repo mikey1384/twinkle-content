@@ -115,7 +115,13 @@ export function Theme(color = 'logoBlue') {
     button: {
       color:
         {
-          gold: 'orange'
+          gold: 'darkBrownOrange'
+        }[color] || color
+    },
+    buttonHovered: {
+      color:
+        {
+          gold: 'gold'
         }[color] || color
     },
     byUserIndicator: {
@@ -197,7 +203,8 @@ export function Theme(color = 'logoBlue') {
       color:
         {
           red: 'darkRed',
-          vantaBlack: 'black'
+          vantaBlack: 'black',
+          gold: 'magenta'
         }[color] || 'rose'
     },
     done: { color: 'blue' },
@@ -264,7 +271,7 @@ export function Theme(color = 'logoBlue') {
           green: 'yellowGreen',
           rose: 'skyBlue',
           red: 'pinkOrange',
-          gold: 'lighterOrange'
+          gold: 'lightOceanBlue'
         }[color] || 'lightBlue'
     },
     likeButtonPressed: {
@@ -272,8 +279,7 @@ export function Theme(color = 'logoBlue') {
         {
           green: 'darkYellowGreen',
           rose: 'oceanBlue',
-          red: 'passionFruit',
-          gold: 'lightOrange'
+          red: 'passionFruit'
         }[color] || 'logoBlue'
     },
     link: {
@@ -337,10 +343,13 @@ export function Theme(color = 'logoBlue') {
     },
     sectionPanel: { color },
     sectionPanelText: {
-      color,
+      color:
+        {
+          gold: 'darkGold'
+        }[color] || color,
       shadow:
         {
-          gold: 'brownOrange'
+          gold: 'darkBrownOrange'
         }[color] || ''
     },
     showMeAnotherSubjectButton: { color: 'green' },

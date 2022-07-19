@@ -78,7 +78,8 @@ function MessageInput({
 }) {
   const { banned, fileUploadLvl } = useKeyContext((v) => v.myState);
   const {
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor }
   } = useKeyContext((v) => v.theme);
   const {
     actions: { onEnterComment, onSetIsRespondingToSubject, onSetReplyTarget }
@@ -308,6 +309,7 @@ function MessageInput({
               skeuomorphic
               onClick={onChessButtonClick}
               color={buttonColor}
+              hoverColor={buttonHoverColor}
             >
               <Icon size="lg" icon={['fas', 'chess']} />
               <span className="desktop" style={{ marginLeft: '0.7rem' }}>
@@ -320,6 +322,7 @@ function MessageInput({
               skeuomorphic
               onClick={onWordleButtonClick}
               color={buttonColor}
+              hoverColor={buttonHoverColor}
             >
               W<span className="desktop">ordle</span>
             </Button>
@@ -353,6 +356,7 @@ function MessageInput({
               filled
               disabled={loading || !socketConnected || coolingDown}
               color={buttonColor}
+              hoverColor={buttonHoverColor}
               onClick={handleSendMsg}
             >
               <Icon size="lg" icon="paper-plane" />

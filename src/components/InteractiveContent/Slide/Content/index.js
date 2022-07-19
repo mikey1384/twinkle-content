@@ -52,7 +52,8 @@ export default function Content({
   selectedForkButtonId
 }) {
   const {
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor }
   } = useKeyContext((v) => v.theme);
   const descriptionShown = useMemo(
     () => !stringIsEmpty(description),
@@ -229,6 +230,7 @@ export default function Content({
               <Button
                 onClick={() => onPortalButtonClick(portalButton.destination)}
                 color={buttonColor}
+                hoverColor={buttonHoverColor}
                 skeuomorphic
                 style={{ fontSize: '1.7rem' }}
               >

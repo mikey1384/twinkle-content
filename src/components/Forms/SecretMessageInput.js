@@ -50,6 +50,7 @@ export default function SecretMessageInput({
   );
   const {
     button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor },
     skeuomorphicDisabled: {
       color: skeuomorphicDisabledColor,
       opacity: skeuomorphicDisabledOpacity
@@ -124,6 +125,7 @@ export default function SecretMessageInput({
               <Button
                 skeuomorphic
                 color={buttonColor}
+                hoverColor={buttonHoverColor}
                 onClick={() => (disabled ? null : FileInputRef.current.click())}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}

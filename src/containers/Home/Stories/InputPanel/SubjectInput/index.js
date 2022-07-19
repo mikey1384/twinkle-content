@@ -54,7 +54,8 @@ function SubjectInput() {
   const { canEditRewardLevel, banned } = useKeyContext((v) => v.myState);
   const {
     success: { color: successColor },
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor }
   } = useKeyContext((v) => v.theme);
   const fileUploadProgress = useHomeContext((v) => v.state.fileUploadProgress);
   const secretAttachmentUploadProgress = useHomeContext(
@@ -216,6 +217,7 @@ function SubjectInput() {
                 <Button
                   skeuomorphic
                   color={buttonColor}
+                  hoverColor={buttonHoverColor}
                   onClick={() => setAttachContentModalShown(true)}
                 >
                   <Icon size="lg" icon="plus" />

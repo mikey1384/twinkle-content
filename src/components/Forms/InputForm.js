@@ -78,6 +78,7 @@ function InputForm({
       opacity: skeuomorphicDisabledOpacity
     },
     button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor },
     danger: { color: dangerColor }
   } = useTheme(theme || profileTheme);
   const maxSize = useMemo(
@@ -351,6 +352,7 @@ function InputForm({
             <Button
               skeuomorphic
               color={buttonColor}
+              hoverColor={buttonHoverColor}
               onClick={() =>
                 uploadDisabled ? null : FileInputRef.current.click()
               }

@@ -75,7 +75,8 @@ export default function BasicInfos({
     banned
   } = useKeyContext((v) => v.myState);
   const {
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor }
   } = useTheme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
@@ -305,6 +306,7 @@ export default function BasicInfos({
                 }}
                 skeuomorphic
                 color={buttonColor}
+                hoverColor={buttonHoverColor}
                 onClick={handleTalkButtonClick}
               >
                 <Icon icon="comments" />

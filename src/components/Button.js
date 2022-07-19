@@ -89,17 +89,17 @@ function Button({
       &:hover {
         background: ${skeuomorphic
           ? '#fff'
-          : Color[colorKey](
+          : Color[hoverColor || color](
               disabled ? backgroundDisabledOpacity : backgroundHoverOpacity
             )};
         color: ${renderHoverColor()};
-        border-color: ${Color[colorKey](
+        border-color: ${Color[hoverColor || color](
           disabled ? backgroundDisabledOpacity : backgroundHoverOpacity
         )};
         ${skeuomorphic
           ? disabled
             ? ''
-            : `box-shadow: 0 0 3px ${Color[colorKey]()};`
+            : `box-shadow: 0 0 3px ${Color[hoverColor || color]()};`
           : ''};
       }
       @media (max-width: ${mobileMaxWidth}) {
@@ -107,17 +107,17 @@ function Button({
         &:hover {
           background: ${skeuomorphic
             ? '#fff'
-            : Color[colorKey](
+            : Color[hoverColor || color](
                 disabled ? backgroundDisabledOpacity : backgroundOpacity
               )};
           color: ${!skeuomorphic && (filled || opacity)
             ? '#fff'
-            : Color[colorKey](textOpacity)};
+            : Color[hoverColor || color](textOpacity)};
           box-shadow: ${skeuomorphic && filled
-            ? `box-shadow: 0 0 1px ${Color[colorKey](0.5)};`
+            ? `box-shadow: 0 0 1px ${Color[hoverColor || color](0.5)};`
             : 'none'};
           border: 1px solid
-            ${Color[colorKey](
+            ${Color[hoverColor || color](
               disabled
                 ? backgroundDisabledOpacity
                 : skeuomorphic && filled
@@ -131,10 +131,10 @@ function Button({
     function renderHoverColor() {
       if (disabled) {
         if (!filled) {
-          return Color[colorKey](textOpacity);
+          return Color[hoverColor || color](textOpacity);
         }
       } else if (skeuomorphic || transparent) {
-        return Color[colorKey]();
+        return Color[hoverColor || color]();
       }
       return '#fff';
     }

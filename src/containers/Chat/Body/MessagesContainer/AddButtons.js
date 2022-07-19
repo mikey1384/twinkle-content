@@ -16,7 +16,8 @@ export default function AddButtons({
   onSelectVideoButtonClick
 }) {
   const {
-    button: { color: buttonColor }
+    button: { color: buttonColor },
+    buttonHovered: { color: buttonHoverColor }
   } = useKeyContext((v) => v.theme);
 
   return (
@@ -32,6 +33,7 @@ export default function AddButtons({
         disabled={disabled}
         onClick={onUploadButtonClick}
         color={buttonColor}
+        hoverColor={buttonHoverColor}
       >
         <Icon size="lg" icon="upload" />
       </Button>
@@ -39,6 +41,7 @@ export default function AddButtons({
         skeuomorphic
         disabled={disabled}
         color={buttonColor}
+        hoverColor={buttonHoverColor}
         onClick={onSelectVideoButtonClick}
         style={{ marginLeft: '1rem' }}
       >
