@@ -113,6 +113,9 @@ export default function Cover({
               margin-left: 15rem;
               padding-top: 6rem;
               font-size: 2.5rem;
+              ${coverTextShadowColor
+                ? `text-shadow: 1px 1px ${Color[coverTextShadowColor]()};`
+                : ''}
               > p {
                 font-size: 1.3rem;
               }
