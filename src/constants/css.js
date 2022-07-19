@@ -172,7 +172,7 @@ export function Theme(color = 'logoBlue') {
     chatInvitation: {
       color:
         {
-          gold: 'pinkOrange'
+          gold: 'darkGold'
         }[color] || color
     },
     content: {
