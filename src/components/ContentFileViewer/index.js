@@ -105,7 +105,7 @@ export default function ContentFileViewer({
                   color: Color[linkColor](),
                   overflow: 'hidden',
                   display: '-webkit-box',
-                  webkitLineClamp: 2,
+                  WebkitLineClamp: 2,
                   webkitBoxOrient: 'vertical'
                 }}
                 href={src}
