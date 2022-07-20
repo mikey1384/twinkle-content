@@ -38,7 +38,8 @@ export function addEmoji(string) {
 
 export function addTwoLetterEmoji(string) {
   return string
-    .replace(/(:\) )/g, '🙂 ')
+    .replace(/(:\) )/g, '😊 ')
+    .replace(/(:\] )/g, '🙂 ')
     .replace(/(\(: )/g, '🙃 ')
     .replace(/(;\) )/g, '😉 ')
     .replace(/(XD )/g, '😆 ')
