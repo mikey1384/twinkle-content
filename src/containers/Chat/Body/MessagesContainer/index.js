@@ -809,7 +809,9 @@ function MessagesContainer({
         if (!recepientId) {
           return reportError({
             componentPath: 'MessagesContainer/index',
-            message: `handleMessageSubmit: User is trying to send the first message to someone but recepient ID is missing`
+            message: `handleMessageSubmit: User is trying to send the first message to someone but recepient ID is missing. Content of the message was "${content}," and pathId was ${
+              currentPathId ? `"${currentPathId}"` : 'empty'
+            }`
           });
         }
         onSetCreatingNewDMChannel(true);
