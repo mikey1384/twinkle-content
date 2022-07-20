@@ -341,7 +341,12 @@ function Chat({ onFileUpload }) {
   }, [currentPathId, currentChannel.pathId, navigate]);
 
   useEffect(() => {
-    if (chatType === 'vocabulary' && !prevPathId.current && !!currentPathId) {
+    if (
+      chatType === 'vocabulary' &&
+      !prevPathId.current &&
+      !!currentPathId &&
+      currentPathId !== 'vocabulary'
+    ) {
       navigate(`/chat/vocabulary`, { replace: true });
     }
   }, [chatType, currentPathId, navigate]);
