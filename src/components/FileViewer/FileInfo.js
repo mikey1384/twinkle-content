@@ -4,6 +4,7 @@ import Icon from 'components/Icon';
 import { css } from '@emotion/css';
 import { borderRadius, Color, mobileMaxWidth } from 'constants/css';
 import { renderFileSize } from 'helpers/stringHelpers';
+import { useKeyContext } from 'contexts';
 
 FileInfo.propTypes = {
   fileType: PropTypes.string.isRequired,
@@ -13,6 +14,9 @@ FileInfo.propTypes = {
 };
 
 export default function FileInfo({ src, fileType, fileName, fileSize }) {
+  const {
+    link: { color: linkColor }
+  } = useKeyContext((v) => v.theme);
   const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
@@ -52,11 +56,16 @@ export default function FileInfo({ src, fileType, fileName, fileSize }) {
           />
           <div
             className={css`
+              color: ${Color[linkColor]()};
               margin-top: 0.5rem;
               width: 100%;
               text-align: center;
               font-size: 1.3rem;
               font-weight: bold;
+              overflow: hidden;
+              display: -webkit-box;
+              webkit-line-clamp: 2;
+              webkit-box-orient: vertical;
               @media (max-width: ${mobileMaxWidth}) {
                 font-size: 1.2rem;
               }

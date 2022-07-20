@@ -8,6 +8,8 @@ import {
   desktopMinWidth,
   mobileMaxWidth
 } from 'constants/css';
+import { useKeyContext } from 'contexts';
+import { useTheme } from 'helpers/hooks';
 import { renderFileSize } from 'helpers/stringHelpers';
 
 FileInfo.propTypes = {
@@ -15,7 +17,8 @@ FileInfo.propTypes = {
   fileType: PropTypes.string.isRequired,
   fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isThumb: PropTypes.bool,
-  src: PropTypes.string.isRequired
+  src: PropTypes.string.isRequired,
+  theme: PropTypes.string
 };
 
 export default function FileInfo({
@@ -23,8 +26,13 @@ export default function FileInfo({
   fileType,
   fileSize,
   isThumb,
-  src
+  src,
+  theme
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
+  const {
+    link: { color: linkColor }
+  } = useTheme(theme || profileTheme);
   const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
@@ -87,14 +95,24 @@ export default function FileInfo({
                 }
               `}
               style={{
-                displahy: 'flex',
-                flexDirection: 'column',
                 width: '100%'
               }}
             >
-              <div style={{ width: '100%' }}>
+              <div
+                style={{
+                  width: '100%'
+                }}
+              >
                 <a
-                  style={{ fontWeight: 'bold' }}
+                  style={{
+                    width: '100%',
+                    fontWeight: 'bold',
+                    color: Color[linkColor](),
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}
                   className={css`
                     @media (max-width: ${mobileMaxWidth}) {
                       font-size: 1.5rem;

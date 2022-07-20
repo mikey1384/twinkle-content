@@ -99,7 +99,15 @@ export default function ContentFileViewer({
               }}
             >
               <a
-                style={{ fontWeight: 'bold', color: Color[linkColor]() }}
+                style={{
+                  width: '100%',
+                  fontWeight: 'bold',
+                  color: Color[linkColor](),
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  webkitLineClamp: 2,
+                  webkitBoxOrient: 'vertical'
+                }}
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -127,6 +135,7 @@ export default function ContentFileViewer({
           fileName={fileName}
           fileType={fileType}
           fileSize={fileSize}
+          theme={theme}
           src={src}
         />
       )}
