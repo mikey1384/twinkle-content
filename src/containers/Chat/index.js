@@ -331,6 +331,22 @@ function Chat({ onFileUpload }) {
   }, [currentPathId]);
 
   useEffect(() => {
+    if (
+      !prevPathId.current &&
+      !isNaN(currentChannel.pathId) &&
+      Number(currentChannel.pathId) !== Number(currentPathId)
+    ) {
+      navigate(`/chat/${currentChannel.pathId}`, { replace: true });
+    }
+  }, [currentPathId, currentChannel.pathId, navigate]);
+
+  useEffect(() => {
+    if (chatType === 'vocabulary' && !prevPathId.current && !!currentPathId) {
+      navigate(`/chat/vocabulary`, { replace: true });
+    }
+  }, [chatType, currentPathId, navigate]);
+
+  useEffect(() => {
     if (!currentPathId) {
       if (chatType === 'vocabulary') {
         prevPathId.current = 'vocabulary';
