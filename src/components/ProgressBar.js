@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { borderRadius, Color, innerBorderRadius } from 'constants/css';
 import { css } from '@emotion/css';
+import { useTheme } from 'helpers/hooks';
 import { useKeyContext } from 'contexts';
 
 ProgressBar.propTypes = {
@@ -10,6 +11,7 @@ ProgressBar.propTypes = {
   progress: PropTypes.number.isRequired,
   color: PropTypes.string,
   style: PropTypes.object,
+  theme: PropTypes.string,
   text: PropTypes.string
 };
 
@@ -19,11 +21,14 @@ export default function ProgressBar({
   noBorderRadius,
   progress,
   style = {},
+  theme,
   text
 }) {
+  const { profileTheme } = useKeyContext((v) => v.myState);
   const {
     progressBar: { color: progressBarColor }
-  } = useKeyContext((v) => v.theme);
+  } = useTheme(theme || profileTheme);
+
   const barColor = useMemo(
     () => color || Color[progressBarColor](),
     [color, progressBarColor]

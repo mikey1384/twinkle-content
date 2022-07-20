@@ -39,6 +39,7 @@ TextMessage.propTypes = {
   onShowSubjectMsgsModal: PropTypes.func.isRequired,
   socketConnected: PropTypes.bool,
   subjectId: PropTypes.number,
+  theme: PropTypes.string,
   thumbUrl: PropTypes.string,
   userCanEditThis: PropTypes.bool
 };
@@ -62,6 +63,7 @@ function TextMessage({
   subjectId,
   onShowSubjectMsgsModal,
   socketConnected,
+  theme,
   thumbUrl,
   userCanEditThis
 }) {
@@ -138,6 +140,7 @@ function TextMessage({
                 <Spoiler content={content} />
               ) : stringIsEmpty(content) ? null : (
                 <LongText
+                  theme={theme}
                   readMoreHeightFixed
                   style={{
                     marginTop: isSubject ? '0.5rem' : 0,

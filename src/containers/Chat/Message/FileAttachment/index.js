@@ -5,8 +5,9 @@ import FileInfo from './FileInfo';
 import ImagePreview from './ImagePreview';
 import MediaPlayer from './MediaPlayer';
 import { css } from '@emotion/css';
-import { mobileMaxWidth } from 'constants/css';
+import { Color, mobileMaxWidth } from 'constants/css';
 import { getFileInfoFromFileName } from 'helpers/stringHelpers';
+import { useTheme } from 'helpers/hooks';
 import { cloudFrontURL } from 'constants/defaultValues';
 
 FileAttachment.propTypes = {
@@ -14,6 +15,7 @@ FileAttachment.propTypes = {
   fileName: PropTypes.string,
   filePath: PropTypes.string,
   fileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  theme: PropTypes.string,
   thumbUrl: PropTypes.string
 };
 
@@ -22,11 +24,15 @@ export default function FileAttachment({
   fileName,
   filePath,
   fileSize,
+  theme,
   thumbUrl
 }) {
   const {
     actions: { onSetMediaStarted }
   } = useContext(LocalContext);
+  const {
+    link: { color: linkColor }
+  } = useTheme(theme);
   const isImageOrVideo = useMemo(
     () =>
       getFileInfoFromFileName(fileName)?.fileType === 'image' ||
@@ -99,7 +105,15 @@ export default function FileAttachment({
             }}
           >
             <a
-              style={{ fontWeight: 'bold' }}
+              style={{
+                width: '100%',
+                fontWeight: 'bold',
+                color: Color[linkColor](),
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical'
+              }}
               href={src}
               target="_blank"
               rel="noopener noreferrer"
@@ -134,6 +148,7 @@ export default function FileAttachment({
           fileType={fileType}
           fileSize={fileSize}
           src={src}
+          theme={theme}
         />
       )}
     </div>

@@ -6,12 +6,14 @@ import { Color } from 'constants/css';
 FileUploadStatusIndicator.propTypes = {
   fileName: PropTypes.string,
   uploadProgress: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  theme: PropTypes.string
 };
 
 export default function FileUploadStatusIndicator({
   fileName,
   style,
+  theme,
   uploadProgress
 }) {
   const uploadComplete = useMemo(
@@ -36,7 +38,12 @@ export default function FileUploadStatusIndicator({
       <div style={{ textAlign: 'center' }}>{`Uploading${
         fileName ? ` ${fileName}` : ''
       }...`}</div>
-      <ProgressBar text={text} color={color} progress={progress} />
+      <ProgressBar
+        text={text}
+        theme={theme}
+        color={color}
+        progress={progress}
+      />
     </div>
   );
 }

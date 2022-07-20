@@ -106,7 +106,7 @@ export default function ContentFileViewer({
                   overflow: 'hidden',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
-                  webkitBoxOrient: 'vertical'
+                  WebkitBoxOrient: 'vertical'
                 }}
                 href={src}
                 target="_blank"

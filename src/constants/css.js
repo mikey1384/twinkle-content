@@ -315,7 +315,7 @@ export function Theme(color = 'logoBlue') {
     },
     mission: { color: 'orange' },
     profilePanel: { color },
-    progressBar: { color },
+    progressBar: { color: { green: 'yellowGreen' }[color] || color },
     reactionButton: { color, opacity: 0.2 },
     recommendation: { color: { gold: 'passionFruit' }[color] || 'brownOrange' },
     reward: {

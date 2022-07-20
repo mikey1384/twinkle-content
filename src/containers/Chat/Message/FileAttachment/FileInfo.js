@@ -8,16 +8,22 @@ import {
   desktopMinWidth,
   mobileMaxWidth
 } from 'constants/css';
+import { useTheme } from 'helpers/hooks';
 import { renderFileSize } from 'helpers/stringHelpers';
 
 FileInfo.propTypes = {
   fileName: PropTypes.string.isRequired,
   fileType: PropTypes.string.isRequired,
   fileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  src: PropTypes.string.isRequired
+  src: PropTypes.string.isRequired,
+  theme: PropTypes.string
 };
 
-export default function FileInfo({ fileName, fileType, fileSize, src }) {
+export default function FileInfo({ fileName, fileType, fileSize, src, theme }) {
+  const {
+    link: { color: linkColor }
+  } = useTheme(theme);
+
   const displayedFileSize = useMemo(() => renderFileSize(fileSize), [fileSize]);
   return (
     <div
@@ -87,7 +93,15 @@ export default function FileInfo({ fileName, fileType, fileSize, src }) {
           >
             <div style={{ width: '100%' }}>
               <a
-                style={{ fontWeight: 'bold' }}
+                style={{
+                  width: '100%',
+                  fontWeight: 'bold',
+                  color: Color[linkColor](),
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical'
+                }}
                 className={css`
                   @media (max-width: ${mobileMaxWidth}) {
                     font-size: 1.5rem;

@@ -689,6 +689,7 @@ function Message({
                 ) : fileToUpload && !loading ? (
                   <FileUploadStatusIndicator
                     key={channelId}
+                    theme={displayedThemeColor}
                     fileName={fileToUpload.name}
                     uploadProgress={uploadStatus.uploadProgress}
                   />
@@ -702,6 +703,7 @@ function Message({
                         filePath={filePath}
                         fileSize={fileSize}
                         messageId={messageId}
+                        theme={displayedThemeColor}
                         thumbUrl={thumbUrl || recentThumbUrl}
                       />
                     )}

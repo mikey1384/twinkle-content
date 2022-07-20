@@ -84,6 +84,7 @@ export default function CommentInputArea({
       )}
       {uploadingFile ? (
         <FileUploadStatusIndicator
+          theme={theme}
           style={{
             fontSize: '1.7rem',
             fontWeight: 'bold',
