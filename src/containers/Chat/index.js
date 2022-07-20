@@ -278,21 +278,20 @@ function Chat({ onFileUpload }) {
       if (!stringIsEmpty(currentPathId)) {
         onUpdateChatType('default');
       }
-      if (
+      if (currentPathId === 'new') {
+        prevPathId.current = currentPathId;
+        if (homeChannelIds.includes(0)) {
+          onEnterEmptyChat();
+        } else {
+          navigate(`/chat`, { replace: true });
+        }
+      } else if (
         currentPathId &&
         Number(currentPathId) !== Number(prevPathId.current) &&
         userId
       ) {
         prevPathId.current = currentPathId;
-        if (currentPathId === 'new') {
-          if (homeChannelIds.includes(0)) {
-            onEnterEmptyChat();
-          } else {
-            navigate(`/chat`, { replace: true });
-          }
-        } else {
-          handleChannelEnter(currentPathId);
-        }
+        handleChannelEnter(currentPathId);
       }
     }
 
@@ -359,8 +358,8 @@ function Chat({ onFileUpload }) {
       await loadVocabulary();
     if (currentPathIdRef.current === 'vocabulary') {
       onLoadVocabulary({ vocabActivities, wordsObj, wordCollectors });
-      onSetLoadingVocabulary(false);
     }
+    onSetLoadingVocabulary(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatType]);
 
