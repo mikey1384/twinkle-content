@@ -359,7 +359,7 @@ export default function BasicInfos({
         }
       });
     }
-    navigate(pathId ? `/chat/${pathId}` : `/chat/new`);
+    setTimeout(() => navigate(pathId ? `/chat/${pathId}` : `/chat/new`), 0);
   }
 
   function goToEmail() {
