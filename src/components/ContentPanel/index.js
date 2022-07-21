@@ -296,21 +296,19 @@ export default function ContentPanel({
                   />
                 )}
                 {contentState.loaded && targetObj?.subject && (
-                  <div>
-                    <ContentListItem
-                      comments={contentState.comments}
-                      style={{
-                        zIndex: 1,
-                        position: 'relative'
-                      }}
-                      expandable
-                      onClick={() =>
-                        navigate(`/subjects/${targetObj.subject.id}`)
-                      }
-                      contentObj={targetObj.subject}
-                      onChangeSpoilerStatus={onChangeSpoilerStatus}
-                    />
-                  </div>
+                  <ContentListItem
+                    comments={contentState.comments}
+                    style={{
+                      zIndex: 1,
+                      position: 'relative'
+                    }}
+                    expandable
+                    onClick={() =>
+                      navigate(`/subjects/${targetObj.subject.id}`)
+                    }
+                    contentObj={targetObj.subject}
+                    onChangeSpoilerStatus={onChangeSpoilerStatus}
+                  />
                 )}
                 {contentType === 'comment' &&
                   contentState.rootType === 'video' && (

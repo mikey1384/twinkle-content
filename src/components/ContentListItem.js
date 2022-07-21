@@ -212,10 +212,22 @@ function ContentListItem({
                     style={{
                       width: '100%',
                       overflowWrap: 'break-word',
+                      paddingRight: '1rem',
                       wordBreak: 'break-word'
                     }}
                   >
-                    <p style={{ lineClamp: 2, fontSize: '2.5rem' }}>{title}</p>
+                    <p
+                      className={css`
+                        line-clamp: 2;
+                        font-size: 2.5rem;
+                        @media (max-width: ${mobileMaxWidth}) {
+                          font-size: 2rem;
+                          line-height: 1.4;
+                        }
+                      `}
+                    >
+                      {title}
+                    </p>
                     {uploader.username && (
                       <p style={{ color: Color.gray() }}>
                         Posted by {uploader.username}
