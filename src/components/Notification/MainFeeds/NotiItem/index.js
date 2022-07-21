@@ -5,15 +5,30 @@ import { timeSince } from 'helpers/timeStampHelpers';
 import { Color } from 'constants/css';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
-import { useKeyContext } from 'contexts';
 import useNotificationMessage from './useNotificationMessage';
 import UsernameText from 'components/Texts/UsernameText';
 
 NotiItem.propTypes = {
+  actionColor: PropTypes.string,
+  infoColor: PropTypes.string,
+  linkColor: PropTypes.string,
+  mentionColor: PropTypes.string,
+  missionColor: PropTypes.string,
+  recommendationColor: PropTypes.string,
+  rewardColor: PropTypes.string,
+  userId: PropTypes.number,
   notification: PropTypes.object.isRequired
 };
 
 export default function NotiItem({
+  actionColor,
+  infoColor,
+  linkColor,
+  mentionColor,
+  missionColor,
+  recommendationColor,
+  rewardColor,
+  userId,
   notification: {
     id,
     actionObj = {},
@@ -31,13 +46,17 @@ export default function NotiItem({
     rootMissionType
   }
 }) {
-  const {
-    link: { color: linkColor }
-  } = useKeyContext((v) => v.theme);
   const NotificationMessage = useNotificationMessage({
+    actionColor,
     actionObj,
+    infoColor,
     isNotification,
     isTask,
+    linkColor,
+    mentionColor,
+    missionColor,
+    recommendationColor,
+    rewardColor,
     rewardRootId,
     rewardType,
     rewardRootMissionType,
@@ -46,8 +65,10 @@ export default function NotiItem({
     targetObj,
     targetComment,
     targetSubject,
-    user
+    user,
+    myId: userId
   });
+
   const userLabel = useMemo(() => {
     if (actionObj.contentType !== 'pass' && actionObj.contentType !== 'fail') {
       return (

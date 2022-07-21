@@ -1,36 +1,33 @@
 import { useMemo } from 'react';
 import renderEnglishMessage from './localization/english';
 import renderKoreanMessage from './localization/korean';
-import { useKeyContext } from 'contexts';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 export default function useNotificationMessage({
+  actionColor,
   actionObj,
+  infoColor,
+  linkColor,
+  mentionColor,
+  missionColor,
   targetObj,
   targetComment,
   targetSubject,
   isNotification,
   isTask,
+  recommendationColor,
+  rewardColor,
   rewardRootId,
   rewardType,
   rewardRootMissionType,
   rewardRootType,
   rootMissionType,
-  user
+  user,
+  myId
 }) {
-  const { userId } = useKeyContext((v) => v.myState);
-  const {
-    action: { color: actionColor },
-    info: { color: infoColor },
-    link: { color: linkColor },
-    mention: { color: mentionColor },
-    mission: { color: missionColor },
-    recommendation: { color: recommendationColor },
-    reward: { color: rewardColor }
-  } = useKeyContext((v) => v.theme);
   const NotificationMessage = useMemo(() => {
-    const isReply = targetComment?.userId === userId;
-    const isSubjectResponse = targetSubject?.userId === userId;
+    const isReply = targetComment?.userId === myId;
+    const isSubjectResponse = targetSubject?.userId === myId;
     const params = {
       actionObj,
       actionColor,
@@ -59,7 +56,7 @@ export default function useNotificationMessage({
       : renderEnglishMessage(params);
   }, [
     targetComment,
-    userId,
+    myId,
     targetSubject,
     actionObj,
     actionColor,

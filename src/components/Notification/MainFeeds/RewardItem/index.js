@@ -2,16 +2,25 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import renderEnglishText from './localization/english';
 import renderKoreanText from './localization/korean';
-import { useKeyContext } from 'contexts';
 import { timeSince } from 'helpers/timeStampHelpers';
 import { notiFeedListItem } from '../../Styles';
 import { SELECTED_LANGUAGE } from 'constants/defaultValues';
 
 RewardItem.propTypes = {
+  actionColor: PropTypes.string,
+  infoColor: PropTypes.string,
+  linkColor: PropTypes.string,
+  rewardColor: PropTypes.string,
+  missionColor: PropTypes.string,
   reward: PropTypes.object.isRequired
 };
 
 export default function RewardItem({
+  actionColor,
+  infoColor,
+  linkColor,
+  rewardColor,
+  missionColor,
   reward: {
     id,
     isTask,
@@ -28,13 +37,6 @@ export default function RewardItem({
     timeStamp
   }
 }) {
-  const {
-    action: { color: actionColor },
-    info: { color: infoColor },
-    link: { color: linkColor },
-    mission: { color: missionColor },
-    reward: { color: rewardColor }
-  } = useKeyContext((v) => v.theme);
   const NotiText = useMemo(() => {
     const params = {
       actionColor,

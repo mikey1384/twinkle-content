@@ -38,6 +38,16 @@ function MainFeeds({
   selectNotiTab,
   style
 }) {
+  const {
+    action: { color: actionColor },
+    info: { color: infoColor },
+    link: { color: linkColor },
+    mention: { color: mentionColor },
+    mission: { color: missionColor },
+    recommendation: { color: recommendationColor },
+    reward: { color: rewardColor }
+  } = useKeyContext((v) => v.theme);
+
   const fetchNotifications = useAppContext(
     (v) => v.requestHelpers.fetchNotifications
   );
@@ -108,15 +118,44 @@ function MainFeeds({
 
   const NotificationsItems = useMemo(() => {
     return notifications.map((notification) => (
-      <NotiItem key={notification.id} notification={notification} />
+      <NotiItem
+        actionColor={actionColor}
+        infoColor={infoColor}
+        linkColor={linkColor}
+        mentionColor={mentionColor}
+        missionColor={missionColor}
+        recommendationColor={recommendationColor}
+        rewardColor={rewardColor}
+        userId={userId}
+        key={notification.id}
+        notification={notification}
+      />
     ));
-  }, [notifications]);
+  }, [
+    actionColor,
+    infoColor,
+    linkColor,
+    mentionColor,
+    missionColor,
+    notifications,
+    recommendationColor,
+    rewardColor,
+    userId
+  ]);
 
   const RewardListItems = useMemo(() => {
     return rewards.map((reward) => (
-      <RewardItem key={reward.id} reward={reward} />
+      <RewardItem
+        key={reward.id}
+        actionColor={actionColor}
+        infoColor={infoColor}
+        linkColor={linkColor}
+        missionColor={missionColor}
+        rewardColor={rewardColor}
+        reward={reward}
+      />
     ));
-  }, [rewards]);
+  }, [actionColor, infoColor, linkColor, missionColor, rewardColor, rewards]);
 
   return (
     <ErrorBoundary componentPath="Notification/MainFeeds/index" style={style}>
