@@ -17,6 +17,7 @@ ContentListItem.propTypes = {
   expandable: PropTypes.bool,
   modalOverModal: PropTypes.bool,
   onClick: PropTypes.func,
+  onContentIsDeleted: PropTypes.func,
   selectable: PropTypes.bool,
   selected: PropTypes.bool,
   style: PropTypes.object
@@ -28,6 +29,7 @@ function ContentListItem({
   contentObj: { id: contentId, contentType, notFound },
   expandable,
   modalOverModal,
+  onContentIsDeleted,
   selectable,
   selected,
   style
@@ -67,6 +69,12 @@ function ContentListItem({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      onContentIsDeleted?.(contentId);
+    }
+  }, [contentId, isDeleted, onContentIsDeleted]);
 
   return !!notFound || !!isDeleted ? null : (
     <div

@@ -163,6 +163,13 @@ export default function SelectFeaturedSubjectsModal({
                       marginBottom: index !== selected.length - 1 ? '1rem' : 0
                     }}
                     contentObj={subjectObj[selectedId]}
+                    onContentIsDeleted={(id) =>
+                      setSelected((selected) => {
+                        return selected.filter(
+                          (selectedId) => selectedId !== id
+                        );
+                      })
+                    }
                     onClick={() => handleSelect(selectedId)}
                   />
                 ))
