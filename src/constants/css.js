@@ -372,7 +372,7 @@ export function Theme(color = 'logoBlue') {
     verifyEmail: {
       color:
         {
-          green: 'pinkOrange'
+          green: 'green'
         }[color] || color
     },
     warning: { color: 'pink' },
