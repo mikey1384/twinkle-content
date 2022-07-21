@@ -76,7 +76,9 @@ export default function BasicInfos({
   } = useKeyContext((v) => v.myState);
   const {
     button: { color: buttonColor },
-    buttonHovered: { color: buttonHoverColor }
+    buttonHovered: { color: buttonHoverColor },
+    link: { color: linkColor },
+    verifyEmail: { color: verifyEmailColor }
   } = useTheme(selectedTheme || profileTheme || 'logoBlue');
   const loadDMChannel = useAppContext((v) => v.requestHelpers.loadDMChannel);
   const uploadProfileInfo = useAppContext(
@@ -164,6 +166,7 @@ export default function BasicInfos({
                   >
                     <a
                       href={`mailto:${email}`}
+                      style={{ color: Color[linkColor]() }}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -189,7 +192,7 @@ export default function BasicInfos({
                           : 'pointer',
                       color:
                         emailVerified || emailCheckHighlighted
-                          ? Color[selectedTheme]()
+                          ? Color[verifyEmailColor]()
                           : Color.lighterGray()
                     }}
                     icon="check-circle"
@@ -213,7 +216,7 @@ export default function BasicInfos({
                           : undefined,
                         cursor: 'pointer',
                         fontSize: '1.2rem',
-                        color: Color[selectedTheme]()
+                        color: Color[verifyEmailColor]()
                       }}
                       onClick={
                         verificationEmailSent ? goToEmail : onVerifyEmail
@@ -239,7 +242,12 @@ export default function BasicInfos({
                 }}
               >
                 <span>{youtubeLabel}: </span>
-                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  style={{ color: Color[linkColor]() }}
+                  href={youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {youtubeName || trimUrl(youtubeUrl)}
                 </a>
               </div>
@@ -247,7 +255,12 @@ export default function BasicInfos({
             {website && (
               <div style={{ marginTop: '0.5rem' }}>
                 <span>{websiteLabel}: </span>
-                <a href={website} target="_blank" rel="noopener noreferrer">
+                <a
+                  style={{ color: Color[linkColor]() }}
+                  href={website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {trimUrl(website)}
                 </a>
               </div>

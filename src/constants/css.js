@@ -369,6 +369,12 @@ export function Theme(color = 'logoBlue') {
           gold: 'darkGold'
         }[color] || color
     },
+    verifyEmail: {
+      color:
+        {
+          green: 'logoBlue'
+        }[color] || color
+    },
     warning: { color: 'pink' },
     xpNumber: { color: 'logoGreen' }
   };
