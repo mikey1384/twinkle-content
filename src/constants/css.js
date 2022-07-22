@@ -48,7 +48,7 @@ export const Color = {
   whiteBlueGray: (opacity = 1) => `rgba(248,248,255,${opacity})`,
   whiteGray: (opacity = 1) => `rgba(250,250,250,${opacity})`,
   ivory: (opacity = 1) => `rgba(255,255,240,${opacity})`,
-  redOrange: (opacity = 1) => `rgba(255,90,70,${opacity})`,
+  redOrange: (opacity = 1) => `rgba(240,100,70,${opacity})`,
   darkBrownOrange: (opacity = 1) => `rgba(235,160,70,${opacity})`,
   brownOrange: (opacity = 1) => `rgba(245,190,70,${opacity})`,
   orange: (opacity = 1) => `rgba(255,140,0,${opacity})`,
@@ -92,7 +92,7 @@ export function Theme(color = 'logoBlue') {
           pink: 'darkGray',
           purple: 'purple',
           black: 'darkerGray',
-          red: 'redOrange',
+          red: 'magenta',
           darkBlue: 'armyGreen',
           vantaBlack: 'armyGreen'
         }[color] || 'green'
@@ -184,7 +184,7 @@ export function Theme(color = 'logoBlue') {
           pink: 'passionFruit',
           purple: 'purple',
           black: 'darkOceanBlue',
-          red: 'redOrange',
+          red: 'magenta',
           darkBlue: 'armyGreen',
           vantaBlack: 'armyGreen'
         }[color] || 'green'
