@@ -287,7 +287,7 @@ export function Theme(color = 'logoBlue') {
           orange: 'darkOceanBlue',
           rose: 'darkOceanBlue',
           pink: 'oceanBlue',
-          black: 'bluerGray',
+          black: 'blueGray',
           vantaBlack: 'darkerOceanBlue',
           gold: 'oceanBlue'
         }[color] || 'blue'
