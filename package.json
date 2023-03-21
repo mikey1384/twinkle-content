@@ -100,7 +100,7 @@
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.24",
     "terser-webpack-plugin": "^5.3.1",
-    "ua-parser-js": "^1.0.2",
+    "ua-parser-js": "^1.0.33",
     "url-loader": "4.1.1",
     "use-context-selector": "^1.4.0",
     "uuid": "^8.3.2",
