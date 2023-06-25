@@ -92,7 +92,7 @@
     "resolve": "^1.22.0",
     "resolve-url-loader": "^5.0.0",
     "scheduler": "^0.22.0",
-    "semver": "^7.3.7",
+    "semver": "^7.5.2",
     "simple-peer": "^9.11.1",
     "socket.io-client": "4.5.0",
     "source-map-loader": "^3.0.1",
